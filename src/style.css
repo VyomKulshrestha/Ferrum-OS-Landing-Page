@@ -676,37 +676,6 @@ h2 {
   color: var(--paper);
 }
 
-footer {
-  position: relative;
-  z-index: 5;
-  min-height: 20rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 6rem var(--pad) 2rem;
-  border-top: 1px solid var(--line);
-  background: #070806;
-  color: rgba(241, 235, 220, 0.5);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.67rem;
-  line-height: 1.5;
-}
-
-footer p {
-  max-width: 54ch;
-}
-
-footer div {
-  display: flex;
-  gap: 1.4rem;
-}
-
-footer a:hover,
-footer a:focus-visible {
-  color: var(--cyan);
-}
-
 .noscript-notice {
   position: fixed;
   z-index: 32;
