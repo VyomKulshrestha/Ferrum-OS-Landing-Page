@@ -5,15 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#070806" />
     <meta name="description" content="Reproducible FerrumOS evidence: capability coverage, world-model evaluation, latency, physical simulation, neural synthetic tests, and explicit claim boundaries." />
+    <meta name="author" content="Vyom Kulshrestha" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
     <link rel="canonical" href="https://ferrum-os.vercel.app/proof" />
+    <link rel="alternate" type="text/markdown" href="/proof.md" title="FerrumOS proof in Markdown" />
+    <link rel="alternate" type="application/json" href="/benchmarks.json" title="FerrumOS benchmark data" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/src/page.css" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="FerrumOS" />
+    <meta property="og:title" content="FerrumOS evidence & limitations" />
+    <meta property="og:description" content="Reproduce FerrumOS capability, latency, JEPA, simulator, and synthetic neural results—and read the limits attached to every result." />
+    <meta property="og:url" content="https://ferrum-os.vercel.app/proof" />
+    <meta property="og:image" content="https://ferrum-os.vercel.app/og-ferrumos.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="FerrumOS black-iron kernel forge with ember and cyan verification light" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FerrumOS evidence & limitations" />
+    <meta name="twitter:description" content="Measured results, source artifacts, and explicit claim boundaries for FerrumOS." />
+    <meta name="twitter:image" content="https://ferrum-os.vercel.app/og-ferrumos.jpg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "TechArticle",
+            "@id": "https://ferrum-os.vercel.app/proof#article",
+            "headline": "FerrumOS evidence and limitations",
+            "description": "Reproducible capability, world-model, latency, physical-simulator, and synthetic-neural evidence with explicit claim boundaries.",
+            "url": "https://ferrum-os.vercel.app/proof",
+            "dateModified": "2026-08-13",
+            "author": { "@type": "Person", "name": "Vyom Kulshrestha", "url": "https://github.com/VyomKulshrestha" },
+            "citation": [
+              "https://doi.org/10.5281/zenodo.21829808",
+              "https://doi.org/10.5281/zenodo.21829193"
+            ],
+            "isPartOf": { "@id": "https://ferrum-os.vercel.app/#software" }
+          },
+          {
+            "@type": "Dataset",
+            "@id": "https://ferrum-os.vercel.app/benchmarks.json#dataset",
+            "name": "FerrumOS public benchmark snapshot",
+            "url": "https://ferrum-os.vercel.app/benchmarks.json",
+            "license": "https://opensource.org/license/mit",
+            "measurementTechnique": "Versioned repository verification scripts and documented QEMU/WHPX protocols",
+            "isBasedOn": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/main/benchmarks.json"
+          }
+        ]
+      }
+    </script>
     <title>Evidence & limitations — FerrumOS</title>
   </head>
   <body>
     <nav class="page-nav">
       <a href="/">Ferrum<span>OS</span></a>
-      <div><a href="/research.html">Research</a><a href="https://github.com/VyomKulshrestha/Ferrum-OS">Source ↗</a></div>
+      <div><a href="/research">Research</a><a href="https://github.com/VyomKulshrestha/Ferrum-OS">Source ↗</a></div>
     </nav>
     <main class="page-shell">
       <header class="page-hero">

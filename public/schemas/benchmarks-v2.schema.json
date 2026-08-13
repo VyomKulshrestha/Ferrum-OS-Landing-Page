@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferrum-os.vercel.app/schemas/benchmarks-v2.schema.json",
+  "title": "FerrumOS benchmark catalog",
+  "type": "object",
+  "required": ["schemaVersion", "project", "source", "benchmarks", "protocols", "globalLimitations"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "project": { "const": "FerrumOS" },
+    "source": { "type": "object", "required": ["repository", "commit", "sha256"] },
+    "benchmarks": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["id", "metric", "protocol", "boundary"] } },
+    "protocols": { "type": "object" },
+    "globalLimitations": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+  }
+}

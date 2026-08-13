@@ -5,11 +5,17 @@
 ## Canonical resources
 
 - [Website](https://ferrum-os.vercel.app/)
+- [Full public context](https://ferrum-os.vercel.app/llms-full.txt)
 - [Measured evidence and limitations](https://ferrum-os.vercel.app/proof)
 - [Research interfaces](https://ferrum-os.vercel.app/research)
+- [Capability catalog](https://ferrum-os.vercel.app/capabilities.json)
+- [Benchmark catalog](https://ferrum-os.vercel.app/benchmarks.json)
+- [Release feed](https://ferrum-os.vercel.app/releases.json)
 - [Source code](https://github.com/VyomKulshrestha/Ferrum-OS)
 - [Releases](https://github.com/VyomKulshrestha/Ferrum-OS/releases)
 
 ## Claim boundary
 
 FerrumOS v0.1.1 is a research OS and QEMU appliance, not a production-ready general-purpose OS or certified safety platform. Physical results are simulator-only. Neural results use deterministic synthetic or recorded evidence; there is no live-EEG accuracy or medical claim.
+
+Current main contains newer research work than v0.1.1. Machine-readable snapshots identify their source commit and content hash; do not describe main-branch evidence as shipped in v0.1.1.

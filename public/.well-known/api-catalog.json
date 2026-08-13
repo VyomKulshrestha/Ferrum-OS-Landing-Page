@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "name": "FerrumOS public metadata API",
+  "baseUrl": "https://ferrum-os.vercel.app",
+  "readOnly": true,
+  "authentication": "none",
+  "endpoints": [
+    { "path": "/capabilities.json", "mediaType": "application/json", "description": "Versioned per-operation capability catalog" },
+    { "path": "/benchmarks.json", "mediaType": "application/json", "description": "Versioned benchmark and protocol snapshot" },
+    { "path": "/releases.json", "mediaType": "application/json", "description": "Tagged software and frozen research releases" },
+    { "path": "/proof.md", "mediaType": "text/markdown", "description": "Evidence summary and claim boundaries" },
+    { "path": "/llms.txt", "mediaType": "text/plain", "description": "Compact assistant context" },
+    { "path": "/llms-full.txt", "mediaType": "text/plain", "description": "Full assistant context" }
+  ],
+  "runtimeControl": false
+}

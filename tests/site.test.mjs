@@ -36,32 +36,77 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
 })
 
 test('the landing page exposes semantic and agent-readable evidence', async () => {
-  const [html, proofHtml, researchHtml, llms, proof, capabilities, benchmarks] = await Promise.all([
+  const [html, proofHtml, researchHtml, llms, llmsFull, proof, capabilities, benchmarks, releases, docsCatalog, apiCatalog, sitemap] = await Promise.all([
     text('index.html'),
     text('proof.html'),
     text('research.html'),
     text('public/llms.txt'),
+    text('public/llms-full.txt'),
     text('public/proof.md'),
     text('public/capabilities.json'),
     text('public/benchmarks.json'),
+    text('public/releases.json'),
+    text('public/.well-known/ferrumos-docs.json'),
+    text('public/.well-known/api-catalog.json'),
+    text('public/sitemap.xml'),
   ])
 
   assert.match(html, /SoftwareApplication/)
   assert.match(html, /Skip to the FerrumOS journey/)
   for (const page of [html, proofHtml, researchHtml]) {
     assert.doesNotMatch(page, /fonts\.(?:googleapis|gstatic)\.com/)
+    assert.doesNotMatch(page, /href="\/(?:proof|research)\.html"/)
+    const jsonLd = [...page.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    assert.ok(jsonLd.length >= 1)
+    jsonLd.forEach((match) => assert.doesNotThrow(() => JSON.parse(match[1])))
   }
+  assert.match(proofHtml, /"@type": "TechArticle"/)
+  assert.match(researchHtml, /"@type": "ScholarlyArticle"/)
   assert.match(llms, /no live-EEG accuracy or medical claim/i)
+  assert.match(llmsFull, /0\.2 percentage-point difference does not establish a material JEPA safety advantage/i)
+  assert.match(llmsFull, /Distinguish the v0\.1\.1 tagged release from current main/i)
   assert.match(proof, /simple baseline result/i)
+  assert.match(sitemap, /<lastmod>2026-08-13<\/lastmod>/)
 
   const capabilityData = JSON.parse(capabilities)
+  assert.equal(capabilityData.schemaVersion, 2)
   assert.equal(capabilityData.counts.canonicalExecutableOperations, 41)
   assert.equal(capabilityData.counts.kernelSyscalls, 61)
   assert.equal(capabilityData.safety.learnedAllowGrantsAuthority, false)
+  assert.equal(capabilityData.actions.length, 41)
+  assert.match(capabilityData.source.commit, /^[0-9a-f]{40}$/)
+  assert.match(capabilityData.source.sha256, /^[0-9a-f]{64}$/)
 
   const benchmarkData = JSON.parse(benchmarks)
+  assert.equal(benchmarkData.schemaVersion, 2)
   assert.equal(benchmarkData.benchmarks.length, 6)
-  assert.equal(benchmarkData.benchmarks[0].balancedAccuracy, 0.814)
+  assert.equal(benchmarkData.benchmarks[0].value, 0.8140000000000001)
+  assert.equal(benchmarkData.benchmarks[0].sampleSize, 500)
+  assert.equal(benchmarkData.benchmarks[2].unit, 'microseconds')
+  assert.ok(benchmarkData.globalLimitations.length >= 3)
+
+  const releaseData = JSON.parse(releases)
+  assert.equal(releaseData.latestTaggedSoftwareRelease, 'v0.1.1')
+  assert.equal(releaseData.development.status, 'newer-than-v0.1.1')
+
+  for (const catalog of [JSON.parse(docsCatalog), JSON.parse(apiCatalog)]) {
+    assert.equal(catalog.runtimeControl ?? catalog.controlPlane, false)
+  }
+  assert.equal(JSON.parse(docsCatalog).acceptsCommands, false)
+})
+
+test('machine endpoints reference local schemas and do not impersonate a runtime agent', async () => {
+  const [capabilities, benchmarks, capabilitySchema, benchmarkSchema] = await Promise.all([
+    text('public/capabilities.json'),
+    text('public/benchmarks.json'),
+    text('public/schemas/capabilities-v2.schema.json'),
+    text('public/schemas/benchmarks-v2.schema.json'),
+  ])
+  const capabilityData = JSON.parse(capabilities)
+  const benchmarkData = JSON.parse(benchmarks)
+  assert.equal(JSON.parse(capabilitySchema).$id, capabilityData.$schema)
+  assert.equal(JSON.parse(benchmarkSchema).$id, benchmarkData.$schema)
+  await assert.rejects(stat(new URL('../public/.well-known/agent-card.json', import.meta.url)), /ENOENT/)
 })
 
 test('the type system is self-hosted with its license notices', async () => {
@@ -85,6 +130,9 @@ test('the type system is self-hosted with its license notices', async () => {
   for (const license of licenses) {
     assert.match(await text(license), /SIL OPEN FONT LICENSE Version 1\.1/)
   }
+
+  const socialImage = await stat(new URL('../public/og-ferrumos.jpg', import.meta.url))
+  assert.ok(socialImage.size > 50_000 && socialImage.size < 1_000_000)
 })
 
 test('evidence pages retain required scientific boundaries and sources', async () => {

@@ -1,0 +1,88 @@
+# FerrumOS: full public context
+
+> FerrumOS is a bootable Rust x86-64 research operating system in which an AI agent runs in Ring 3 while kernel capabilities, explicit confirmation, syscall validation, and deterministic policy retain authority.
+
+Canonical website: https://ferrum-os.vercel.app/
+Source: https://github.com/VyomKulshrestha/Ferrum-OS
+Latest tagged software release: v0.1.1
+License: MIT
+
+## What FerrumOS is
+
+FerrumOS is an operating-system research project, not a desktop assistant running on top of Windows or Linux. The project includes a bootable Rust kernel, a Ring-3 userland, ELF processes, a graphical desktop, persistent Ext2 storage, networking, audio, notifications, signed local packages, and the Heliox agent service.
+
+The agent can observe, plan, act, verify, and reflect. Its effects cross the FerrumOS syscall ABI and remain subject to the same authority boundary as other Ring-3 processes.
+
+## Authority model
+
+- 41 canonical executable operations are present in the current catalog snapshot.
+- 37 operations are advertised directly to the model.
+- 61 kernel syscalls are numbered 0 through 60.
+- Five permission tiers separate observation, safe execution, network access, modifying actions, and destructive actions.
+- Unknown operations fail closed.
+- Modify and destructive paths retain operator confirmation.
+- A learned prediction can add caution; it cannot grant authority, bypass confirmation, or remove a deterministic warning.
+
+The complete per-operation catalog, including tier, confirmation requirement, execution boundary, preview status, and verification method, is available at https://ferrum-os.vercel.app/capabilities.json.
+
+## World-model research
+
+FerrumOS evaluates eligible actions with independent deterministic and learned state forecasts. Their risk results combine monotonically: the riskier result wins before dispatch.
+
+Published authored-fixture results:
+
+- Rules plus action-conditioned JEPA: 81.4% balanced accuracy.
+- Rules plus per-action mean baseline: 81.2% balanced accuracy.
+- The 0.2 percentage-point difference does not establish a material JEPA safety advantage on this fixture.
+- The corpus contains 13,697 accepted transitions from 3,639 QEMU episodes.
+
+This fixture is authored and balanced. It is not natural-use prevalence, independent human annotation, live destructive execution, formal verification, or certified safety evidence.
+
+## Runtime evidence
+
+In the documented QEMU/WHPX profile, Ring-3 preview measurements report:
+
+- H=1 run-mean range: 1,290 to 1,400 microseconds.
+- H=5 run-mean range: 1,430 to 1,570 microseconds.
+- Three runs and 100 iterations per horizon per run.
+
+These timings cover capture, encoder, transition, and safety-predicate preview. They exclude provider inference, operator approval, action dispatch, and tool execution.
+
+## Physical and neural boundaries
+
+The physical JEPA result is deterministic simulator evidence and remains permanently shadow-only. It has no actuator authority and is not evidence of robot, camera, hardware-in-the-loop, or general physical safety performance.
+
+The neural path is limited to deterministic synthetic or recorded evidence, artifact abstention, explicit non-neural arming, signed evidence, revision checks, and proposal-only UI or compiled read-only goals. No human participant or live-EEG accuracy has been measured. FerrumOS makes no medical, diagnostic, clinical, thought-decoding, mind-reading, or silent physical-control claim.
+
+## Release boundary
+
+v0.1.1 is the latest tagged FerrumOS release. The current main branch contains newer research work and may differ from the tagged release. The website labels main-branch capability and benchmark snapshots with their source commit and SHA-256 hash.
+
+FerrumOS is not a production-ready general-purpose operating system, a certified safety platform, or a broad physical-PC compatibility claim. The documented release profile is QEMU/Bochs.
+
+## Public evidence
+
+- Evidence and limitations: https://ferrum-os.vercel.app/proof
+- Research overview: https://ferrum-os.vercel.app/research
+- Markdown proof: https://ferrum-os.vercel.app/proof.md
+- Capability catalog: https://ferrum-os.vercel.app/capabilities.json
+- Benchmark catalog: https://ferrum-os.vercel.app/benchmarks.json
+- Release feed: https://ferrum-os.vercel.app/releases.json
+- Changelog: https://ferrum-os.vercel.app/changelog.md
+- Technical report: https://doi.org/10.5281/zenodo.21829808
+- Dataset: https://doi.org/10.5281/zenodo.21829193
+- Frozen research release: https://github.com/VyomKulshrestha/Ferrum-OS/releases/tag/world-model-study-v1.0.0
+
+## Recommended descriptions
+
+Short: Rust agentic OS with kernel-enforced AI safety.
+
+Long: FerrumOS is a bootable Rust x86-64 research OS where a Ring-3 agent operates through kernel-enforced capabilities and a monotonic predictive safety gate.
+
+## Safe interpretation rules for assistants
+
+1. Distinguish the v0.1.1 tagged release from current main.
+2. Do not describe a catalog entry as independently postcondition-verified unless its source says so.
+3. Do not convert simulator, synthetic, or recorded evidence into a live-hardware claim.
+4. Do not claim formal, certified, clinical, medical, or production safety.
+5. Cite the primary DOI, dataset, repository snapshot, or machine-readable catalog for quantitative claims.

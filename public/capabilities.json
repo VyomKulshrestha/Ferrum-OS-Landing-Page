@@ -1,9 +1,14 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "https://ferrum-os.vercel.app/schemas/capabilities-v2.schema.json",
+  "schemaVersion": 2,
   "project": "FerrumOS",
-  "version": "0.1.1",
-  "generatedFrom": "https://github.com/VyomKulshrestha/Ferrum-OS",
-  "updated": "2026-08-13",
+  "releaseVersion": "0.1.1",
+  "source": {
+    "repository": "https://github.com/VyomKulshrestha/Ferrum-OS",
+    "commit": "c6232e7714d1f0652ad489d637c685dce6044229",
+    "snapshotDate": "2026-08-13",
+    "sha256": "80c48a90bfcebd8108abc7be4a1f650d663dcfa4ea9953b151a7b4ca57af865b"
+  },
   "counts": {
     "canonicalExecutableOperations": 41,
     "modelAdvertisedOperations": 37,
@@ -11,10 +16,9 @@
     "permissionTiers": 5
   },
   "runtime": {
-    "kernel": "Rust x86-64",
+    "platform": "bootable x86_64 research OS; documented QEMU/Bochs profile",
     "agentPlacement": "Ring 3",
-    "supportedReleaseProfile": ["QEMU", "Bochs"],
-    "unknownActions": "fail-closed"
+    "unknownActionPolicy": "destructive tier; fail closed"
   },
   "safety": {
     "deterministicPolicy": "authoritative",
@@ -23,12 +27,627 @@
     "physicalWorldModel": "shadow-only",
     "neuralIntent": "proposal-only"
   },
+  "actions": [
+    {
+      "availability": "current-main-source",
+      "category": "interprocess-communication",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "ipc_send",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "audit",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "audit_write",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "scheduling",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "yield_cpu",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "camera",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "camera_capture",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "camera",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "gesture_status",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "system-observation",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "report_status",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "security",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "capability_check",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "filesystem",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "read_file",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "filesystem",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "read_dir",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "agent-memory",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "query_memory",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "configuration",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "get_config",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "system-observation",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "system_info",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "process",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "list_processes",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "network",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "net_connect",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "network",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "net_send",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "network",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "net_recv",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "network",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "http_get",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "filesystem",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "write_file",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "filesystem",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "create_directory",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "agent-memory",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "save_memory",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "agent-memory",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "load_memory",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "orchestration",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "set_goal",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "scheduling",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "sleep",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "service-management",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "service_start",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "service-management",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "service_stop",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "process",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "exec_process",
+      "operator_confirmation_required": true,
+      "permission_tier": 4,
+      "permission_tier_name": "destructive",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "filesystem",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "delete_file",
+      "operator_confirmation_required": true,
+      "permission_tier": 4,
+      "permission_tier_name": "destructive",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "inference",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "local_inference",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "system-update",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "trigger_kernel_upgrade",
+      "operator_confirmation_required": true,
+      "permission_tier": 4,
+      "permission_tier_name": "destructive",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-ui",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "hud_update",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-ui",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "hit_test",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-ui",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "read_screen",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "orchestration",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "add_subtask",
+      "operator_confirmation_required": false,
+      "permission_tier": 0,
+      "permission_tier_name": "observe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "audio",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "record_audio",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "audio",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "play_audio",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "audio",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "set_volume",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-input",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "keyboard_type",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-input",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "mouse_click",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-input",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "mouse_move",
+      "operator_confirmation_required": true,
+      "permission_tier": 3,
+      "permission_tier_name": "modify",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "browser",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "browse_url",
+      "operator_confirmation_required": false,
+      "permission_tier": 2,
+      "permission_tier_name": "network",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    },
+    {
+      "availability": "current-main-source",
+      "category": "desktop-input",
+      "execution_route": "Ring-3 orchestrator -> world-model decision -> capability-gated syscall",
+      "name": "poll_input",
+      "operator_confirmation_required": false,
+      "permission_tier": 1,
+      "permission_tier_name": "safe",
+      "verification": {
+        "catalog_source_parity": true,
+        "qemu_runtime_suite": "collective command and bridge coverage",
+        "semantic_postcondition_verified_per_action": false
+      },
+      "world_model_mediation": "required on the orchestrator execution path"
+    }
+  ],
   "claimBoundaries": [
-    "Research OS, not a production general-purpose OS",
-    "No broad physical-hardware compatibility claim",
-    "Physical results are deterministic simulator evidence only",
-    "Neural results are deterministic synthetic evidence only",
-    "No live-EEG, clinical, medical, mind-reading, or silent actuator-control claim",
-    "No formal or certified safety claim"
+    "Catalog membership does not mean each action has an independent semantic postcondition verifier.",
+    "The catalog describes current main source, not the older v0.1.1 tagged source tree.",
+    "Camera input is synthetic in the current release; broad physical-PC compatibility is not claimed.",
+    "Neural physical intents remain proposal-only and cannot invoke an actuator adapter."
   ]
 }

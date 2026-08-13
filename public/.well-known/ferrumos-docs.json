@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "kind": "read-only-documentation-catalog",
+  "name": "FerrumOS public evidence",
+  "description": "Discovery surface for FerrumOS capabilities, benchmarks, releases, research sources, and claim boundaries.",
+  "url": "https://ferrum-os.vercel.app/",
+  "controlPlane": false,
+  "acceptsCommands": false,
+  "connectsToRuntime": false,
+  "resources": {
+    "summary": "https://ferrum-os.vercel.app/llms.txt",
+    "fullContext": "https://ferrum-os.vercel.app/llms-full.txt",
+    "capabilities": "https://ferrum-os.vercel.app/capabilities.json",
+    "benchmarks": "https://ferrum-os.vercel.app/benchmarks.json",
+    "proof": "https://ferrum-os.vercel.app/proof.md",
+    "releases": "https://ferrum-os.vercel.app/releases.json",
+    "changelog": "https://ferrum-os.vercel.app/changelog.md"
+  },
+  "source": "https://github.com/VyomKulshrestha/Ferrum-OS",
+  "note": "This catalog exposes public documentation only. It cannot observe, command, or control a FerrumOS instance."
+}

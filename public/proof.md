@@ -30,3 +30,9 @@ This is a balanced authored counterfactual fixture. It is not natural-use preval
 - [Dataset](https://doi.org/10.5281/zenodo.21829193)
 - [Source repository](https://github.com/VyomKulshrestha/Ferrum-OS)
 - [Benchmark definitions](https://github.com/VyomKulshrestha/Ferrum-OS/blob/main/docs/BENCHMARKS.md)
+- [Versioned capability snapshot](https://ferrum-os.vercel.app/capabilities.json)
+- [Versioned benchmark snapshot](https://ferrum-os.vercel.app/benchmarks.json)
+
+## Release boundary
+
+v0.1.1 is the latest tagged software release. Current main contains newer research work. The machine-readable snapshots carry a source commit and SHA-256 hash so a quantitative claim can be tied to exact evidence rather than silently attributed to the older tag.

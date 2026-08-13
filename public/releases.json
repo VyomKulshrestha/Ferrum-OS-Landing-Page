@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "project": "FerrumOS",
+  "latestTaggedSoftwareRelease": "v0.1.1",
+  "releases": [
+    {
+      "tag": "v0.1.1",
+      "kind": "software",
+      "status": "tagged",
+      "url": "https://github.com/VyomKulshrestha/Ferrum-OS/releases/tag/v0.1.1"
+    },
+    {
+      "tag": "world-model-study-v1.0.0",
+      "kind": "research-artifact",
+      "status": "frozen",
+      "url": "https://github.com/VyomKulshrestha/Ferrum-OS/releases/tag/world-model-study-v1.0.0",
+      "reportDoi": "https://doi.org/10.5281/zenodo.21829808",
+      "datasetDoi": "https://doi.org/10.5281/zenodo.21829193"
+    }
+  ],
+  "development": {
+    "branch": "main",
+    "status": "newer-than-v0.1.1",
+    "compareUrl": "https://github.com/VyomKulshrestha/Ferrum-OS/compare/v0.1.1...main"
+  },
+  "claimBoundary": "A development snapshot is not a tagged software release."
+}

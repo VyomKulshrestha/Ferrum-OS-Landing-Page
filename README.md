@@ -23,8 +23,15 @@ Every clip begins from a lossless PNG extracted from the actual final frame of t
 - `/research` — world-model, physical simulator, and neural claim boundaries
 - `/capabilities.json` — machine-readable system surface
 - `/benchmarks.json` — machine-readable benchmark summary
-- `/proof.md` and `/llms.txt` — compact agent-readable context
-- `/.well-known/agent-card.json` — read-only documentation discovery; never a runtime-control endpoint
+- `/proof.md`, `/llms.txt`, and `/llms-full.txt` — compact and full agent-readable context
+- `/releases.json` and `/changelog.md` — release-versus-main boundaries
+- `/.well-known/ferrumos-docs.json` and `/.well-known/api-catalog.json` — read-only documentation discovery; never runtime-control endpoints
+
+The capability and benchmark documents identify the exact FerrumOS source commit and SHA-256 content hash used for each website snapshot. Refresh them from a sibling FerrumOS checkout with:
+
+```bash
+node scripts/sync-public-evidence.mjs ../cursor-os-base public
+```
 
 FerrumOS v0.1.1 is a research OS and QEMU appliance. Physical results are simulator-only, neural results are synthetic/recorded evidence only, and no formal-safety, medical, live-EEG, real-robot, or broad-PC-compatibility claim is made.
 
