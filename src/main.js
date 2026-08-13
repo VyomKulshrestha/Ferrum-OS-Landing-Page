@@ -136,11 +136,20 @@ function setVideoTime(video, progress) {
 function updateJourney() {
   scrollRaf = null
   const scrollY = window.scrollY
-  const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
-  const totalProgress = clamp(scrollY / maxScroll, 0, 1)
-  const scaled = totalProgress * scenes.length
-  const index = clamp(Math.floor(scaled), 0, scenes.length - 1)
-  const localProgress = index === scenes.length - 1 ? clamp(scaled - index, 0, 1) : scaled - index
+  const activationOffset = window.innerHeight * 0.28
+  let index = 0
+
+  chapters.forEach((chapter, chapterIndex) => {
+    if (scrollY >= chapter.offsetTop - activationOffset) index = chapterIndex
+  })
+
+  const segmentStart = index === 0 ? 0 : Math.max(0, chapters[index].offsetTop - activationOffset)
+  const segmentEnd =
+    index < chapters.length - 1
+      ? chapters[index + 1].offsetTop - activationOffset
+      : Math.max(segmentStart + 1, chapters[index].offsetTop + chapters[index].offsetHeight - window.innerHeight * 0.4)
+  const localProgress = clamp((scrollY - segmentStart) / Math.max(1, segmentEnd - segmentStart), 0, 1)
+  const totalProgress = clamp((index + localProgress) / scenes.length, 0, 1)
 
   showScene(index)
   progressFill.style.transform = `scaleX(${totalProgress})`
@@ -204,4 +213,3 @@ mobileNav.addEventListener('click', (event) => {
     menuToggle.setAttribute('aria-expanded', 'false')
   }
 })
-

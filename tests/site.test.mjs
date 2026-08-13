@@ -6,11 +6,14 @@ const text = async (path) => readFile(new URL(`../${path}`, import.meta.url), 'u
 
 test('the cinematic has eight complete, unique chapters', async () => {
   const source = await text('src/scenes.js')
+  const controller = await text('src/main.js')
   const ids = [...source.matchAll(/\n\s+id: '([^']+)'/g)].map((match) => match[1])
   assert.deepEqual(ids, ['forge', 'boundary', 'userland', 'authority', 'world-model', 'evidence', 'inputs', 'horizon'])
   assert.equal(new Set(ids).size, 8)
   assert.equal((source.match(/\n\s+video: '/g) ?? []).length, 8)
   assert.equal((source.match(/\n\s+poster: '/g) ?? []).length, 8)
+  assert.match(controller, /chapter\.offsetTop - activationOffset/)
+  assert.doesNotMatch(controller, /scrollY \/ maxScroll/)
 })
 
 test('the landing page exposes semantic and agent-readable evidence', async () => {
