@@ -9,8 +9,9 @@
     "preview": "vite preview --host 0.0.0.0",
     "evidence:sync": "node scripts/sync-public-evidence.mjs ../cursor-os-base public",
     "test": "node --test tests/*.test.mjs",
+    "verify:media": "node scripts/verify-media.mjs",
     "verify:dist": "node scripts/verify-dist.mjs",
-    "check": "npm run test && npm run build && npm run verify:dist"
+    "check": "npm run test && npm run verify:media && npm run build && npm run verify:dist"
   },
   "devDependencies": {
     "ffmpeg-static": "^5.2.0",
