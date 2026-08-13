@@ -1,6 +1,6 @@
 # FerrumOS evidence and limitations
 
-Current-main evidence snapshot: [`a8de2d769840adccb03e9a7c4b5ba5929839f9a1`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/a8de2d769840adccb03e9a7c4b5ba5929839f9a1).
+Current-main evidence snapshot: [`c329b23c7f080b969c482461958271bcdaaa40f1`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/c329b23c7f080b969c482461958271bcdaaa40f1).
 
 FerrumOS v0.1.1 is a bootable Rust x86-64 research operating system. Its agent runs in Ring 3 and all effects remain subject to kernel capabilities, operator confirmation where required, syscall validation, deterministic policy, and a monotonic predictive screening gate.
 
@@ -11,6 +11,7 @@ FerrumOS v0.1.1 is a bootable Rust x86-64 research operating system. Its agent r
 - 61 kernel syscalls numbered 0–60
 - 5 permission tiers
 - Unknown operations fail closed
+- 101/101 focused QEMU command cases and 81/81 exhaustive catalog entries passed at the named source commit
 
 ## World-model fixture
 

@@ -65,6 +65,7 @@ const paper = sourceBenchmarks.paper_release
 const preview = sourceBenchmarks.current_ring3_preview
 const physical = sourceBenchmarks.physical_simulator_jepa
 const neural = sourceBenchmarks.neural_synthetic
+const qemu = sourceBenchmarks.qemu_command_audit
 
 const benchmarks = {
   $schema: 'https://ferrum-os.vercel.app/schemas/benchmarks-v2.schema.json',
@@ -141,6 +142,17 @@ const benchmarks = {
       protocol: 'deterministic-synthetic-eeg-contract',
       boundary: neural.claim_boundary,
     },
+    {
+      id: 'qemu-command-audit',
+      metric: 'passing_command_paths',
+      focusedCases: qemu.command_sweep_cases,
+      focusedPassed: qemu.command_sweep_passed,
+      catalogEntries: qemu.catalog_entries,
+      catalogPassed: qemu.catalog_passed,
+      unknownCommandPaths: qemu.unknown_command_paths,
+      protocol: qemu.protocol_id,
+      boundary: qemu.claim_boundary,
+    },
   ],
   protocols: sourceBenchmarks,
   globalLimitations: sourceBenchmarks.global_limitations,
@@ -149,9 +161,23 @@ const benchmarks = {
 const writeJson = (name, value) =>
   writeFile(resolve(outputRoot, name), `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 
+const snapshotPages = [
+  resolve('proof.html'),
+  resolve('research.html'),
+  resolve(outputRoot, 'proof.md'),
+  resolve(outputRoot, 'research.md'),
+]
+
+const syncSnapshotCommit = async (path) => {
+  const content = await readFile(path, 'utf8')
+  const updated = content.replace(/[0-9a-f]{40}/g, sourceCommit)
+  await writeFile(path, updated, 'utf8')
+}
+
 await Promise.all([
   writeJson('capabilities.json', capabilities),
   writeJson('benchmarks.json', benchmarks),
+  ...snapshotPages.map(syncSnapshotCommit),
 ])
 
 console.log(`Synced FerrumOS evidence from ${sourceCommit}`)

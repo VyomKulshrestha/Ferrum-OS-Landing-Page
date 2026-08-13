@@ -1,6 +1,6 @@
 # FerrumOS world-model and neural research
 
-Current-main evidence snapshot: [`a8de2d769840adccb03e9a7c4b5ba5929839f9a1`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/a8de2d769840adccb03e9a7c4b5ba5929839f9a1).
+Current-main evidence snapshot: [`c329b23c7f080b969c482461958271bcdaaa40f1`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/c329b23c7f080b969c482461958271bcdaaa40f1).
 
 FerrumOS studies a narrow systems question: can a learned forecast add caution before an operating-system action while deterministic policy and the kernel retain final authority?
 

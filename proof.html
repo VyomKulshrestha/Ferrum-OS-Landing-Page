@@ -36,15 +36,15 @@
             "description": "Reproducible capability, world-model, latency, physical-simulator, and synthetic-neural evidence with explicit claim boundaries.",
             "url": "https://ferrum-os.vercel.app/proof",
             "dateModified": "2026-08-13",
-            "version": "a8de2d769840adccb03e9a7c4b5ba5929839f9a1",
+            "version": "c329b23c7f080b969c482461958271bcdaaa40f1",
             "author": { "@type": "Person", "name": "Vyom Kulshrestha", "url": "https://github.com/VyomKulshrestha" },
             "citation": [
               "https://doi.org/10.5281/zenodo.21829808",
               "https://doi.org/10.5281/zenodo.21829193"
             ],
             "isBasedOn": [
-              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/a8de2d769840adccb03e9a7c4b5ba5929839f9a1/capabilities.json",
-              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/a8de2d769840adccb03e9a7c4b5ba5929839f9a1/benchmarks.json"
+              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/c329b23c7f080b969c482461958271bcdaaa40f1/capabilities.json",
+              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/c329b23c7f080b969c482461958271bcdaaa40f1/benchmarks.json"
             ],
             "isPartOf": { "@id": "https://ferrum-os.vercel.app/#software" }
           },
@@ -53,11 +53,11 @@
             "@id": "https://ferrum-os.vercel.app/benchmarks.json#dataset",
             "name": "FerrumOS public benchmark snapshot",
             "url": "https://ferrum-os.vercel.app/benchmarks.json",
-            "identifier": "git:a8de2d769840adccb03e9a7c4b5ba5929839f9a1",
-            "version": "a8de2d769840adccb03e9a7c4b5ba5929839f9a1",
+            "identifier": "git:c329b23c7f080b969c482461958271bcdaaa40f1",
+            "version": "c329b23c7f080b969c482461958271bcdaaa40f1",
             "license": "https://opensource.org/license/mit",
             "measurementTechnique": "Versioned repository verification scripts and documented QEMU/WHPX protocols",
-            "isBasedOn": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/a8de2d769840adccb03e9a7c4b5ba5929839f9a1/benchmarks.json"
+            "isBasedOn": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/c329b23c7f080b969c482461958271bcdaaa40f1/benchmarks.json"
           }
         ]
       }
@@ -72,7 +72,7 @@
     <main class="page-shell">
       <header class="page-hero">
         <div>
-          <p class="eyebrow snapshot-label">Evidence center / current main<a href="https://github.com/VyomKulshrestha/Ferrum-OS/commit/a8de2d769840adccb03e9a7c4b5ba5929839f9a1">Source a8de2d769840adccb03e9a7c4b5ba5929839f9a1</a></p>
+          <p class="eyebrow snapshot-label">Evidence center / current main<a href="https://github.com/VyomKulshrestha/Ferrum-OS/commit/c329b23c7f080b969c482461958271bcdaaa40f1">Source c329b23c7f080b969c482461958271bcdaaa40f1</a></p>
           <h1>Proof before promise.</h1>
         </div>
         <p class="hero-intro">FerrumOS publishes <strong>what was measured, how it was measured, and what the result does not prove.</strong> Learned forecasts can add caution. They cannot remove deterministic warnings or grant execution authority.</p>
@@ -86,6 +86,7 @@
             <article class="evidence-card"><h3>Kernel syscalls</h3><span class="metric">61</span><p>The source enum spans syscall numbers 0–60. Agent effects still cross this deterministic ABI.</p></article>
             <article class="evidence-card"><h3>Permission tiers</h3><span class="metric">5</span><p>Observation, safe execution, user-write, administrative, and destructive classes remain distinct from model prediction.</p></article>
             <article class="evidence-card"><h3>Unknown actions</h3><span class="metric">Closed</span><p>Unrecognized catalog entries are rejected rather than silently mapped to a permissive fallback.</p></article>
+            <article class="evidence-card"><h3>QEMU command audit</h3><span class="metric">101 / 101</span><p>The focused sweep and all 81/81 exhaustive catalog entries passed at the source commit named above.</p></article>
           </div>
         </div>
       </section>
