@@ -21,6 +21,7 @@ let maxScroll = 1
 let lastViewportWidth = window.innerWidth
 let mediaPrimed = false
 let openingBaseline = 0
+let openingDelayTimer = null
 
 const pendingSeeks = new WeakMap()
 const sceneTargets = new WeakMap()
@@ -174,6 +175,8 @@ function updateJourney() {
 
 function requestJourneyUpdate(markInteraction = true) {
   if (markInteraction) {
+    if (openingDelayTimer) clearTimeout(openingDelayTimer)
+    openingDelayTimer = null
     const opening = media[0]
     if (!userHasScrolled && Number.isFinite(opening?.currentTime)) {
       openingBaseline = Math.max(openingBaseline, opening.currentTime)
@@ -182,6 +185,7 @@ function requestJourneyUpdate(markInteraction = true) {
       opening.pause()
     }
     userHasScrolled = true
+    loadSceneSource(activeIndex)
     if (autoplayRaf) cancelAnimationFrame(autoplayRaf)
     autoplayRaf = null
   }
@@ -212,6 +216,24 @@ async function startOpeningMotion() {
   }
 
   autoplayRaf = requestAnimationFrame(monitorOpening)
+}
+
+function scheduleOpeningMotion() {
+  if (reducedMotion.matches || saveData || userHasScrolled || openingDelayTimer) return
+  // Keep the high-quality opening poster as the critical visual. The 3 MB
+  // cinematic stream starts only after first content has settled, or sooner
+  // when the visitor interacts, so it cannot compete with initial copy/fonts.
+  openingDelayTimer = window.setTimeout(() => {
+    openingDelayTimer = null
+    void startOpeningMotion()
+  }, 1800)
+}
+
+function beginInteractiveMotion() {
+  if (openingDelayTimer) clearTimeout(openingDelayTimer)
+  openingDelayTimer = null
+  loadSceneSource(activeIndex)
+  if (!userHasScrolled && activeIndex === 0) void startOpeningMotion()
 }
 
 async function primeLoadedMedia() {
@@ -269,9 +291,9 @@ chapters.forEach((chapter, index) => {
 })
 document.documentElement.classList.toggle('is-enhanced', enhancedMotion())
 measureJourney()
-ensureAdjacentSources(0)
 updateJourney()
-void startOpeningMotion()
+if (document.readyState === 'complete') scheduleOpeningMotion()
+else window.addEventListener('load', scheduleOpeningMotion, { once: true })
 mediaRaf = requestAnimationFrame(animateMedia)
 window.addEventListener('scroll', requestJourneyUpdate, { passive: true })
 window.addEventListener('resize', () => {
@@ -281,11 +303,14 @@ window.addEventListener('resize', () => {
   measureJourney()
   requestJourneyUpdate(false)
 })
+window.addEventListener('pointerdown', beginInteractiveMotion, { once: true, passive: true })
 window.addEventListener('pointerdown', primeLoadedMedia, { once: true, passive: true })
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && !userHasScrolled && !autoplayRaf) void startOpeningMotion()
+  if (!document.hidden && !userHasScrolled && !autoplayRaf) scheduleOpeningMotion()
 })
 window.addEventListener('pagehide', () => {
+  if (openingDelayTimer) clearTimeout(openingDelayTimer)
+  openingDelayTimer = null
   if (mediaRaf) cancelAnimationFrame(mediaRaf)
   mediaRaf = null
 })

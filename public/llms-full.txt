@@ -23,7 +23,8 @@ The agent can observe, plan, act, verify, and reflect. Its effects cross the Fer
 - Modify and destructive paths retain operator confirmation.
 - A learned prediction can add caution; it cannot grant authority, bypass confirmation, or remove a deterministic warning.
 
-The complete per-operation catalog, including tier, confirmation requirement, execution boundary, preview status, and verification method, is available at https://ferrum-os.vercel.app/capabilities.json.
+The complete per-operation catalog, including tier, confirmation requirement, execution boundary, preview status, and verification method, is available here:
+https://ferrum-os.vercel.app/capabilities.json
 
 ## World-model research
 
