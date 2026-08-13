@@ -596,6 +596,11 @@ footer a:focus-visible {
       linear-gradient(90deg, rgba(7, 8, 6, 0.32), rgba(7, 8, 6, 0.04));
   }
 
+  .progress-rail {
+    top: calc(var(--header-h) + 0.9rem);
+    bottom: auto;
+  }
+
   .chapter,
   .chapter--right,
   .chapter--center {
@@ -628,7 +633,7 @@ footer a:focus-visible {
   }
 
   h2 {
-    font-size: clamp(2.6rem, 11vw, 5rem);
+    font-size: clamp(2.35rem, 9vw, 4.6rem);
   }
 
   .boundary {
