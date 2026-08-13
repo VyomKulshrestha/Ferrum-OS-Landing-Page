@@ -50,12 +50,12 @@ test('evidence pages retain required scientific boundaries and sources', async (
 })
 
 test('generated scenes ship as playable, bounded media with lossless handoffs', async () => {
-  for (const scene of ['01', '02']) {
+  for (const scene of ['01', '02', '03']) {
     const media = await stat(new URL(`../public/media/scene-${scene}.mp4`, import.meta.url))
     assert.ok(media.size > 500_000 && media.size < 10_000_000)
   }
 
-  for (const poster of ['scene-01-opening.png', 'scene-02.png', 'scene-03.png']) {
+  for (const poster of ['scene-01-opening.png', 'scene-02.png', 'scene-03.png', 'scene-04.png']) {
     const image = await stat(new URL(`../public/posters/${poster}`, import.meta.url))
     assert.ok(image.size > 500_000)
   }
