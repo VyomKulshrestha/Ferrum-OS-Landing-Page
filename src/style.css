@@ -238,7 +238,7 @@ a {
 }
 
 .scene-media.has-error {
-  visibility: hidden;
+  visibility: visible;
 }
 
 .cinematic__fallback {
@@ -749,6 +749,14 @@ footer a:focus-visible {
 @media (max-width: 620px) {
   .scene-media {
     object-position: center;
+  }
+
+  .site-header,
+  .mobile-nav,
+  .chapter__copy,
+  footer {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 
   .progress-rail__label {

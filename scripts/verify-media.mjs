@@ -15,8 +15,7 @@ const scenes = Array.from({ length: 8 }, (_, index) => String(index + 1).padStar
 function ffmpeg(args) {
   const result = spawnSync(ffmpegPath, args, { encoding: 'utf8' })
   const output = `${result.stdout ?? ''}${result.stderr ?? ''}`
-  const expectedMetadataProbe = args.at(-1) === 'NUL' && output.includes('At least one output file must be specified')
-  if (result.status !== 0 && !expectedMetadataProbe) {
+  if (result.status !== 0) {
     throw new Error(output || `ffmpeg failed with status ${result.status}`)
   }
   return output
@@ -31,7 +30,7 @@ try {
 
   for (const scene of scenes) {
     const video = resolve(mediaDirectory, `scene-${scene}.mp4`)
-    const output = ffmpeg(['-hide_banner', '-i', video, '-f', 'null', 'NUL'])
+    const output = ffmpeg(['-hide_banner', '-i', video, '-f', 'null', '-'])
     assert.match(output, /Video: h264/)
     assert.match(output, /1280x720/)
     assert.doesNotMatch(output, /Audio:/)
@@ -58,7 +57,7 @@ try {
       '[0:v]scale=1280:720[master];[master][1:v]psnr',
       '-f',
       'null',
-      'NUL',
+      '-',
     ])
     const match = comparison.match(/average:([\d.]+|inf)/)
     assert.ok(match, `PSNR comparison missing for ${basename(video)}`)

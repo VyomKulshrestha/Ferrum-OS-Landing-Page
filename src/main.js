@@ -9,28 +9,59 @@ const menuToggle = document.querySelector('.menu-toggle')
 const menuLabel = menuToggle?.querySelector('.sr-only')
 const mobileNav = document.querySelector('#mobile-nav')
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+const coarsePointer = window.matchMedia('(pointer: coarse)')
 const saveData = navigator.connection?.saveData === true
 
 let activeIndex = 0
 let scrollRaf = null
 let autoplayRaf = null
-let autoplayStart = performance.now()
 let userHasScrolled = false
 let chapterMetrics = []
 let maxScroll = 1
+let lastViewportWidth = window.innerWidth
+let mediaPrimed = false
+
+const mediaRequests = new Map()
+const objectUrls = new Map()
+const pendingSeeks = new WeakMap()
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
+
+async function loadSceneSource(index) {
+  const video = media[index]
+  if (!video || reducedMotion.matches || saveData || video.dataset.loaded === 'true') return
+  if (mediaRequests.has(index)) return mediaRequests.get(index)
+
+  const request = (async () => {
+    const source = video.querySelector('source')
+    const url = source.dataset.src
+
+    try {
+      const response = await fetch(url)
+      if (!response.ok) throw new Error(`Media request failed with ${response.status}`)
+      const objectUrl = URL.createObjectURL(await response.blob())
+      objectUrls.set(index, objectUrl)
+      source.src = objectUrl
+    } catch {
+      source.src = url
+      video.dataset.transport = 'direct-fallback'
+    }
+
+    video.dataset.loaded = 'true'
+    video.preload = 'auto'
+    video.load()
+  })().finally(() => mediaRequests.delete(index))
+
+  mediaRequests.set(index, request)
+  return request
+}
 
 function ensureAdjacentSources(index) {
   media.forEach((video, videoIndex) => {
     if (Math.abs(videoIndex - index) > 1) return
     if (!video.getAttribute('poster')) video.setAttribute('poster', video.dataset.poster)
     if (reducedMotion.matches || saveData) return
-
-    const source = video.querySelector('source')
-    if (!source.getAttribute('src')) source.setAttribute('src', source.dataset.src)
-    if (video.preload !== 'metadata') video.preload = 'metadata'
-    video.load()
+    void loadSceneSource(videoIndex)
   })
 }
 
@@ -56,6 +87,10 @@ function showScene(index) {
 function setVideoTime(video, progress) {
   if (!video || !Number.isFinite(video.duration) || video.duration <= 0) return
   const target = clamp(progress, 0, 0.999) * video.duration
+  if (video.seeking) {
+    pendingSeeks.set(video, target)
+    return
+  }
   if (Math.abs(video.currentTime - target) > 0.045) video.currentTime = target
 }
 
@@ -104,22 +139,44 @@ function requestJourneyUpdate(markInteraction = true) {
   if (!scrollRaf) scrollRaf = requestAnimationFrame(updateJourney)
 }
 
-function openingMotion(now) {
+async function startOpeningMotion() {
   if (reducedMotion.matches || saveData || userHasScrolled || window.scrollY > 2 || document.hidden) return
   const opening = media[0]
-  if (Number.isFinite(opening.duration) && opening.duration > 0) {
-    const elapsed = (now - autoplayStart) / 1000
-    const cap = Math.min(3.5, opening.duration * 0.42)
-    opening.currentTime = Math.min(elapsed, cap)
-    if (elapsed >= cap) {
+  await loadSceneSource(0)
+  try {
+    await opening.play()
+  } catch {
+    return
+  }
+
+  const monitorOpening = () => {
+    const cap = Number.isFinite(opening.duration) ? Math.min(3.5, opening.duration * 0.42) : 3.5
+    if (userHasScrolled || window.scrollY > 2 || document.hidden || opening.currentTime >= cap) {
+      opening.pause()
       autoplayRaf = null
       return
     }
-  } else if (now - autoplayStart > 5000) {
-    autoplayRaf = null
-    return
+    autoplayRaf = requestAnimationFrame(monitorOpening)
   }
-  autoplayRaf = requestAnimationFrame(openingMotion)
+
+  autoplayRaf = requestAnimationFrame(monitorOpening)
+}
+
+async function primeLoadedMedia() {
+  if (mediaPrimed || reducedMotion.matches || saveData) return
+  mediaPrimed = true
+
+  for (const video of media) {
+    if (video.dataset.loaded !== 'true') continue
+    const restoreTime = video.currentTime
+    try {
+      await video.play()
+      video.pause()
+      video.currentTime = restoreTime
+    } catch {
+      // Priming is an optional compatibility path; scroll-seeking remains available.
+    }
+  }
 }
 
 function closeNavigation({ restoreFocus = false } = {}) {
@@ -138,7 +195,18 @@ media.forEach((video) => {
   video.addEventListener('loadedmetadata', () => {
     if (video === media[activeIndex]) updateJourney()
   })
-  video.addEventListener('error', () => video.classList.add('has-error'))
+  video.addEventListener('seeked', () => {
+    const target = pendingSeeks.get(video)
+    if (!Number.isFinite(target)) return
+    pendingSeeks.delete(video)
+    if (Math.abs(video.currentTime - target) > 0.045) video.currentTime = target
+  })
+  video.addEventListener('error', () => {
+    video.classList.add('has-error')
+    const source = video.querySelector('source')
+    source.removeAttribute('src')
+    video.load()
+  })
 })
 
 chapters[0]?.classList.add('is-current')
@@ -146,11 +214,22 @@ document.documentElement.classList.add('is-enhanced')
 measureJourney()
 ensureAdjacentSources(0)
 updateJourney()
-autoplayRaf = requestAnimationFrame(openingMotion)
+void startOpeningMotion()
 window.addEventListener('scroll', requestJourneyUpdate, { passive: true })
 window.addEventListener('resize', () => {
+  const widthChanged = Math.abs(window.innerWidth - lastViewportWidth) > 1
+  if (coarsePointer.matches && !widthChanged) return
+  lastViewportWidth = window.innerWidth
   measureJourney()
   requestJourneyUpdate(false)
+})
+window.addEventListener('pointerdown', primeLoadedMedia, { once: true, passive: true })
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && !userHasScrolled && !autoplayRaf) void startOpeningMotion()
+})
+window.addEventListener('pagehide', () => {
+  objectUrls.forEach((url) => URL.revokeObjectURL(url))
+  objectUrls.clear()
 })
 reducedMotion.addEventListener('change', () => {
   media.forEach((video) => {
