@@ -25,6 +25,7 @@ let openingBaseline = 0
 const pendingSeeks = new WeakMap()
 const sceneTargets = new WeakMap()
 const sceneCurrents = new WeakMap()
+const enhancedMotion = () => !reducedMotion.matches && !saveData
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 const smooth = (value) => {
@@ -86,6 +87,15 @@ function copyOpacity(index, progress) {
 function updateCopyStage(index, progress) {
   chapters.forEach((chapter, chapterIndex) => {
     const copy = chapter.querySelector('.chapter__copy')
+    if (!enhancedMotion()) {
+      copy.style.removeProperty('--copy-opacity')
+      copy.style.removeProperty('--copy-shift')
+      copy.style.removeProperty('--copy-scale')
+      copy.style.removeProperty('visibility')
+      copy.style.removeProperty('pointer-events')
+      copy.removeAttribute('aria-hidden')
+      return
+    }
     const opacity = chapterIndex === index ? copyOpacity(index, progress) : 0
     const shift = (0.5 - progress) * 42
     const scale = 0.985 + opacity * 0.015
@@ -253,7 +263,7 @@ chapters[0]?.classList.add('is-current')
 chapters.forEach((chapter, index) => {
   chapter.style.setProperty('--scene-height', `${Math.round((scenes[index].scroll ?? 1.8) * 100)}svh`)
 })
-document.documentElement.classList.add('is-enhanced')
+document.documentElement.classList.toggle('is-enhanced', enhancedMotion())
 measureJourney()
 ensureAdjacentSources(0)
 updateJourney()
@@ -276,6 +286,7 @@ window.addEventListener('pagehide', () => {
   mediaRaf = null
 })
 reducedMotion.addEventListener('change', () => {
+  document.documentElement.classList.toggle('is-enhanced', enhancedMotion())
   media.forEach((video) => {
     video.style.opacity = ''
   })
