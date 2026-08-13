@@ -138,6 +138,7 @@ test('deployment metadata negotiates Markdown and enforces browser safety header
   const headerMap = Object.fromEntries(globalHeaders.map(({ key, value }) => [key, value]))
   assert.equal(headerMap['X-Frame-Options'], 'DENY')
   assert.match(headerMap['Content-Security-Policy'], /frame-ancestors 'none'/)
+  assert.match(headerMap['Content-Security-Policy'], /media-src 'self' blob:/)
   assert.match(headerMap['Permissions-Policy'], /camera=\(\)/)
 })
 
