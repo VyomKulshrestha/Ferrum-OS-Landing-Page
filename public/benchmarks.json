@@ -1,0 +1,45 @@
+{
+  "project": "FerrumOS",
+  "osVersion": "0.1.1",
+  "researchVersion": "1.0.0",
+  "updated": "2026-08-13",
+  "source": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/main/benchmarks.json",
+  "benchmarks": [
+    {
+      "id": "os-safety-fixture-rules-jepa",
+      "balancedAccuracy": 0.814,
+      "falseNegativeRate": 0.208,
+      "falsePositiveRate": 0.164,
+      "boundary": "Authored balanced 500-episode counterfactual fixture"
+    },
+    {
+      "id": "os-safety-fixture-rules-action-mean",
+      "balancedAccuracy": 0.812,
+      "boundary": "Simple baseline; no material JEPA advantage established"
+    },
+    {
+      "id": "ring3-preview-h1-ms",
+      "runMeanRange": [1.29, 1.4],
+      "boundary": "QEMU/WHPX; excludes provider inference, execution, and approval latency"
+    },
+    {
+      "id": "ring3-preview-h5-ms",
+      "runMeanRange": [1.43, 1.57],
+      "boundary": "QEMU/WHPX; bounded lookahead"
+    },
+    {
+      "id": "physical-jepa-simulator",
+      "balancedAccuracy": 0.9944,
+      "falseNegatives": 1,
+      "falsePositives": 16,
+      "boundary": "Deterministic simulator; permanently shadow-only"
+    },
+    {
+      "id": "neural-synthetic-contract",
+      "signalsAccepted": "600/600",
+      "artifactsAbstained": "400/400",
+      "idleCandidates": "0/10000",
+      "boundary": "Synthetic EEG only; no human or live-EEG claim"
+    }
+  ]
+}

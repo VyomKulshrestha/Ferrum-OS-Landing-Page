@@ -1,0 +1,11 @@
+{
+  "name": "FerrumOS public documentation",
+  "description": "Read-only discovery surface for FerrumOS capabilities, benchmarks, releases, and claim boundaries.",
+  "url": "https://ferrum-os.vercel.app/",
+  "version": "0.1.1",
+  "documentationUrl": "https://ferrum-os.vercel.app/llms.txt",
+  "capabilitiesUrl": "https://ferrum-os.vercel.app/capabilities.json",
+  "benchmarksUrl": "https://ferrum-os.vercel.app/benchmarks.json",
+  "actions": [],
+  "note": "This manifest exposes documentation only. It does not connect to or control a FerrumOS runtime."
+}

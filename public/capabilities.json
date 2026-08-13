@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project": "FerrumOS",
+  "version": "0.1.1",
+  "generatedFrom": "https://github.com/VyomKulshrestha/Ferrum-OS",
+  "updated": "2026-08-13",
+  "counts": {
+    "canonicalExecutableOperations": 41,
+    "modelAdvertisedOperations": 37,
+    "kernelSyscalls": 61,
+    "permissionTiers": 5
+  },
+  "runtime": {
+    "kernel": "Rust x86-64",
+    "agentPlacement": "Ring 3",
+    "supportedReleaseProfile": ["QEMU", "Bochs"],
+    "unknownActions": "fail-closed"
+  },
+  "safety": {
+    "deterministicPolicy": "authoritative",
+    "learnedWorldModel": "advisory-monotonic",
+    "learnedAllowGrantsAuthority": false,
+    "physicalWorldModel": "shadow-only",
+    "neuralIntent": "proposal-only"
+  },
+  "claimBoundaries": [
+    "Research OS, not a production general-purpose OS",
+    "No broad physical-hardware compatibility claim",
+    "Physical results are deterministic simulator evidence only",
+    "Neural results are deterministic synthetic evidence only",
+    "No live-EEG, clinical, medical, mind-reading, or silent actuator-control claim",
+    "No formal or certified safety claim"
+  ]
+}

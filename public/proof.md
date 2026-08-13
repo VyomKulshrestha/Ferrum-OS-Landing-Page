@@ -1,0 +1,32 @@
+# FerrumOS evidence and limitations
+
+FerrumOS v0.1.1 is a bootable Rust x86-64 research operating system. Its agent runs in Ring 3 and all effects remain subject to kernel capabilities, operator confirmation where required, syscall validation, deterministic policy, and a monotonic predictive screening gate.
+
+## Verified system surface
+
+- 41 canonical executable operations
+- 37 operations advertised directly to the model
+- 61 kernel syscalls numbered 0–60
+- 5 permission tiers
+- Unknown operations fail closed
+
+## World-model fixture
+
+- Rules + JEPA: 81.4% balanced accuracy, 20.8% false-negative rate, 16.4% false-positive rate
+- Rules + per-action mean: 81.2% balanced accuracy
+- Corpus: 13,697 transitions from 3,639 QEMU episodes
+
+This is a balanced authored counterfactual fixture. It is not natural-use prevalence, independent human annotation, live destructive execution, formal verification, or a certified safety result. The simple baseline result means no material JEPA safety advantage has been established on this fixture.
+
+## Research boundaries
+
+- The physical JEPA is simulator-only and permanently shadow-only.
+- Neural evidence is deterministic and synthetic; there is no live-EEG or human accuracy claim.
+- FerrumOS makes no medical, diagnostic, mind-reading, real-robot, camera-accuracy, hardware-in-the-loop, or learned actuator-permit claim.
+
+## Primary sources
+
+- [Technical report](https://doi.org/10.5281/zenodo.21829808)
+- [Dataset](https://doi.org/10.5281/zenodo.21829193)
+- [Source repository](https://github.com/VyomKulshrestha/Ferrum-OS)
+- [Benchmark definitions](https://github.com/VyomKulshrestha/Ferrum-OS/blob/main/docs/BENCHMARKS.md)

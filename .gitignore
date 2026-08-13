@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.vercel/
+*.log
+public/media/*-source.mp4
+.DS_Store
+Thumbs.db

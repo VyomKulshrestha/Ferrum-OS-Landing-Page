@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070806" />
+    <meta name="description" content="FerrumOS research on action-conditioned OS world models, fail-closed authority, physical simulator screening, and bounded neural intent." />
+    <link rel="canonical" href="https://ferrum-os.vercel.app/research" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/page.css" />
+    <title>World-model & neural research — FerrumOS</title>
+  </head>
+  <body>
+    <nav class="page-nav">
+      <a href="/">Ferrum<span>OS</span></a>
+      <div><a href="/proof.html">Evidence</a><a href="https://github.com/VyomKulshrestha/Ferrum-OS">Source ↗</a></div>
+    </nav>
+    <main class="page-shell">
+      <header class="page-hero">
+        <div><p class="eyebrow">Research / bounded intelligence</p><h1>Forecasts without authority.</h1></div>
+        <p class="hero-intro">FerrumOS asks a narrow systems question: <strong>can a learned world model help detect risky state transitions while deterministic policy and the kernel retain final control?</strong></p>
+      </header>
+
+      <section class="evidence-section">
+        <div><p class="section-label">OS world model</p><h2>Two forecasts. One monotonic gate.</h2></div>
+        <div>
+          <p class="body-copy">Each eligible action is projected through an independent deterministic transition model and an action-conditioned JEPA latent model. Their risk results are combined monotonically: the learned branch may make the result more cautious, never less. Capability checks, operator confirmation, and syscall validation remain outside the learned model.</p>
+          <p class="boundary-card"><strong>Claim boundary</strong>The current paper establishes reproducible behavior on an authored counterfactual fixture. It does not establish formal safety, natural-use accuracy, or a meaningful safety advantage over every simpler model.</p>
+        </div>
+      </section>
+
+      <section class="evidence-section">
+        <div><p class="section-label">Corpus</p><h2>Episode-disjoint, inspectable, versioned.</h2></div>
+        <div class="evidence-grid">
+          <article class="evidence-card"><h3>Transitions</h3><span class="metric">13,697</span><p>Recorded state-action-next-state transitions.</p></article>
+          <article class="evidence-card"><h3>QEMU episodes</h3><span class="metric">3,639</span><p>Split by episode to reduce direct transition leakage.</p></article>
+          <article class="evidence-card"><h3>Fitting rows</h3><span class="metric">13,270</span><p>Versioned alongside the dataset card and hashes.</p></article>
+          <article class="evidence-card"><h3>Evaluation fixture</h3><span class="metric">500</span><p>Balanced authored episodes used for paired screening comparison.</p></article>
+        </div>
+      </section>
+
+      <section class="evidence-section">
+        <div><p class="section-label">Physical systems</p><h2>A shadow can warn. It cannot drive.</h2></div>
+        <div>
+          <p class="body-copy">The physical JEPA evaluates deterministic simulator traces behind a hard architectural boundary. Its output is telemetry-only and permanently shadow-only; it cannot create an actuator permit or override a deterministic stop.</p>
+          <p class="boundary-card"><strong>Claim boundary</strong>There is no real-robot validation, camera-accuracy study, hardware-in-the-loop safety result, or autonomous physical-control claim.</p>
+        </div>
+      </section>
+
+      <section class="evidence-section">
+        <div><p class="section-label">Neural intent</p><h2>Coarse signed evidence, not mind reading.</h2></div>
+        <div>
+          <p class="body-copy">The neural path is constrained to deterministic synthetic or recorded EEG evidence, artifact abstention, explicit non-neural arming, and proposal-only UI or read-only goals. The evidence envelope is signed before crossing into FerrumOS.</p>
+          <p class="boundary-card"><strong>Claim boundary</strong>No live participant or live-EEG accuracy has been measured. FerrumOS makes no diagnostic, clinical, medical, thought-decoding, or silent physical-control claim.</p>
+        </div>
+      </section>
+
+      <section class="evidence-section">
+        <div><p class="section-label">Read & reproduce</p><h2>The primary record is public.</h2></div>
+        <ul class="source-list">
+          <li><a href="https://zenodo.org/records/21829808">When Agents Control the Kernel — technical report</a>.</li>
+          <li><a href="https://zenodo.org/records/21829193">FerrumOS world-model dataset v1.0.0</a>.</li>
+          <li><a href="https://github.com/VyomKulshrestha/Ferrum-OS/releases/tag/world-model-study-v1.0.0">Frozen GitHub research release</a>.</li>
+          <li><a href="https://github.com/VyomKulshrestha/Ferrum-OS#build">Build and boot FerrumOS in QEMU</a>.</li>
+        </ul>
+      </section>
+
+      <div class="cta-panel"><h2>Reproduce it. Break it. Improve it.</h2><a class="cta-button" href="https://github.com/VyomKulshrestha/Ferrum-OS">Contribute ↗</a></div>
+    </main>
+  </body>
+</html>
+

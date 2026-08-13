@@ -1,0 +1,15 @@
+# FerrumOS
+
+> FerrumOS is a bootable Rust x86-64 research operating system where an AI agent runs in Ring 3 and every effect remains subject to kernel-enforced authority.
+
+## Canonical resources
+
+- [Website](https://ferrum-os.vercel.app/)
+- [Measured evidence and limitations](https://ferrum-os.vercel.app/proof)
+- [Research interfaces](https://ferrum-os.vercel.app/research)
+- [Source code](https://github.com/VyomKulshrestha/Ferrum-OS)
+- [Releases](https://github.com/VyomKulshrestha/Ferrum-OS/releases)
+
+## Claim boundary
+
+FerrumOS v0.1.1 is a research OS and QEMU appliance, not a production-ready general-purpose OS or certified safety platform. Physical results are simulator-only. Neural results use deterministic synthetic or recorded evidence; there is no live-EEG accuracy or medical claim.
