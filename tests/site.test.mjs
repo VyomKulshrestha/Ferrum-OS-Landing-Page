@@ -4,23 +4,35 @@ import { test } from 'node:test'
 
 const text = async (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('the cinematic has eight complete, unique chapters', async () => {
-  const source = await text('src/scenes.js')
-  const controller = await text('src/main.js')
+test('the cinematic has eight complete, unique, statically rendered chapters', async () => {
+  const [html, source, controller, styles] = await Promise.all([
+    text('index.html'),
+    text('src/scenes.js'),
+    text('src/main.js'),
+    text('src/style.css'),
+  ])
   const ids = [...source.matchAll(/\n\s+id: '([^']+)'/g)].map((match) => match[1])
+  const renderedIds = [...html.matchAll(/<section class="chapter [^"]+" id="([^"]+)"/g)].map((match) => match[1])
   assert.deepEqual(ids, ['forge', 'boundary', 'userland', 'authority', 'world-model', 'evidence', 'inputs', 'horizon'])
+  assert.deepEqual(renderedIds, ids)
   assert.equal(new Set(ids).size, 8)
   assert.equal((source.match(/\n\s+video: '/g) ?? []).length, 8)
   assert.equal((source.match(/\n\s+poster: '/g) ?? []).length, 8)
+  assert.equal((html.match(/class="scene-media(?: is-active)?"/g) ?? []).length, 8)
+  assert.match(html, /<h1 id="title-forge">An agentic OS, forged from the kernel up\.<\/h1>/)
+  assert.match(html, /<noscript><p class="noscript-notice">/)
+  assert.doesNotMatch(html, /id="app"/)
+  assert.doesNotMatch(controller, /\.innerHTML\s*=/)
   assert.match(controller, /chapterMetrics\[index\]\.top - activationOffset/)
   assert.doesNotMatch(controller, /scrollY \/ maxScroll/)
   assert.match(controller, /Math\.max\(segmentStart \+ 1, maxScroll\)/)
   assert.match(controller, /if \(elapsed >= cap\)/)
   assert.match(controller, /source\.dataset\.src/)
   assert.match(controller, /video\.dataset\.poster/)
-  assert.match(controller, /<h1 id="title-/)
   assert.match(controller, /event\.key !== 'Escape'/)
-  assert.doesNotMatch(controller, /class="brand" href="#forge" aria-label=/)
+  assert.match(controller, /Static scene markup is out of sync/)
+  assert.match(styles, /(?:^|\n)\.chapter__copy\s*{[^}]*transform:\s*translateY\(0\);[^}]*opacity:\s*1/s)
+  assert.match(styles, /\.is-enhanced \.chapter:not\(\.is-current\) \.chapter__copy\s*{[^}]*opacity:\s*0\.7/s)
 })
 
 test('the landing page exposes semantic and agent-readable evidence', async () => {

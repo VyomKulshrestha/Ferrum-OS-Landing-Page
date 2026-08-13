@@ -2,22 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#070806" />
     <meta
       name="description"
       content="FerrumOS is a bootable Rust x86-64 research OS where a Ring-3 agent operates through kernel-enforced capabilities and a fail-closed predictive safety gate."
     />
-    <meta
-      name="keywords"
-      content="FerrumOS, Rust operating system, agentic OS, AI operating system, world model, JEPA, Ring 3, x86-64, QEMU"
-    />
     <meta name="author" content="Vyom Kulshrestha" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-video-preview:-1" />
     <link rel="canonical" href="https://ferrum-os.vercel.app/" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="FerrumOS LLM summary" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="FerrumOS full LLM context" />
+    <link rel="alternate" type="application/json" href="/capabilities.json" title="FerrumOS capability catalog" />
+    <link rel="alternate" type="application/json" href="/benchmarks.json" title="FerrumOS benchmark catalog" />
+    <link rel="preload" as="image" href="/posters-webp/scene-01-opening.webp" fetchpriority="high" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="FerrumOS" />
     <meta property="og:title" content="FerrumOS — Intelligence answers to the system" />
     <meta
@@ -25,49 +27,218 @@
       content="A bootable Rust research OS with a real Ring-3 agent, kernel-enforced authority, and measurable predictive safety."
     />
     <meta property="og:url" content="https://ferrum-os.vercel.app/" />
-    <meta property="og:image" content="https://ferrum-os.vercel.app/posters/scene-01-opening.png" />
+    <meta property="og:image" content="https://ferrum-os.vercel.app/og-ferrumos.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="FerrumOS black-iron kernel forge with ember and cyan verification light" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="FerrumOS — Intelligence answers to the system" />
     <meta
       name="twitter:description"
       content="A bootable Rust research OS where learned predictions can add caution but never grant authority."
     />
-    <meta name="twitter:image" content="https://ferrum-os.vercel.app/posters/scene-01-opening.png" />
-    <title>FerrumOS — Intelligence answers to the system</title>
+    <meta name="twitter:image" content="https://ferrum-os.vercel.app/og-ferrumos.jpg" />
+    <meta name="twitter:image:alt" content="FerrumOS black-iron kernel forge with ember and cyan verification light" />
+    <title>FerrumOS — Rust agentic operating system</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "FerrumOS",
-        "alternateName": "Ferrum OS",
-        "applicationCategory": "OperatingSystem",
-        "operatingSystem": "x86-64 (documented QEMU/Bochs profile)",
-        "softwareVersion": "0.1.1",
-        "license": "https://opensource.org/license/mit",
-        "url": "https://ferrum-os.vercel.app/",
-        "downloadUrl": "https://github.com/VyomKulshrestha/Ferrum-OS/releases",
-        "codeRepository": "https://github.com/VyomKulshrestha/Ferrum-OS",
-        "author": {
-          "@type": "Person",
-          "name": "Vyom Kulshrestha",
-          "url": "https://github.com/VyomKulshrestha"
-        },
-        "description": "Bootable Rust x86-64 research OS with a Ring-3 agent, kernel-enforced capabilities, deterministic safety rules, and an action-conditioned predictive screening gate."
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://ferrum-os.vercel.app/#software",
+            "name": "FerrumOS",
+            "alternateName": "Ferrum OS",
+            "applicationCategory": "OperatingSystem",
+            "operatingSystem": "x86-64; documented QEMU/Bochs profile",
+            "softwareVersion": "0.1.1",
+            "license": "https://opensource.org/license/mit",
+            "url": "https://ferrum-os.vercel.app/",
+            "codeRepository": "https://github.com/VyomKulshrestha/Ferrum-OS",
+            "releaseNotes": "https://github.com/VyomKulshrestha/Ferrum-OS/releases/tag/v0.1.1",
+            "citation": [
+              "https://doi.org/10.5281/zenodo.21829808",
+              "https://doi.org/10.5281/zenodo.21829193"
+            ],
+            "author": {
+              "@type": "Person",
+              "name": "Vyom Kulshrestha",
+              "url": "https://github.com/VyomKulshrestha"
+            },
+            "description": "Bootable Rust x86-64 research OS with a Ring-3 agent, kernel-enforced capabilities, deterministic safety rules, and an action-conditioned predictive screening gate."
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://ferrum-os.vercel.app/#source",
+            "name": "FerrumOS current main source",
+            "codeRepository": "https://github.com/VyomKulshrestha/Ferrum-OS",
+            "programmingLanguage": ["Rust", "Assembly", "Python", "JavaScript"],
+            "runtimePlatform": "x86-64 QEMU/Bochs",
+            "license": "https://opensource.org/license/mit",
+            "isPartOf": { "@id": "https://ferrum-os.vercel.app/#software" }
+          }
+        ]
       }
     </script>
   </head>
   <body>
     <a class="skip-link" href="#journey">Skip to the FerrumOS journey</a>
-    <div id="app"></div>
-    <noscript>
-      <main class="noscript-copy">
-        <h1>FerrumOS</h1>
-        <p>
-          A bootable Rust x86-64 research OS where intelligence runs in Ring 3 and every effect remains subject to kernel authority.
-        </p>
-        <p><a href="/proof.html">Read the measured evidence and limitations.</a></p>
-      </main>
-    </noscript>
+
+    <header class="site-header">
+      <a class="brand" href="#forge">
+        <span class="brand__mark" aria-hidden="true">F</span>
+        <span>Ferrum<span>OS</span></span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#world-model">World model</a>
+        <a href="/proof">Evidence</a>
+        <a href="/research">Research</a>
+        <a class="nav-source" href="https://github.com/VyomKulshrestha/Ferrum-OS">Source <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span class="sr-only">Open navigation</span>
+      </button>
+    </header>
+
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="#world-model">World model</a>
+      <a href="/proof">Evidence</a>
+      <a href="/research">Research</a>
+      <a href="https://github.com/VyomKulshrestha/Ferrum-OS">Source ↗</a>
+    </nav>
+
+    <main id="journey">
+      <div class="cinematic" aria-hidden="true">
+        <div class="cinematic__media">
+          <video class="scene-media is-active" data-media="0" data-poster="/posters-webp/scene-01-opening.webp" poster="/posters-webp/scene-01-opening.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-01.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="1" data-poster="/posters-webp/scene-02.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-02.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="2" data-poster="/posters-webp/scene-03.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-03.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="3" data-poster="/posters-webp/scene-04.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-04.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="4" data-poster="/posters-webp/scene-05.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-05.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="5" data-poster="/posters-webp/scene-06.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-06.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="6" data-poster="/posters-webp/scene-07.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-07.mp4" type="video/mp4" />
+          </video>
+          <video class="scene-media" data-media="7" data-poster="/posters-webp/scene-08.webp" muted playsinline preload="none">
+            <source data-src="/media/scene-08.mp4" type="video/mp4" />
+          </video>
+          <div class="cinematic__fallback"></div>
+          <div class="cinematic__aurora"></div>
+          <div class="cinematic__signals"><i></i><i></i><i></i><i></i></div>
+          <div class="cinematic__shade"></div>
+          <div class="cinematic__grain"></div>
+          <div class="cinematic__scan"></div>
+        </div>
+        <div class="progress-rail">
+          <span class="progress-rail__label">Depth</span>
+          <span class="progress-rail__track"><i></i></span>
+          <span class="progress-rail__count">01 / 08</span>
+        </div>
+      </div>
+
+      <section class="chapter chapter--left" id="forge" data-scene="0" aria-labelledby="title-forge">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>01</span>Boot below the app layer</p>
+          <h1 id="title-forge">An agentic OS, forged from the kernel up.</h1>
+          <p class="lede">FerrumOS boots a Rust x86-64 kernel and a real Ring-3 userland. Intelligence lives above the kernel; scheduling, memory, interrupts, and drivers stay deterministic.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>Rust + x86-64</li><li>Bootable research OS</li><li>Deterministic kernel</li></ul>
+          <p class="boundary"><span>Claim boundary</span>Validated against the documented QEMU/Bochs profile—not broad PC compatibility or a production hardware deployment.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--right" id="boundary" data-scene="1" aria-labelledby="title-boundary">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>02</span>Intelligence, contained</p>
+          <h2 id="title-boundary">The brain runs in userspace. Authority does not.</h2>
+          <p class="lede">Heliox can observe, plan, act, verify, and reflect, but every system effect crosses FerrumOS’s syscall ABI. Default-deny capabilities remain the kernel’s authority boundary.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>Real Ring 3</li><li>61 syscalls</li><li>Default deny</li></ul>
+          <p class="boundary"><span>Claim boundary</span>The model is not kernel-resident and has no unrestricted hardware authority. A predictive allow is never permission to execute.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--left" id="userland" data-scene="2" aria-labelledby="title-userland">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>03</span>A real userland</p>
+          <h2 id="title-userland">Not an agent demo. An operating system around it.</h2>
+          <p class="lede">FerrumOS runs ELF processes, a graphical desktop, persistent Ext2 storage, networking, audio, notifications, and signed local packages. Heliox uses the same system boundaries as every Ring-3 process.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>ELF processes</li><li>Ext2 + networking</li><li>Signed packages</li></ul>
+          <p class="boundary"><span>Claim boundary</span>The package catalog is a local signed cache, not a network marketplace; device support remains scoped to the documented emulator profile.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--right" id="authority" data-scene="3" aria-labelledby="title-authority">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>04</span>Capability before command</p>
+          <h2 id="title-authority">Every action earns its authority.</h2>
+          <p class="lede">Canonical operations cross five permission tiers and one common predictive gate. Modify and destructive paths retain operator confirmation, while unknown actions fail closed.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>41 operations</li><li>5 permission tiers</li><li>Confirmation gates</li></ul>
+          <p class="boundary"><span>Claim boundary</span>Confirmation, capability checks, syscall validation, and predictive screening remain separate controls. Catalog membership is not proof of postcondition verification.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--left" id="world-model" data-scene="4" aria-labelledby="title-world-model">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>05</span>Preview before execution</p>
+          <h2 id="title-world-model">Think forward before the system acts.</h2>
+          <p class="lede">FerrumOS previews bounded OS-state consequences with independent deterministic and learned forecasts. The riskier result wins before any eligible action reaches dispatch.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>H=3 lookahead</li><li>1.29–1.57 ms preview</li><li>Monotonic safety</li></ul>
+          <p class="boundary"><span>Claim boundary</span>The learned model complements deterministic policy. It cannot erase a rule-based warning, bypass confirmation, or grant authority.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--right" id="evidence" data-scene="5" aria-labelledby="title-evidence">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>06</span>Measured, not mythologized</p>
+          <h2 id="title-evidence">Reproducible evidence. Visible imperfections.</h2>
+          <p class="lede">FerrumOS publishes its transition data, evaluation protocol, raw artifacts, comparison baselines, and failure clusters. Misses remain visible instead of disappearing into product language.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>13,697 transitions</li><li>81.4% fixture BA</li><li>Failure clusters</li></ul>
+          <p class="boundary"><span>Claim boundary</span>Authored counterfactual fixtures are not natural-use prevalence, independent human annotation, live destructive execution, or formal safety proof.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--left" id="inputs" data-scene="6" aria-labelledby="title-inputs">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>07</span>Proposal is not authority</p>
+          <h2 id="title-inputs">New interfaces inherit the same limits.</h2>
+          <p class="lede">The physical world model remains shadow-only. Neural intent is constrained to signed coarse evidence, UI controls, and compiled read-only goals. Confidence never becomes actuator authority.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>99.44% simulator BA</li><li>0 / 10,000 idle candidates</li><li>Proposal only</li></ul>
+          <p class="boundary"><span>Claim boundary</span>There is no live-EEG accuracy, medical, real-robot, camera-accuracy, or hardware-in-the-loop safety claim.</p>
+        </div>
+      </section>
+
+      <section class="chapter chapter--center" id="horizon" data-scene="7" aria-labelledby="title-horizon">
+        <div class="chapter__copy">
+          <p class="eyebrow"><span>08</span>Open research, built to be challenged</p>
+          <h2 id="title-horizon">Build the OS where intelligence answers to the system.</h2>
+          <p class="lede">Boot it. Reproduce the gate. Inspect the failures. Then help push agentic operating systems beyond application-layer automation—without hiding the limits.</p>
+          <ul class="signal-list" aria-label="Evidence signals"><li>MIT licensed</li><li>Open data + report</li><li>Reproducible in QEMU</li></ul>
+          <p class="boundary"><span>Claim boundary</span>FerrumOS v0.1.1 is the latest tagged release; current main contains newer research work. Neither is a production-ready general-purpose OS or certified safety platform.</p>
+          <div class="final-actions">
+            <a class="button button--primary" href="https://github.com/VyomKulshrestha/Ferrum-OS">Build from source <span aria-hidden="true">↗</span></a>
+            <a class="button button--ghost" href="/proof">Read the evidence</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>FerrumOS is open research. Verify the evidence before repeating the claim.</p>
+      <div><a href="https://github.com/VyomKulshrestha/Ferrum-OS">GitHub</a><a href="/proof">Evidence</a><a href="/llms.txt">LLM context</a></div>
+    </footer>
+
+    <noscript><p class="noscript-notice">The cinematic camera is disabled; all FerrumOS evidence remains available above.</p></noscript>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -1,105 +1,15 @@
 import './style.css'
 import { scenes } from './scenes.js'
 
-const githubUrl = 'https://github.com/VyomKulshrestha/Ferrum-OS'
-
-const sceneMarkup = scenes
-  .map(
-    (scene, index) => `
-      <section class="chapter chapter--${scene.align}" id="${scene.id}" data-scene="${index}" aria-labelledby="title-${scene.id}">
-        <div class="chapter__copy">
-          <p class="eyebrow"><span>${scene.number}</span>${scene.chapter}</p>
-          ${index === 0 ? `<h1 id="title-${scene.id}">${scene.title}</h1>` : `<h2 id="title-${scene.id}">${scene.title}</h2>`}
-          <p class="lede">${scene.body}</p>
-          <ul class="signal-list" aria-label="Evidence signals">
-            ${scene.tags.map((tag) => `<li>${tag}</li>`).join('')}
-          </ul>
-          <p class="boundary"><span>Claim boundary</span>${scene.note}</p>
-          ${
-            scene.cta
-              ? `<div class="final-actions">
-                  <a class="button button--primary" href="${githubUrl}">Explore the source <span aria-hidden="true">↗</span></a>
-                  <a class="button button--ghost" href="/proof.html">Read the evidence</a>
-                </div>`
-              : ''
-          }
-        </div>
-      </section>`,
-  )
-  .join('')
-
-document.querySelector('#app').innerHTML = `
-  <header class="site-header">
-    <a class="brand" href="#forge">
-      <span class="brand__mark" aria-hidden="true">F</span>
-      <span>Ferrum<span>OS</span></span>
-    </a>
-    <nav aria-label="Primary navigation">
-      <a href="#world-model">World model</a>
-      <a href="/proof.html">Evidence</a>
-      <a href="/research.html">Research</a>
-      <a class="nav-source" href="${githubUrl}">Source <span aria-hidden="true">↗</span></a>
-    </nav>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
-      <span></span><span></span><span class="sr-only">Open navigation</span>
-    </button>
-  </header>
-
-  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
-    <a href="#world-model">World model</a>
-    <a href="/proof.html">Evidence</a>
-    <a href="/research.html">Research</a>
-    <a href="${githubUrl}">Source ↗</a>
-  </nav>
-
-  <main id="journey">
-    <div class="cinematic" aria-hidden="true">
-      <div class="cinematic__media">
-        ${scenes
-          .map(
-            (scene, index) => `
-              <video
-                class="scene-media ${index === 0 ? 'is-active' : ''}"
-                data-media="${index}"
-                data-poster="${scene.poster}"
-                ${index === 0 ? `poster="${scene.poster}"` : ''}
-                muted
-                playsinline
-                preload="none"
-              >
-                <source data-src="${scene.video}" type="video/mp4" />
-              </video>`,
-          )
-          .join('')}
-        <div class="cinematic__fallback"></div>
-        <div class="cinematic__shade"></div>
-        <div class="cinematic__grain"></div>
-        <div class="cinematic__scan"></div>
-      </div>
-      <div class="progress-rail">
-        <span class="progress-rail__label">Depth</span>
-        <span class="progress-rail__track"><i></i></span>
-        <span class="progress-rail__count">01 / 08</span>
-      </div>
-    </div>
-
-    ${sceneMarkup}
-  </main>
-
-  <footer>
-    <p>FerrumOS is open research. Verify the evidence before repeating the claim.</p>
-    <div><a href="${githubUrl}">GitHub</a><a href="/proof.html">Evidence</a><a href="/llms.txt">LLM context</a></div>
-  </footer>
-`
-
 const media = [...document.querySelectorAll('.scene-media')]
 const chapters = [...document.querySelectorAll('.chapter')]
 const progressFill = document.querySelector('.progress-rail__track i')
 const progressCount = document.querySelector('.progress-rail__count')
 const menuToggle = document.querySelector('.menu-toggle')
-const menuLabel = menuToggle.querySelector('.sr-only')
+const menuLabel = menuToggle?.querySelector('.sr-only')
 const mobileNav = document.querySelector('#mobile-nav')
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+const saveData = navigator.connection?.saveData === true
 
 let activeIndex = 0
 let scrollRaf = null
@@ -115,7 +25,7 @@ function ensureAdjacentSources(index) {
   media.forEach((video, videoIndex) => {
     if (Math.abs(videoIndex - index) > 1) return
     if (!video.getAttribute('poster')) video.setAttribute('poster', video.dataset.poster)
-    if (reducedMotion.matches) return
+    if (reducedMotion.matches || saveData) return
 
     const source = video.querySelector('source')
     if (!source.getAttribute('src')) source.setAttribute('src', source.dataset.src)
@@ -170,7 +80,7 @@ function updateJourney() {
   showScene(index)
   progressFill.style.transform = `scaleX(${totalProgress})`
 
-  if (!reducedMotion.matches) {
+  if (!reducedMotion.matches && !saveData) {
     setVideoTime(media[index], localProgress)
     const nextIndex = Math.min(index + 1, scenes.length - 1)
     const seam = clamp((localProgress - 0.92) / 0.08, 0, 1)
@@ -195,7 +105,7 @@ function requestJourneyUpdate(markInteraction = true) {
 }
 
 function openingMotion(now) {
-  if (reducedMotion.matches || userHasScrolled || window.scrollY > 2) return
+  if (reducedMotion.matches || saveData || userHasScrolled || window.scrollY > 2 || document.hidden) return
   const opening = media[0]
   if (Number.isFinite(opening.duration) && opening.duration > 0) {
     const elapsed = (now - autoplayStart) / 1000
@@ -212,6 +122,18 @@ function openingMotion(now) {
   autoplayRaf = requestAnimationFrame(openingMotion)
 }
 
+function closeNavigation({ restoreFocus = false } = {}) {
+  if (!mobileNav || !menuToggle) return
+  mobileNav.hidden = true
+  menuToggle.setAttribute('aria-expanded', 'false')
+  if (menuLabel) menuLabel.textContent = 'Open navigation'
+  if (restoreFocus) menuToggle.focus()
+}
+
+if (media.length !== scenes.length || chapters.length !== scenes.length) {
+  throw new Error('Static scene markup is out of sync with the scene registry')
+}
+
 media.forEach((video) => {
   video.addEventListener('loadedmetadata', () => {
     if (video === media[activeIndex]) updateJourney()
@@ -220,6 +142,7 @@ media.forEach((video) => {
 })
 
 chapters[0]?.classList.add('is-current')
+document.documentElement.classList.add('is-enhanced')
 measureJourney()
 ensureAdjacentSources(0)
 updateJourney()
@@ -237,25 +160,18 @@ reducedMotion.addEventListener('change', () => {
   requestJourneyUpdate(false)
 })
 
-menuToggle.addEventListener('click', () => {
+menuToggle?.addEventListener('click', () => {
   const expanded = menuToggle.getAttribute('aria-expanded') === 'true'
   menuToggle.setAttribute('aria-expanded', String(!expanded))
   mobileNav.hidden = expanded
-  menuLabel.textContent = expanded ? 'Open navigation' : 'Close navigation'
+  if (menuLabel) menuLabel.textContent = expanded ? 'Open navigation' : 'Close navigation'
 })
 
-mobileNav.addEventListener('click', (event) => {
-  if (event.target.closest('a')) {
-    mobileNav.hidden = true
-    menuToggle.setAttribute('aria-expanded', 'false')
-    menuLabel.textContent = 'Open navigation'
-  }
+mobileNav?.addEventListener('click', (event) => {
+  if (event.target.closest('a')) closeNavigation()
 })
 
 document.addEventListener('keydown', (event) => {
-  if (event.key !== 'Escape' || mobileNav.hidden) return
-  mobileNav.hidden = true
-  menuToggle.setAttribute('aria-expanded', 'false')
-  menuLabel.textContent = 'Open navigation'
-  menuToggle.focus()
+  if (event.key !== 'Escape' || mobileNav?.hidden !== false) return
+  closeNavigation({ restoreFocus: true })
 })
