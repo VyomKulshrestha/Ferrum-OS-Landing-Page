@@ -6,9 +6,9 @@
   "researchVersion": "1.0.0",
   "source": {
     "repository": "https://github.com/VyomKulshrestha/Ferrum-OS",
-    "commit": "b971cd721d0f1db51b0454391e8e0fb85623f59f",
+    "commit": "75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7",
     "snapshotDate": "2026-08-13",
-    "sha256": "71c0b8ad6619195bc1993c1a1faaca333602ad93e0d21c4064d73a674a8fe055",
+    "sha256": "09f7a28397a5e2e3f5f85bc9409f6be3a20d5a40f38a72f610113d5369ba3685",
     "raw": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/main/benchmarks.json"
   },
   "benchmarks": [
@@ -429,7 +429,7 @@
         },
         {
           "path": "docs/benchmarks/raw/2026-08-13/neural-synthetic.json",
-          "sha256": "41eb693e5e47d9500d144fc3b3f30db8115da8d845bbcb83a2236f541c2c7512"
+          "sha256": "251996d01847f20f4ac17ae964c4b9ca72e27e0a89908407c6761c9a88b2bb79"
         },
         {
           "path": "docs/benchmarks/raw/2026-08-13/qemu-command-audit.json",
@@ -437,7 +437,7 @@
         },
         {
           "path": "docs/research/world_model_paper_evaluation.json",
-          "sha256": "503f171239d2d4df530156f86e86cac717ec6355d101c23ef8c2c3e9b6d1568e"
+          "sha256": "59e79803e6d3430fc3e6694cbf72ca7acb19f90b8cb5c335692ace7748ae6d58"
         },
         {
           "path": "docs/research/world_model_training_config.json",
@@ -445,7 +445,7 @@
         },
         {
           "path": "docs/research/physical_world_model_evaluation.json",
-          "sha256": "25195d0d3b8229305cb07aa6274c2f5a337d74a6380103edc3f5243a7f824cde"
+          "sha256": "a7c9e36f846750ca6988c7434fa4c34baffe35567eb68ab930534a8d6c6b7111"
         }
       ]
     },
