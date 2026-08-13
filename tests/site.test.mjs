@@ -31,6 +31,8 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
   assert.doesNotMatch(controller, /scrollY \/ maxScroll/)
   assert.match(controller, /Math\.max\(segmentStart \+ 1, maxScroll\)/)
   assert.match(controller, /opening\.currentTime >= cap/)
+  assert.match(controller, /openingBaseline = opening\.currentTime/)
+  assert.match(controller, /video === media\[0\] \? openingBaseline : 0/)
   assert.doesNotMatch(controller, /URL\.createObjectURL/)
   assert.match(controller, /video\.dataset\.transport = 'byte-range'/)
   assert.match(controller, /pendingSeeks\.set/)
@@ -45,6 +47,7 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
   assert.match(styles, /\.is-enhanced \.chapter__copy\s*{[^}]*position:\s*fixed;[^}]*opacity:\s*var\(--copy-opacity, 0\)/s)
   assert.match(styles, /@keyframes camera-breathe/)
   assert.match(styles, /overflow-x:\s*clip/)
+  assert.match(styles, /@media \(max-width: 900px\)[\s\S]*?\.chapter__copy[\s\S]*?width:\s*auto;[\s\S]*?max-width:\s*none;/)
 })
 
 test('the landing page exposes semantic and agent-readable evidence', async () => {

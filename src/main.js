@@ -20,6 +20,7 @@ let chapterMetrics = []
 let maxScroll = 1
 let lastViewportWidth = window.innerWidth
 let mediaPrimed = false
+let openingBaseline = 0
 
 const pendingSeeks = new WeakMap()
 const sceneTargets = new WeakMap()
@@ -100,7 +101,8 @@ function updateCopyStage(index, progress) {
 
 function setVideoTime(video, progress) {
   if (!video || !Number.isFinite(video.duration) || video.duration <= 0) return
-  const target = clamp(progress, 0, 0.999) * video.duration
+  const baseline = video === media[0] ? openingBaseline : 0
+  const target = baseline + clamp(progress, 0, 0.999) * Math.max(0, video.duration - baseline)
   if (video.seeking) {
     pendingSeeks.set(video, target)
     return
@@ -183,6 +185,11 @@ async function startOpeningMotion() {
   const monitorOpening = () => {
     const cap = Number.isFinite(opening.duration) ? Math.min(3.5, opening.duration * 0.42) : 3.5
     if (userHasScrolled || window.scrollY > 2 || document.hidden || opening.currentTime >= cap) {
+      if (!userHasScrolled && opening.currentTime >= cap) {
+        openingBaseline = opening.currentTime
+        sceneTargets.set(opening, 0)
+        sceneCurrents.set(opening, 0)
+      }
       opening.pause()
       autoplayRaf = null
       return
