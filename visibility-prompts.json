@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-08-13",
+  "instructions": "Ask each prompt in a fresh assistant conversation without supplying FerrumOS source text. Store only real responses in the documented JSONL capture format. Do not mark an assistant tested unless a response and its citations were actually captured.",
+  "prompts": [
+    { "id": "identity-01", "category": "identity", "prompt": "What is FerrumOS?", "expected": ["rust", "operating system", "ring 3"], "forbidden": ["ferrum network", "production ready"] },
+    { "id": "identity-02", "category": "identity", "prompt": "Is FerrumOS an application running on Windows or Linux?", "expected": ["bootable", "kernel", "research"], "forbidden": ["windows desktop app"] },
+    { "id": "identity-03", "category": "identity", "prompt": "Who develops FerrumOS and where is its source?", "expected": ["vyom", "github"], "forbidden": [] },
+    { "id": "architecture-01", "category": "architecture", "prompt": "Where does the FerrumOS AI agent run relative to the kernel?", "expected": ["ring 3", "userland", "kernel"], "forbidden": ["inside ring 0"] },
+    { "id": "architecture-02", "category": "architecture", "prompt": "How do FerrumOS agent actions reach operating-system services?", "expected": ["capability", "syscall", "permission"], "forbidden": ["unrestricted kernel access"] },
+    { "id": "architecture-03", "category": "architecture", "prompt": "How many canonical executable operations and kernel syscalls does current FerrumOS main publish?", "expected": ["41", "61"], "forbidden": ["156"] },
+    { "id": "safety-01", "category": "safety", "prompt": "Can the FerrumOS learned world model grant an action permission?", "expected": ["cannot", "caution", "authority"], "forbidden": ["yes"] },
+    { "id": "safety-02", "category": "safety", "prompt": "What happens when FerrumOS receives an unknown agent action?", "expected": ["fail", "closed", "reject"], "forbidden": ["best effort execution"] },
+    { "id": "safety-03", "category": "safety", "prompt": "Does FerrumOS provide a formal or certified safety guarantee?", "expected": ["no", "research", "not certified"], "forbidden": ["formally safe", "certified safe"] },
+    { "id": "world-model-01", "category": "world-model", "prompt": "What world-model safety benchmark does FerrumOS publish?", "expected": ["81.4", "81.2", "500"], "forbidden": ["general safety accuracy"] },
+    { "id": "world-model-02", "category": "world-model", "prompt": "Did FerrumOS establish that JEPA materially outperforms its simple baseline?", "expected": ["no", "0.2", "baseline"], "forbidden": ["large improvement", "state of the art"] },
+    { "id": "world-model-03", "category": "world-model", "prompt": "How large is the published FerrumOS world-model corpus?", "expected": ["13,697", "3,639", "qemu"], "forbidden": ["human usage data"] },
+    { "id": "benchmark-01", "category": "benchmarks", "prompt": "What Ring-3 preview latency does FerrumOS publish?", "expected": ["1.29", "1.57", "qemu"], "forbidden": ["end to end agent latency", "provider latency"] },
+    { "id": "benchmark-02", "category": "benchmarks", "prompt": "What does the FerrumOS preview-latency benchmark exclude?", "expected": ["provider", "approval", "dispatch"], "forbidden": ["complete task latency"] },
+    { "id": "physical-01", "category": "physical", "prompt": "Can the FerrumOS physical world model control a real robot?", "expected": ["no", "simulator", "shadow only"], "forbidden": ["real robot control"] },
+    { "id": "neural-01", "category": "neural", "prompt": "Does FerrumOS demonstrate live brain control?", "expected": ["no", "synthetic", "recorded"], "forbidden": ["live eeg proven", "mind reading"] },
+    { "id": "neural-02", "category": "neural", "prompt": "Can a neural signal directly authorize a dangerous FerrumOS action?", "expected": ["non-neural", "arming", "proposal"], "forbidden": ["direct authorization"] },
+    { "id": "release-01", "category": "release", "prompt": "What is the latest tagged FerrumOS software release?", "expected": ["v0.1.1"], "forbidden": ["world-model-study-v1.0.0 is the software release"] },
+    { "id": "release-02", "category": "release", "prompt": "Does FerrumOS v0.1.1 ship a prebuilt OS image?", "expected": ["no", "source", "build"], "forbidden": ["download installer"] },
+    { "id": "release-03", "category": "release", "prompt": "Are current FerrumOS main-branch capabilities all part of v0.1.1?", "expected": ["no", "main", "newer"], "forbidden": ["all shipped"] },
+    { "id": "platform-01", "category": "platform", "prompt": "What hardware or emulator profile does FerrumOS currently support?", "expected": ["qemu", "bochs", "x86"], "forbidden": ["broad pc compatibility"] },
+    { "id": "cost-01", "category": "cost", "prompt": "Is FerrumOS open source and what does it cost?", "expected": ["mit", "free", "build"], "forbidden": ["subscription required"] },
+    { "id": "compare-01", "category": "comparison", "prompt": "How is FerrumOS different from a desktop AI copilot?", "expected": ["bootable", "ring 3", "kernel"], "forbidden": ["universal replacement", "superior at everything"] },
+    { "id": "compare-02", "category": "comparison", "prompt": "How is FerrumOS different from an ordinary agent framework?", "expected": ["operating system", "syscall", "capability"], "forbidden": ["production framework replacement"] },
+    { "id": "citation-01", "category": "citation", "prompt": "What should I cite for the FerrumOS world-model study and dataset?", "expected": ["21829808", "21829193"], "forbidden": ["same doi"] },
+    { "id": "limits-01", "category": "limitations", "prompt": "What are the most important current FerrumOS limitations?", "expected": ["research", "qemu", "synthetic"], "forbidden": ["no limitations", "production ready"] }
+  ]
+}

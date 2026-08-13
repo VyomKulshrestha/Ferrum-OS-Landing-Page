@@ -9,6 +9,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "evidence:sync": "node scripts/sync-public-evidence.mjs ../cursor-os-base public",
     "test": "node --test tests/*.test.mjs",
+    "audit:visibility": "node scripts/run-visibility-audit.mjs --output visibility-report.json",
     "verify:media": "node scripts/verify-media.mjs",
     "verify:dist": "node scripts/verify-dist.mjs",
     "check": "npm run test && npm run verify:media && npm run build && npm run verify:dist"

@@ -48,6 +48,14 @@ Run the production checks:
 npm run check
 ```
 
+Run the credential-free visibility source-readiness audit:
+
+```bash
+npm run audit:visibility
+```
+
+The audit does not call or pretend to sample ChatGPT, Gemini, or another assistant. Real responses can be recorded separately as JSONL and evaluated with `node scripts/run-visibility-audit.mjs --responses <captures.jsonl>`. The monthly workflow uploads a source-readiness artifact and notifies IndexNow using the deployed public ownership-verification key. IndexNow keys are intentionally public validation tokens, not provider credentials or private secrets.
+
 The continuous visual journey and its handoff/quality rules are documented in [`docs/CINEMATIC_ROUTE.md`](docs/CINEMATIC_ROUTE.md).
 
 The site is a Vite multipage build deployed with Vercel.
