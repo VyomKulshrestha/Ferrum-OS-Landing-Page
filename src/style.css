@@ -225,7 +225,7 @@ a {
   z-index: 1;
   object-fit: cover;
   opacity: 0;
-  filter: saturate(0.92) contrast(1.08) brightness(0.76);
+  filter: saturate(1.06) contrast(1.04) brightness(0.92);
   transition: opacity 320ms linear;
 }
 
@@ -682,4 +682,3 @@ footer a:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
-
