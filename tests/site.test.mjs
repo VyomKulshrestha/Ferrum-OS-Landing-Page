@@ -49,12 +49,14 @@ test('evidence pages retain required scientific boundaries and sources', async (
   assert.match(research, /No live participant or live-EEG accuracy has been measured/i)
 })
 
-test('scene 1 ships as a playable, bounded media asset', async () => {
-  const media = await stat(new URL('../public/media/scene-01.mp4', import.meta.url))
-  const opening = await stat(new URL('../public/posters/scene-01-opening.png', import.meta.url))
-  const handoff = await stat(new URL('../public/posters/scene-02.png', import.meta.url))
-  assert.ok(media.size > 500_000 && media.size < 10_000_000)
-  assert.ok(opening.size > 500_000)
-  assert.ok(handoff.size > 500_000)
-})
+test('generated scenes ship as playable, bounded media with lossless handoffs', async () => {
+  for (const scene of ['01', '02']) {
+    const media = await stat(new URL(`../public/media/scene-${scene}.mp4`, import.meta.url))
+    assert.ok(media.size > 500_000 && media.size < 10_000_000)
+  }
 
+  for (const poster of ['scene-01-opening.png', 'scene-02.png', 'scene-03.png']) {
+    const image = await stat(new URL(`../public/posters/${poster}`, import.meta.url))
+    assert.ok(image.size > 500_000)
+  }
+})
