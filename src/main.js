@@ -3,8 +3,6 @@ import { scenes } from './scenes.js'
 
 const media = [...document.querySelectorAll('.scene-media')]
 const chapters = [...document.querySelectorAll('.chapter')]
-const progressFill = document.querySelector('.progress-rail__track i')
-const progressCount = document.querySelector('.progress-rail__count')
 const menuToggle = document.querySelector('.menu-toggle')
 const menuLabel = menuToggle?.querySelector('.sr-only')
 const mobileNav = document.querySelector('#mobile-nav')
@@ -73,7 +71,6 @@ function showScene(index) {
   activeIndex = index
   media[activeIndex]?.classList.add('is-active')
   chapters[activeIndex]?.classList.add('is-current')
-  progressCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}`
   ensureAdjacentSources(index)
 }
 
@@ -145,11 +142,8 @@ function updateJourney() {
       ? chapterMetrics[index + 1].top - activationOffset
       : Math.max(segmentStart + 1, maxScroll)
   const localProgress = clamp((scrollY - segmentStart) / Math.max(1, segmentEnd - segmentStart), 0, 1)
-  const totalProgress = scrollY >= maxScroll - 1 ? 1 : clamp((index + localProgress) / scenes.length, 0, 1)
-
   showScene(index)
   updateCopyStage(index, localProgress)
-  progressFill.style.transform = `scaleX(${totalProgress})`
 
   if (!reducedMotion.matches && !saveData) {
     sceneTargets.set(media[index], localProgress)

@@ -23,6 +23,8 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
   assert.match(html, /<h1 id="title-forge">An agentic OS, forged from the kernel up\.<\/h1>/)
   assert.match(html, /<noscript><p class="noscript-notice">/)
   assert.doesNotMatch(html, /<footer>/)
+  assert.doesNotMatch(html, /progress-rail/)
+  assert.doesNotMatch(controller, /progressFill|progressCount/)
   assert.doesNotMatch(html, /id="app"/)
   assert.doesNotMatch(controller, /\.innerHTML\s*=/)
   assert.match(controller, /chapterMetrics\[index\]\.top - activationOffset/)
