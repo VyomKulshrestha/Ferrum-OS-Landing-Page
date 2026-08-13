@@ -65,14 +65,5 @@
         { "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=3600" }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }],
-      "destination": "/index.md"
-    },
-    { "source": "/proof", "destination": "/proof.html" },
-    { "source": "/research", "destination": "/research.html" }
   ]
 }

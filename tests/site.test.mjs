@@ -110,16 +110,24 @@ test('machine endpoints reference local schemas and do not impersonate a runtime
 })
 
 test('deployment metadata negotiates Markdown and enforces browser safety headers', async () => {
-  const [html, markdown, configSource] = await Promise.all([
+  const [html, markdown, configSource, middlewareSource] = await Promise.all([
     text('index.html'),
     text('public/index.md'),
     text('vercel.json'),
+    text('middleware.js'),
   ])
   const config = JSON.parse(configSource)
-  const markdownRewrite = config.rewrites.find((rewrite) => rewrite.source === '/' && rewrite.has)
-  assert.equal(markdownRewrite.destination, '/index.md')
-  assert.equal(markdownRewrite.has[0].key, 'accept')
-  assert.match(markdownRewrite.has[0].value, /text\/markdown/)
+  const { acceptsMarkdown, config: middlewareConfig, default: middleware } = await import('../middleware.js')
+  assert.equal(middlewareConfig.matcher, '/')
+  assert.equal(acceptsMarkdown('text/markdown'), true)
+  assert.equal(acceptsMarkdown('text/html, text/markdown;q=0.8'), true)
+  assert.equal(acceptsMarkdown('text/html, text/markdown;q=0'), false)
+  assert.equal(acceptsMarkdown('text/html,application/xhtml+xml'), false)
+  const markdownResponse = middleware(new Request('https://ferrum-os.vercel.app/', { headers: { accept: 'text/markdown' } }))
+  const htmlResponse = middleware(new Request('https://ferrum-os.vercel.app/', { headers: { accept: 'text/html' } }))
+  assert.equal(markdownResponse.headers.get('x-middleware-rewrite'), 'https://ferrum-os.vercel.app/index.md')
+  assert.equal(htmlResponse.headers.get('x-middleware-next'), '1')
+  assert.match(middlewareSource, /rewrite\(new URL\('\/index\.md'/)
   assert.match(html, /rel="alternate" type="text\/markdown" href="\/index\.md"/)
   assert.match(markdown, /Current main contains newer research/i)
 
