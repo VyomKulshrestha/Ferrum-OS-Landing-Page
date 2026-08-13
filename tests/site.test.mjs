@@ -79,6 +79,11 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   }
   assert.match(proofHtml, /"@type": "TechArticle"/)
   assert.match(researchHtml, /"@type": "ScholarlyArticle"/)
+  assert.match(proofHtml, /Evidence center \/ current main/)
+  assert.match(proofHtml, /Source a8de2d769840adccb03e9a7c4b5ba5929839f9a1/)
+  assert.match(proofHtml, /"version": "a8de2d769840adccb03e9a7c4b5ba5929839f9a1"/)
+  assert.doesNotMatch(researchHtml, /"sameAs"/)
+  assert.match(researchHtml, /"citation": \[\s*"https:\/\/doi\.org\/10\.5281\/zenodo\.21829808",\s*"https:\/\/doi\.org\/10\.5281\/zenodo\.21829193"/)
   assert.match(html, /href="https:\/\/doi\.org\/10\.5281\/zenodo\.21829808">Read the research paper/)
   assert.match(llms, /no live-EEG accuracy or medical claim/i)
   assert.match(llmsFull, /0\.2 percentage-point difference does not establish a material JEPA safety advantage/i)

@@ -89,6 +89,19 @@ a { color: inherit; }
   text-transform: uppercase;
 }
 
+.snapshot-label a {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--dim);
+  font-size: 0.58rem;
+  letter-spacing: 0.035em;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.snapshot-label a:hover { color: var(--cyan); }
+
 h1,
 h2,
 h3 {
