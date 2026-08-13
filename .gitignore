@@ -5,3 +5,5 @@ dist/
 public/media/*-source.mp4
 .DS_Store
 Thumbs.db
+
+.vercel
