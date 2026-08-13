@@ -15,45 +15,34 @@ const saveData = navigator.connection?.saveData === true
 let activeIndex = 0
 let scrollRaf = null
 let autoplayRaf = null
+let mediaRaf = null
+let lastMediaTick = 0
 let userHasScrolled = false
 let chapterMetrics = []
 let maxScroll = 1
 let lastViewportWidth = window.innerWidth
 let mediaPrimed = false
 
-const mediaRequests = new Map()
-const objectUrls = new Map()
 const pendingSeeks = new WeakMap()
+const sceneTargets = new WeakMap()
+const sceneCurrents = new WeakMap()
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
-async function loadSceneSource(index) {
+function loadSceneSource(index) {
   const video = media[index]
   if (!video || reducedMotion.matches || saveData || video.dataset.loaded === 'true') return
-  if (mediaRequests.has(index)) return mediaRequests.get(index)
+  const url = video.querySelector('source')?.dataset.src
+  if (!url) return
 
-  const request = (async () => {
-    const source = video.querySelector('source')
-    const url = source.dataset.src
-
-    try {
-      const response = await fetch(url)
-      if (!response.ok) throw new Error(`Media request failed with ${response.status}`)
-      const objectUrl = URL.createObjectURL(await response.blob())
-      objectUrls.set(index, objectUrl)
-      source.src = objectUrl
-    } catch {
-      source.src = url
-      video.dataset.transport = 'direct-fallback'
-    }
-
-    video.dataset.loaded = 'true'
-    video.preload = 'auto'
-    video.load()
-  })().finally(() => mediaRequests.delete(index))
-
-  mediaRequests.set(index, request)
-  return request
+  // Vercel serves byte ranges for the delivery MP4s. Assigning the URL to the
+  // video itself lets the browser stream and seek natively; wrapping the full
+  // response in a Blob delayed decoding and failed on some Chromium builds.
+  video.src = url
+  video.dataset.loaded = 'true'
+  video.dataset.transport = 'byte-range'
+  video.preload = index === activeIndex ? 'auto' : 'metadata'
+  video.load()
 }
 
 function ensureAdjacentSources(index) {
@@ -94,6 +83,24 @@ function setVideoTime(video, progress) {
   if (Math.abs(video.currentTime - target) > 0.045) video.currentTime = target
 }
 
+function animateMedia(now) {
+  if (!reducedMotion.matches && !saveData && !document.hidden && now - lastMediaTick >= 1000 / 24) {
+    lastMediaTick = now
+    media.forEach((video) => {
+      const target = sceneTargets.get(video)
+      if (!Number.isFinite(target) || (video === media[0] && !userHasScrolled && !video.paused)) return
+
+      let current = sceneCurrents.get(video)
+      if (!Number.isFinite(current)) current = target
+      current += (target - current) * 0.48
+      if (Math.abs(target - current) < 0.0015) current = target
+      sceneCurrents.set(video, current)
+      setVideoTime(video, current)
+    })
+  }
+  mediaRaf = requestAnimationFrame(animateMedia)
+}
+
 function updateJourney() {
   scrollRaf = null
   const scrollY = window.scrollY
@@ -116,13 +123,13 @@ function updateJourney() {
   progressFill.style.transform = `scaleX(${totalProgress})`
 
   if (!reducedMotion.matches && !saveData) {
-    setVideoTime(media[index], localProgress)
+    sceneTargets.set(media[index], localProgress)
     const nextIndex = Math.min(index + 1, scenes.length - 1)
     const seam = clamp((localProgress - 0.92) / 0.08, 0, 1)
     if (nextIndex !== index) {
       media[index].style.opacity = String(1 - seam)
       media[nextIndex].style.opacity = String(seam)
-      setVideoTime(media[nextIndex], 0)
+      sceneTargets.set(media[nextIndex], 0)
     }
     media.forEach((video, videoIndex) => {
       if (videoIndex !== index && videoIndex !== nextIndex) video.style.opacity = ''
@@ -132,6 +139,7 @@ function updateJourney() {
 
 function requestJourneyUpdate(markInteraction = true) {
   if (markInteraction) {
+    if (!userHasScrolled) media[0]?.pause()
     userHasScrolled = true
     if (autoplayRaf) cancelAnimationFrame(autoplayRaf)
     autoplayRaf = null
@@ -142,7 +150,7 @@ function requestJourneyUpdate(markInteraction = true) {
 async function startOpeningMotion() {
   if (reducedMotion.matches || saveData || userHasScrolled || window.scrollY > 2 || document.hidden) return
   const opening = media[0]
-  await loadSceneSource(0)
+  loadSceneSource(0)
   try {
     await opening.play()
   } catch {
@@ -205,6 +213,8 @@ media.forEach((video) => {
     video.classList.add('has-error')
     const source = video.querySelector('source')
     source.removeAttribute('src')
+    video.removeAttribute('src')
+    video.dataset.loaded = 'error'
     video.load()
   })
 })
@@ -215,6 +225,7 @@ measureJourney()
 ensureAdjacentSources(0)
 updateJourney()
 void startOpeningMotion()
+mediaRaf = requestAnimationFrame(animateMedia)
 window.addEventListener('scroll', requestJourneyUpdate, { passive: true })
 window.addEventListener('resize', () => {
   const widthChanged = Math.abs(window.innerWidth - lastViewportWidth) > 1
@@ -228,8 +239,8 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden && !userHasScrolled && !autoplayRaf) void startOpeningMotion()
 })
 window.addEventListener('pagehide', () => {
-  objectUrls.forEach((url) => URL.revokeObjectURL(url))
-  objectUrls.clear()
+  if (mediaRaf) cancelAnimationFrame(mediaRaf)
+  mediaRaf = null
 })
 reducedMotion.addEventListener('change', () => {
   media.forEach((video) => {
