@@ -9,7 +9,7 @@ const sceneMarkup = scenes
       <section class="chapter chapter--${scene.align}" id="${scene.id}" data-scene="${index}" aria-labelledby="title-${scene.id}">
         <div class="chapter__copy">
           <p class="eyebrow"><span>${scene.number}</span>${scene.chapter}</p>
-          <h2 id="title-${scene.id}">${scene.title}</h2>
+          ${index === 0 ? `<h1 id="title-${scene.id}">${scene.title}</h1>` : `<h2 id="title-${scene.id}">${scene.title}</h2>`}
           <p class="lede">${scene.body}</p>
           <ul class="signal-list" aria-label="Evidence signals">
             ${scene.tags.map((tag) => `<li>${tag}</li>`).join('')}
@@ -30,7 +30,7 @@ const sceneMarkup = scenes
 
 document.querySelector('#app').innerHTML = `
   <header class="site-header">
-    <a class="brand" href="#forge" aria-label="FerrumOS">
+    <a class="brand" href="#forge">
       <span class="brand__mark" aria-hidden="true">F</span>
       <span>Ferrum<span>OS</span></span>
     </a>
@@ -96,6 +96,7 @@ const chapters = [...document.querySelectorAll('.chapter')]
 const progressFill = document.querySelector('.progress-rail__track i')
 const progressCount = document.querySelector('.progress-rail__count')
 const menuToggle = document.querySelector('.menu-toggle')
+const menuLabel = menuToggle.querySelector('.sr-only')
 const mobileNav = document.querySelector('#mobile-nav')
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
@@ -205,11 +206,21 @@ menuToggle.addEventListener('click', () => {
   const expanded = menuToggle.getAttribute('aria-expanded') === 'true'
   menuToggle.setAttribute('aria-expanded', String(!expanded))
   mobileNav.hidden = expanded
+  menuLabel.textContent = expanded ? 'Open navigation' : 'Close navigation'
 })
 
 mobileNav.addEventListener('click', (event) => {
   if (event.target.closest('a')) {
     mobileNav.hidden = true
     menuToggle.setAttribute('aria-expanded', 'false')
+    menuLabel.textContent = 'Open navigation'
   }
+})
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape' || mobileNav.hidden) return
+  mobileNav.hidden = true
+  menuToggle.setAttribute('aria-expanded', 'false')
+  menuLabel.textContent = 'Open navigation'
+  menuToggle.focus()
 })

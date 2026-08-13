@@ -14,6 +14,9 @@ test('the cinematic has eight complete, unique chapters', async () => {
   assert.equal((source.match(/\n\s+poster: '/g) ?? []).length, 8)
   assert.match(controller, /chapter\.offsetTop - activationOffset/)
   assert.doesNotMatch(controller, /scrollY \/ maxScroll/)
+  assert.match(controller, /<h1 id="title-/)
+  assert.match(controller, /event\.key !== 'Escape'/)
+  assert.doesNotMatch(controller, /class="brand" href="#forge" aria-label=/)
 })
 
 test('the landing page exposes semantic and agent-readable evidence', async () => {
