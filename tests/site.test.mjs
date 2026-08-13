@@ -77,6 +77,7 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   }
   assert.match(proofHtml, /"@type": "TechArticle"/)
   assert.match(researchHtml, /"@type": "ScholarlyArticle"/)
+  assert.match(html, /href="https:\/\/doi\.org\/10\.5281\/zenodo\.21829808">Read the research paper/)
   assert.match(llms, /no live-EEG accuracy or medical claim/i)
   assert.match(llmsFull, /0\.2 percentage-point difference does not establish a material JEPA safety advantage/i)
   assert.match(llmsFull, /Distinguish the v0\.1\.1 tagged release from current main/i)
