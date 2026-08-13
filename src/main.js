@@ -61,12 +61,13 @@ document.querySelector('#app').innerHTML = `
               <video
                 class="scene-media ${index === 0 ? 'is-active' : ''}"
                 data-media="${index}"
-                poster="${scene.poster}"
+                data-poster="${scene.poster}"
+                ${index === 0 ? `poster="${scene.poster}"` : ''}
                 muted
                 playsinline
-                preload="${index < 2 ? 'metadata' : 'none'}"
+                preload="none"
               >
-                <source src="${scene.video}" type="video/mp4" />
+                <source data-src="${scene.video}" type="video/mp4" />
               </video>`,
           )
           .join('')}
@@ -105,16 +106,30 @@ let scrollRaf = null
 let autoplayRaf = null
 let autoplayStart = performance.now()
 let userHasScrolled = false
+let chapterMetrics = []
+let maxScroll = 1
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
 function ensureAdjacentSources(index) {
   media.forEach((video, videoIndex) => {
-    if (Math.abs(videoIndex - index) <= 1 && video.preload === 'none') {
-      video.preload = 'metadata'
-      video.load()
-    }
+    if (Math.abs(videoIndex - index) > 1) return
+    if (!video.getAttribute('poster')) video.setAttribute('poster', video.dataset.poster)
+    if (reducedMotion.matches) return
+
+    const source = video.querySelector('source')
+    if (!source.getAttribute('src')) source.setAttribute('src', source.dataset.src)
+    if (video.preload !== 'metadata') video.preload = 'metadata'
+    video.load()
   })
+}
+
+function measureJourney() {
+  chapterMetrics = chapters.map((chapter) => ({
+    top: chapter.offsetTop,
+    height: chapter.offsetHeight,
+  }))
+  maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
 }
 
 function showScene(index) {
@@ -140,17 +155,17 @@ function updateJourney() {
   const activationOffset = window.innerHeight * 0.28
   let index = 0
 
-  chapters.forEach((chapter, chapterIndex) => {
-    if (scrollY >= chapter.offsetTop - activationOffset) index = chapterIndex
+  chapterMetrics.forEach((chapter, chapterIndex) => {
+    if (scrollY >= chapter.top - activationOffset) index = chapterIndex
   })
 
-  const segmentStart = index === 0 ? 0 : Math.max(0, chapters[index].offsetTop - activationOffset)
+  const segmentStart = index === 0 ? 0 : Math.max(0, chapterMetrics[index].top - activationOffset)
   const segmentEnd =
     index < chapters.length - 1
-      ? chapters[index + 1].offsetTop - activationOffset
-      : Math.max(segmentStart + 1, chapters[index].offsetTop + chapters[index].offsetHeight - window.innerHeight * 0.4)
+      ? chapterMetrics[index + 1].top - activationOffset
+      : Math.max(segmentStart + 1, maxScroll)
   const localProgress = clamp((scrollY - segmentStart) / Math.max(1, segmentEnd - segmentStart), 0, 1)
-  const totalProgress = clamp((index + localProgress) / scenes.length, 0, 1)
+  const totalProgress = scrollY >= maxScroll - 1 ? 1 : clamp((index + localProgress) / scenes.length, 0, 1)
 
   showScene(index)
   progressFill.style.transform = `scaleX(${totalProgress})`
@@ -170,10 +185,12 @@ function updateJourney() {
   }
 }
 
-function requestJourneyUpdate() {
-  userHasScrolled = true
-  if (autoplayRaf) cancelAnimationFrame(autoplayRaf)
-  autoplayRaf = null
+function requestJourneyUpdate(markInteraction = true) {
+  if (markInteraction) {
+    userHasScrolled = true
+    if (autoplayRaf) cancelAnimationFrame(autoplayRaf)
+    autoplayRaf = null
+  }
   if (!scrollRaf) scrollRaf = requestAnimationFrame(updateJourney)
 }
 
@@ -181,8 +198,16 @@ function openingMotion(now) {
   if (reducedMotion.matches || userHasScrolled || window.scrollY > 2) return
   const opening = media[0]
   if (Number.isFinite(opening.duration) && opening.duration > 0) {
-    const elapsed = Math.min((now - autoplayStart) / 1000, 3.5)
-    opening.currentTime = Math.min(elapsed, opening.duration * 0.42)
+    const elapsed = (now - autoplayStart) / 1000
+    const cap = Math.min(3.5, opening.duration * 0.42)
+    opening.currentTime = Math.min(elapsed, cap)
+    if (elapsed >= cap) {
+      autoplayRaf = null
+      return
+    }
+  } else if (now - autoplayStart > 5000) {
+    autoplayRaf = null
+    return
   }
   autoplayRaf = requestAnimationFrame(openingMotion)
 }
@@ -195,12 +220,22 @@ media.forEach((video) => {
 })
 
 chapters[0]?.classList.add('is-current')
+measureJourney()
 ensureAdjacentSources(0)
 updateJourney()
 autoplayRaf = requestAnimationFrame(openingMotion)
 window.addEventListener('scroll', requestJourneyUpdate, { passive: true })
-window.addEventListener('resize', requestJourneyUpdate)
-reducedMotion.addEventListener('change', requestJourneyUpdate)
+window.addEventListener('resize', () => {
+  measureJourney()
+  requestJourneyUpdate(false)
+})
+reducedMotion.addEventListener('change', () => {
+  media.forEach((video) => {
+    video.style.opacity = ''
+  })
+  ensureAdjacentSources(activeIndex)
+  requestJourneyUpdate(false)
+})
 
 menuToggle.addEventListener('click', () => {
   const expanded = menuToggle.getAttribute('aria-expanded') === 'true'
