@@ -7,8 +7,31 @@
   "properties": {
     "schemaVersion": { "const": 2 },
     "project": { "const": "FerrumOS" },
-    "source": { "type": "object", "required": ["repository", "commit", "sha256"] },
-    "benchmarks": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["id", "metric", "protocol", "boundary"] } },
+    "source": {
+      "type": "object",
+      "required": ["repository", "commit", "sha256"],
+      "properties": {
+        "repository": { "type": "string", "format": "uri" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "snapshotDate": { "type": "string", "format": "date" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "raw": { "type": "string", "format": "uri" }
+      }
+    },
+    "benchmarks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "metric", "protocol", "boundary"],
+        "properties": {
+          "id": { "type": "string" },
+          "metric": { "type": "string" },
+          "protocol": { "type": "string" },
+          "boundary": { "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }] }
+        }
+      }
+    },
     "protocols": { "type": "object" },
     "globalLimitations": { "type": "array", "minItems": 1, "items": { "type": "string" } }
   }

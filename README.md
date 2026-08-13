@@ -15,7 +15,7 @@ The landing page is one continuous eight-leg camera journey:
 7. Bounded physical and neural research
 8. Open-source horizon
 
-Every clip begins from a lossless PNG extracted from the actual final frame of the previous Veo clip. Technical copy remains semantic HTML rather than generated text inside video.
+Scenes 2–8 were conditioned from lossless PNGs extracted from the prior source clip; delivery media enforce measured PSNR ≥30 dB handoffs. Technical copy remains semantic HTML rather than generated text inside video.
 
 ## Evidence surfaces
 

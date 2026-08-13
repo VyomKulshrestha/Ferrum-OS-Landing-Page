@@ -6,7 +6,7 @@
   "researchVersion": "1.0.0",
   "source": {
     "repository": "https://github.com/VyomKulshrestha/Ferrum-OS",
-    "commit": "c329b23c7f080b969c482461958271bcdaaa40f1",
+    "commit": "7e8f1014e7fbe1825a1066b3384931d77fed5c23",
     "snapshotDate": "2026-08-13",
     "sha256": "f08c7238157894699667d4da2d4f6b4ef0ac179043659b66e4596765e89995ae",
     "raw": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/main/benchmarks.json"

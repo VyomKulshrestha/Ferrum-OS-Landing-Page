@@ -5,11 +5,9 @@ import { resolve } from 'node:path'
 
 const sourceRoot = resolve(process.argv[2] ?? '../cursor-os-base')
 const outputRoot = resolve(process.argv[3] ?? 'public')
-const capabilityPath = resolve(sourceRoot, 'capabilities.json')
-const benchmarkPath = resolve(sourceRoot, 'benchmarks.json')
 
-const readSnapshot = async (path) => {
-  const bytes = await readFile(path)
+const readCommittedSnapshot = (path) => {
+  const bytes = execFileSync('git', ['-C', sourceRoot, 'show', `HEAD:${path}`], { encoding: 'buffer' })
   return {
     data: JSON.parse(bytes.toString('utf8')),
     sha256: createHash('sha256').update(bytes).digest('hex'),
@@ -17,10 +15,8 @@ const readSnapshot = async (path) => {
 }
 
 const sourceCommit = execFileSync('git', ['-C', sourceRoot, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim()
-const [capabilitySnapshot, benchmarkSnapshot] = await Promise.all([
-  readSnapshot(capabilityPath),
-  readSnapshot(benchmarkPath),
-])
+const capabilitySnapshot = readCommittedSnapshot('capabilities.json')
+const benchmarkSnapshot = readCommittedSnapshot('benchmarks.json')
 
 const source = {
   repository: 'https://github.com/VyomKulshrestha/Ferrum-OS',
@@ -170,7 +166,14 @@ const snapshotPages = [
 
 const syncSnapshotCommit = async (path) => {
   const content = await readFile(path, 'utf8')
-  const updated = content.replace(/[0-9a-f]{40}/g, sourceCommit)
+  const updated = content
+    .replace(/Current-main evidence snapshot: \[`[0-9a-f]{40}`\]\(https:\/\/github\.com\/VyomKulshrestha\/Ferrum-OS\/commit\/[0-9a-f]{40}\)/, `Current-main evidence snapshot: [\`${sourceCommit}\`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/${sourceCommit})`)
+    .replace(/(?<="version": ")[0-9a-f]{40}(?=")/g, sourceCommit)
+    .replace(/(?<=Ferrum-OS\/)[0-9a-f]{40}(?=\/(?:capabilities|benchmarks)\.json)/g, sourceCommit)
+    .replace(/(?<=identifier": "git:)[0-9a-f]{40}(?=")/, sourceCommit)
+    .replace(/(?<=Ferrum-OS\/commit\/)[0-9a-f]{40}(?=">Source )/, sourceCommit)
+    .replace(/(?<=Source )[0-9a-f]{40}(?=<\/a>)/, sourceCommit)
+    .replace(/(?<=Ferrum-OS\/tree\/)[0-9a-f]{40}(?=\/docs\/research)/, sourceCommit)
   await writeFile(path, updated, 'utf8')
 }
 

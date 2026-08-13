@@ -9,6 +9,7 @@
   "allowedMethods": ["GET"],
   "endpoints": [
     { "path": "/.well-known/api-catalog", "mediaType": "application/json", "description": "Canonical read-only API discovery document" },
+    { "path": "/.well-known/ferrumos-docs.json", "mediaType": "application/json", "description": "Read-only documentation and evidence resource catalog" },
     { "path": "/capabilities.json", "mediaType": "application/json", "description": "Versioned per-operation capability catalog" },
     { "path": "/benchmarks.json", "mediaType": "application/json", "description": "Versioned benchmark and protocol snapshot" },
     { "path": "/releases.json", "mediaType": "application/json", "description": "Tagged software and frozen research releases" },

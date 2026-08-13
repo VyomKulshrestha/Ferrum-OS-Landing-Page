@@ -32,7 +32,7 @@ async function main() {
       'dry-run': { type: 'boolean', default: false },
     },
   })
-  if (!values.key) throw new Error('Pass --key from the INDEXNOW_KEY secret')
+  if (!values.key) throw new Error('Pass --key with the public INDEXNOW validation key')
   const urls = extractSitemapUrls(await readFile(resolve(ROOT, 'public/sitemap.xml'), 'utf8'))
   const payload = buildPayload(urls, values.key)
   if (values['dry-run']) {

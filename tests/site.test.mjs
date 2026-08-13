@@ -100,6 +100,10 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   assert.equal(capabilityData.counts.kernelSyscalls, 61)
   assert.equal(capabilityData.safety.learnedAllowGrantsAuthority, false)
   assert.equal(capabilityData.actions.length, 41)
+  assert.deepEqual(
+    [...new Set(capabilityData.actions.map((action) => action.permission_tier_name))].sort(),
+    ['destructive', 'modify', 'network', 'observe', 'safe'],
+  )
   assert.match(capabilityData.source.commit, /^[0-9a-f]{40}$/)
   assert.match(capabilityData.source.sha256, /^[0-9a-f]{64}$/)
 
@@ -121,6 +125,7 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   for (const catalog of [JSON.parse(docsCatalog), JSON.parse(apiCatalog)]) {
     assert.equal(catalog.runtimeControl ?? catalog.controlPlane, false)
   }
+  assert.ok(JSON.parse(apiCatalog).endpoints.some(({ path }) => path === '/.well-known/ferrumos-docs.json'))
   assert.equal(JSON.parse(docsCatalog).acceptsCommands, false)
 })
 

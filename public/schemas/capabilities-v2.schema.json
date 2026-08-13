@@ -7,10 +7,55 @@
   "properties": {
     "schemaVersion": { "const": 2 },
     "project": { "const": "FerrumOS" },
-    "source": { "type": "object", "required": ["repository", "commit", "sha256"] },
-    "counts": { "type": "object", "required": ["canonicalExecutableOperations", "kernelSyscalls", "permissionTiers"] },
-    "safety": { "type": "object", "required": ["learnedAllowGrantsAuthority"] },
-    "actions": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["name", "permission_tier", "operator_confirmation_required", "world_model_previewed"] } },
+    "source": {
+      "type": "object",
+      "required": ["repository", "commit", "sha256"],
+      "properties": {
+        "repository": { "type": "string", "format": "uri" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "snapshotDate": { "type": "string", "format": "date" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "generatedFrom": { "type": "string" }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["canonicalExecutableOperations", "kernelSyscalls", "permissionTiers"],
+      "properties": {
+        "canonicalExecutableOperations": { "type": "integer", "minimum": 1 },
+        "modelAdvertisedOperations": { "type": "integer", "minimum": 0 },
+        "kernelSyscalls": { "type": "integer", "minimum": 1 },
+        "permissionTiers": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": ["learnedAllowGrantsAuthority"],
+      "properties": {
+        "deterministicPolicy": { "type": "string" },
+        "learnedWorldModel": { "type": "string" },
+        "learnedAllowGrantsAuthority": { "const": false },
+        "physicalWorldModel": { "type": "string" },
+        "neuralIntent": { "type": "string" }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "category", "permission_tier", "permission_tier_name", "operator_confirmation_required", "world_model_mediation", "verification"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "category": { "type": "string" },
+          "permission_tier": { "type": "integer", "minimum": 0 },
+          "permission_tier_name": { "enum": ["observe", "safe", "network", "modify", "destructive"] },
+          "operator_confirmation_required": { "type": "boolean" },
+          "world_model_mediation": { "type": "string" },
+          "verification": { "type": "object" }
+        }
+      }
+    },
     "claimBoundaries": { "type": "array", "minItems": 1, "items": { "type": "string" } }
   }
 }
