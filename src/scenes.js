@@ -10,7 +10,7 @@ export const scenes = [
     note:
       'Validated against the documented QEMU/Bochs profile—not broad PC compatibility or a production hardware deployment.',
     video: '/media/scene-01.mp4',
-    poster: '/posters/scene-01-opening.png',
+    poster: '/posters-webp/scene-01-opening.webp',
     align: 'left',
   },
   {
@@ -24,7 +24,7 @@ export const scenes = [
     note:
       'The model is not kernel-resident and has no unrestricted hardware authority. A predictive allow is never permission to execute.',
     video: '/media/scene-02.mp4',
-    poster: '/posters/scene-02.png',
+    poster: '/posters-webp/scene-02.webp',
     align: 'right',
   },
   {
@@ -38,7 +38,7 @@ export const scenes = [
     note:
       'The package catalog is a local signed cache, not a network marketplace; device support remains scoped to the documented emulator profile.',
     video: '/media/scene-03.mp4',
-    poster: '/posters/scene-03.png',
+    poster: '/posters-webp/scene-03.webp',
     align: 'left',
   },
   {
@@ -52,7 +52,7 @@ export const scenes = [
     note:
       'Confirmation, capability checks, syscall validation, and predictive screening remain separate controls. Catalog membership is not proof of postcondition verification.',
     video: '/media/scene-04.mp4',
-    poster: '/posters/scene-04.png',
+    poster: '/posters-webp/scene-04.webp',
     align: 'right',
   },
   {
@@ -66,7 +66,7 @@ export const scenes = [
     note:
       'The learned model complements deterministic policy. It cannot erase a rule-based warning, bypass confirmation, or grant authority.',
     video: '/media/scene-05.mp4',
-    poster: '/posters/scene-05.png',
+    poster: '/posters-webp/scene-05.webp',
     align: 'left',
   },
   {
@@ -80,7 +80,7 @@ export const scenes = [
     note:
       'Authored counterfactual fixtures are not natural-use prevalence, independent human annotation, live destructive execution, or formal safety proof.',
     video: '/media/scene-06.mp4',
-    poster: '/posters/scene-06.png',
+    poster: '/posters-webp/scene-06.webp',
     align: 'right',
   },
   {
@@ -94,7 +94,7 @@ export const scenes = [
     note:
       'There is no live-EEG accuracy, medical, real-robot, camera-accuracy, or hardware-in-the-loop safety claim.',
     video: '/media/scene-07.mp4',
-    poster: '/posters/scene-07.png',
+    poster: '/posters-webp/scene-07.webp',
     align: 'left',
   },
   {
@@ -108,7 +108,7 @@ export const scenes = [
     note:
       'FerrumOS v0.1.1 is a research OS and QEMU appliance, not a production-ready general-purpose OS or certified safety platform.',
     video: '/media/scene-08.mp4',
-    poster: '/posters/scene-08.png',
+    poster: '/posters-webp/scene-08.webp',
     align: 'center',
     cta: true,
   },

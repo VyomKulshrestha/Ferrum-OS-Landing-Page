@@ -62,4 +62,9 @@ test('generated scenes ship as playable, bounded media with lossless handoffs', 
     const image = await stat(new URL(`../public/posters/${poster}`, import.meta.url))
     assert.ok(image.size > 500_000)
   }
+
+  for (const poster of ['scene-01-opening.webp', 'scene-02.webp', 'scene-03.webp', 'scene-04.webp']) {
+    const image = await stat(new URL(`../public/posters-webp/${poster}`, import.meta.url))
+    assert.ok(image.size > 50_000 && image.size < 1_000_000)
+  }
 })
