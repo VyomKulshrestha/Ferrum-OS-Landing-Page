@@ -8,6 +8,7 @@
 - [Full public context](https://ferrum-os.vercel.app/llms-full.txt)
 - [Measured evidence and limitations](https://ferrum-os.vercel.app/proof)
 - [Research interfaces](https://ferrum-os.vercel.app/research)
+- [Research interfaces in Markdown](https://ferrum-os.vercel.app/research.md)
 - [Capability catalog](https://ferrum-os.vercel.app/capabilities.json)
 - [Benchmark catalog](https://ferrum-os.vercel.app/benchmarks.json)
 - [Release feed](https://ferrum-os.vercel.app/releases.json)

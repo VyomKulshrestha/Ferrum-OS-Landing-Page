@@ -65,6 +65,7 @@ FerrumOS is not a production-ready general-purpose operating system, a certified
 - Evidence and limitations: https://ferrum-os.vercel.app/proof
 - Research overview: https://ferrum-os.vercel.app/research
 - Markdown proof: https://ferrum-os.vercel.app/proof.md
+- Markdown research overview: https://ferrum-os.vercel.app/research.md
 - Capability catalog: https://ferrum-os.vercel.app/capabilities.json
 - Benchmark catalog: https://ferrum-os.vercel.app/benchmarks.json
 - Release feed: https://ferrum-os.vercel.app/releases.json

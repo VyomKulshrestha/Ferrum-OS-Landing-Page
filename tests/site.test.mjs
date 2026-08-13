@@ -38,6 +38,8 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
   assert.match(controller, /pendingSeeks\.set/)
   assert.match(controller, /smooth\(\(localProgress - 0\.78\) \/ 0\.22\)/)
   assert.match(controller, /updateCopyStage\(index, localProgress\)/)
+  assert.match(controller, /classList\.toggle\('is-enhanced', enhancedMotion\(\)\)/)
+  assert.match(controller, /if \(!enhancedMotion\(\)\)/)
   assert.match(controller, /coarsePointer\.matches && !widthChanged/)
   assert.match(controller, /querySelector\('source'\)\?\.dataset\.src/)
   assert.match(controller, /video\.dataset\.poster/)
@@ -126,26 +128,51 @@ test('machine endpoints reference local schemas and do not impersonate a runtime
 })
 
 test('deployment metadata negotiates Markdown and enforces browser safety headers', async () => {
-  const [html, markdown, configSource, middlewareSource] = await Promise.all([
+  const [html, proofHtml, researchHtml, markdown, proofMarkdown, researchMarkdown, configSource, middlewareSource] = await Promise.all([
     text('index.html'),
+    text('proof.html'),
+    text('research.html'),
     text('public/index.md'),
+    text('public/proof.md'),
+    text('public/research.md'),
     text('vercel.json'),
     text('middleware.js'),
   ])
   const config = JSON.parse(configSource)
-  const { acceptsMarkdown, config: middlewareConfig, default: middleware } = await import('../middleware.js')
-  assert.equal(middlewareConfig.matcher, '/')
+  const { acceptsMarkdown, config: middlewareConfig, MARKDOWN_ROUTES, default: middleware } = await import('../middleware.js')
+  assert.deepEqual(middlewareConfig.matcher, ['/', '/proof', '/research'])
+  assert.deepEqual([...MARKDOWN_ROUTES], [
+    ['/', '/index.md'],
+    ['/proof', '/proof.md'],
+    ['/research', '/research.md'],
+  ])
   assert.equal(acceptsMarkdown('text/markdown'), true)
   assert.equal(acceptsMarkdown('text/html, text/markdown;q=0.8'), true)
   assert.equal(acceptsMarkdown('text/html, text/markdown;q=0'), false)
   assert.equal(acceptsMarkdown('text/html,application/xhtml+xml'), false)
-  const markdownResponse = middleware(new Request('https://ferrum-os.vercel.app/', { headers: { accept: 'text/markdown' } }))
-  const htmlResponse = middleware(new Request('https://ferrum-os.vercel.app/', { headers: { accept: 'text/html' } }))
-  assert.equal(markdownResponse.headers.get('x-middleware-rewrite'), 'https://ferrum-os.vercel.app/index.md')
-  assert.equal(htmlResponse.headers.get('x-middleware-next'), '1')
-  assert.match(middlewareSource, /rewrite\(new URL\('\/index\.md'/)
+
+  for (const [route, destination] of MARKDOWN_ROUTES) {
+    const markdownResponse = middleware(new Request(`https://ferrum-os.vercel.app${route}`, { headers: { accept: 'text/markdown' } }))
+    const htmlResponse = middleware(new Request(`https://ferrum-os.vercel.app${route}`, { headers: { accept: 'text/html' } }))
+    assert.equal(markdownResponse.headers.get('x-middleware-rewrite'), `https://ferrum-os.vercel.app${destination}`)
+    assert.equal(htmlResponse.headers.get('x-middleware-next'), '1')
+  }
+  const unknownResponse = middleware(new Request('https://ferrum-os.vercel.app/not-a-page', { headers: { accept: 'text/markdown' } }))
+  assert.equal(unknownResponse.headers.get('x-middleware-next'), '1')
+  assert.match(middlewareSource, /url\.pathname = destination/)
   assert.match(html, /rel="alternate" type="text\/markdown" href="\/index\.md"/)
+  assert.match(proofHtml, /rel="alternate" type="text\/markdown" href="\/proof\.md"/)
+  assert.match(researchHtml, /rel="alternate" type="text\/markdown" href="\/research\.md"/)
   assert.match(markdown, /Current main contains newer research/i)
+  assert.match(proofMarkdown, /simple baseline result/i)
+  assert.match(researchMarkdown, /learned forecast add caution/i)
+
+  for (const route of ['/', '/proof', '/research']) {
+    const routeHeaders = config.headers.find((entry) => entry.source === route).headers
+    const routeHeaderMap = Object.fromEntries(routeHeaders.map(({ key, value }) => [key, value]))
+    assert.equal(routeHeaderMap.Vary, 'Accept')
+    assert.match(routeHeaderMap.Link, /rel="alternate"; type="text\/markdown"/)
+  }
 
   const globalHeaders = config.headers.find((entry) => entry.source === '/(.*)').headers
   const headerMap = Object.fromEntries(globalHeaders.map(({ key, value }) => [key, value]))

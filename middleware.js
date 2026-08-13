@@ -1,7 +1,13 @@
 import { next, rewrite } from '@vercel/functions'
 
+export const MARKDOWN_ROUTES = new Map([
+  ['/', '/index.md'],
+  ['/proof', '/proof.md'],
+  ['/research', '/research.md'],
+])
+
 export const config = {
-  matcher: '/',
+  matcher: ['/', '/proof', '/research'],
 }
 
 export function acceptsMarkdown(header = '') {
@@ -14,6 +20,11 @@ export function acceptsMarkdown(header = '') {
 }
 
 export default function middleware(request) {
-  if (!acceptsMarkdown(request.headers.get('accept') ?? '')) return next()
-  return rewrite(new URL('/index.md', request.url))
+  const url = new URL(request.url)
+  const destination = MARKDOWN_ROUTES.get(url.pathname)
+
+  if (!destination || !acceptsMarkdown(request.headers.get('accept') ?? '')) return next()
+
+  url.pathname = destination
+  return rewrite(url)
 }

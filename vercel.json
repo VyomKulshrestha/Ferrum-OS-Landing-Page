@@ -14,6 +14,27 @@
       ]
     },
     {
+      "source": "/",
+      "headers": [
+        { "key": "Vary", "value": "Accept" },
+        { "key": "Link", "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\", </llms.txt>; rel=\"describedby\"" }
+      ]
+    },
+    {
+      "source": "/proof",
+      "headers": [
+        { "key": "Vary", "value": "Accept" },
+        { "key": "Link", "value": "</proof.md>; rel=\"alternate\"; type=\"text/markdown\", </llms.txt>; rel=\"describedby\"" }
+      ]
+    },
+    {
+      "source": "/research",
+      "headers": [
+        { "key": "Vary", "value": "Accept" },
+        { "key": "Link", "value": "</research.md>; rel=\"alternate\"; type=\"text/markdown\", </llms.txt>; rel=\"describedby\"" }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
@@ -52,7 +73,7 @@
       ]
     },
     {
-      "source": "/(index.md|proof.md|changelog.md)",
+      "source": "/(index.md|proof.md|research.md|changelog.md)",
       "headers": [
         { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=3600" }
