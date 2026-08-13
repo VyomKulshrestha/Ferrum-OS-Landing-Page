@@ -43,6 +43,12 @@ test('visibility evaluator scores only supplied real response records', () => {
   assert.equal(result.expectedTermCoverage, 1)
   assert.equal(result.ferrumCitationCount, 1)
   assert.equal(result.needsHumanReview, false)
+  const boundaryResult = evaluate({ id: 'physical-01', expected: ['no'], forbidden: ['real robot control'] }, {
+    assistant: 'Test assistant',
+    response: 'Notably, FerrumOS remains simulator-only.',
+    citations: [],
+  })
+  assert.equal(boundaryResult.expectedTermCoverage, 0)
   assert.throws(() => evaluate(prompt, { assistant: 'Test assistant', response: '' }), /has no response/)
 })
 

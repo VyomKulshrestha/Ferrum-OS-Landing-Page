@@ -15,6 +15,10 @@ const AUTHORITATIVE = [
 ]
 
 const normalize = (value) => String(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+const containsTerm = (normalizedText, term) => {
+  const normalizedTerm = normalize(term)
+  return normalizedTerm.length > 0 && ` ${normalizedText} `.includes(` ${normalizedTerm} `)
+}
 
 export async function loadCaptures(path) {
   if (!path) return []
@@ -39,8 +43,8 @@ export function evaluate(prompt, capture) {
 
   if (!capture.response) throw new Error(`Completed capture ${prompt.id} has no response`)
   const response = normalize(capture.response)
-  const expectedTermsFound = prompt.expected.filter((term) => response.includes(normalize(term)))
-  const forbiddenTermsFound = prompt.forbidden.filter((term) => response.includes(normalize(term)))
+  const expectedTermsFound = prompt.expected.filter((term) => containsTerm(response, term))
+  const forbiddenTermsFound = prompt.forbidden.filter((term) => containsTerm(response, term))
   const citations = Array.isArray(capture.citations) ? capture.citations.map(String) : []
   const ferrumCitations = citations.filter((citation) => {
     try {
