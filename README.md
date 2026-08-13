@@ -41,6 +41,8 @@ Run the production checks:
 npm run check
 ```
 
+The continuous visual journey and its handoff/quality rules are documented in [`docs/CINEMATIC_ROUTE.md`](docs/CINEMATIC_ROUTE.md).
+
 The site is a Vite multipage build deployed with Vercel.
 
 ## Primary research
@@ -52,4 +54,3 @@ The site is a Vite multipage build deployed with Vercel.
 ## License
 
 MIT
-
