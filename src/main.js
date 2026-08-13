@@ -174,7 +174,13 @@ function updateJourney() {
 
 function requestJourneyUpdate(markInteraction = true) {
   if (markInteraction) {
-    if (!userHasScrolled) media[0]?.pause()
+    const opening = media[0]
+    if (!userHasScrolled && Number.isFinite(opening?.currentTime)) {
+      openingBaseline = Math.max(openingBaseline, opening.currentTime)
+      sceneTargets.set(opening, 0)
+      sceneCurrents.set(opening, 0)
+      opening.pause()
+    }
     userHasScrolled = true
     if (autoplayRaf) cancelAnimationFrame(autoplayRaf)
     autoplayRaf = null

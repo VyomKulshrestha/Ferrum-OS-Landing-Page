@@ -33,6 +33,8 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
   assert.match(controller, /opening\.currentTime >= cap/)
   assert.match(controller, /openingBaseline = Math\.max\(openingBaseline, opening\.currentTime\)/)
   assert.match(controller, /video === media\[0\] \? openingBaseline : 0/)
+  assert.match(controller, /if \(!userHasScrolled && Number\.isFinite\(opening\?\.currentTime\)\)/)
+  assert.match(controller, /sceneTargets\.set\(opening, 0\)[\s\S]*sceneCurrents\.set\(opening, 0\)[\s\S]*opening\.pause\(\)/)
   assert.doesNotMatch(controller, /URL\.createObjectURL/)
   assert.match(controller, /video\.dataset\.transport = 'byte-range'/)
   assert.match(controller, /pendingSeeks\.set/)
