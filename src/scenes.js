@@ -12,6 +12,7 @@ export const scenes = [
     video: '/media/scene-01.mp4',
     poster: '/posters-webp/scene-01-opening.webp',
     align: 'left',
+    scroll: 1.95,
   },
   {
     id: 'boundary',
@@ -26,6 +27,7 @@ export const scenes = [
     video: '/media/scene-02.mp4',
     poster: '/posters-webp/scene-02.webp',
     align: 'right',
+    scroll: 1.8,
   },
   {
     id: 'userland',
@@ -40,6 +42,7 @@ export const scenes = [
     video: '/media/scene-03.mp4',
     poster: '/posters-webp/scene-03.webp',
     align: 'left',
+    scroll: 1.82,
   },
   {
     id: 'authority',
@@ -54,6 +57,7 @@ export const scenes = [
     video: '/media/scene-04.mp4',
     poster: '/posters-webp/scene-04.webp',
     align: 'right',
+    scroll: 1.85,
   },
   {
     id: 'world-model',
@@ -68,6 +72,7 @@ export const scenes = [
     video: '/media/scene-05.mp4',
     poster: '/posters-webp/scene-05.webp',
     align: 'left',
+    scroll: 2,
   },
   {
     id: 'evidence',
@@ -82,6 +87,7 @@ export const scenes = [
     video: '/media/scene-06.mp4',
     poster: '/posters-webp/scene-06.webp',
     align: 'right',
+    scroll: 1.88,
   },
   {
     id: 'inputs',
@@ -96,6 +102,7 @@ export const scenes = [
     video: '/media/scene-07.mp4',
     poster: '/posters-webp/scene-07.webp',
     align: 'left',
+    scroll: 1.9,
   },
   {
     id: 'horizon',
@@ -110,6 +117,7 @@ export const scenes = [
     video: '/media/scene-08.mp4',
     poster: '/posters-webp/scene-08.webp',
     align: 'center',
+    scroll: 2.15,
     cta: true,
   },
 ]

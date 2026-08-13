@@ -24,6 +24,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
   background: var(--ink);
 }
 
@@ -230,11 +231,24 @@ a {
   object-fit: cover;
   opacity: 0;
   filter: saturate(1.06) contrast(1.04) brightness(0.92);
-  transition: opacity 320ms linear;
+  transform: scale(1.025);
+  transform-origin: 50% 52%;
+  will-change: opacity, transform;
 }
 
 .scene-media.is-active {
   opacity: 1;
+  animation: camera-breathe 14s ease-in-out infinite alternate;
+}
+
+@keyframes camera-breathe {
+  from {
+    transform: scale(1.025) translate3d(-0.25%, 0.15%, 0);
+  }
+
+  to {
+    transform: scale(1.065) translate3d(0.4%, -0.35%, 0);
+  }
 }
 
 .scene-media.has-error {
@@ -414,6 +428,10 @@ a {
   padding: calc(var(--header-h) + 3rem) var(--pad) 7.5rem;
 }
 
+.is-enhanced .chapter {
+  min-height: var(--scene-height, 180svh);
+}
+
 .chapter::before {
   content: '';
   position: absolute;
@@ -452,14 +470,29 @@ a {
   transition: opacity 700ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.is-enhanced .chapter:not(.is-current) .chapter__copy {
-  transform: translateY(1.25rem);
-  opacity: 0.7;
+.is-enhanced .chapter__copy {
+  position: fixed;
+  z-index: 7;
+  top: 50%;
+  left: var(--pad);
+  opacity: var(--copy-opacity, 0);
+  transform: translate3d(0, calc(-50% + var(--copy-shift, 0px)), 0) scale(var(--copy-scale, 0.985));
+  transform-origin: left center;
+  transition: none;
+  will-change: opacity, transform;
 }
 
-.is-enhanced .chapter.is-current .chapter__copy {
-  transform: translateY(0);
-  opacity: 1;
+.is-enhanced .chapter--right .chapter__copy {
+  right: var(--pad);
+  left: auto;
+  transform-origin: right center;
+}
+
+.is-enhanced .chapter--center .chapter__copy {
+  right: auto;
+  left: 50%;
+  transform: translate3d(-50%, calc(-50% + var(--copy-shift, 0px)), 0) scale(var(--copy-scale, 0.985));
+  transform-origin: center;
 }
 
 .chapter--right {
@@ -721,6 +754,17 @@ footer a:focus-visible {
     align-items: flex-end;
     justify-content: flex-start;
     text-align: left;
+  }
+
+  .is-enhanced .chapter__copy,
+  .is-enhanced .chapter--right .chapter__copy,
+  .is-enhanced .chapter--center .chapter__copy {
+    top: auto;
+    right: var(--pad);
+    bottom: max(4.6rem, env(safe-area-inset-bottom));
+    left: var(--pad);
+    transform: translate3d(0, var(--copy-shift, 0px), 0) scale(var(--copy-scale, 0.985));
+    transform-origin: left bottom;
   }
 
   .chapter__copy,

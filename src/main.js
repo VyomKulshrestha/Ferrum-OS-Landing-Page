@@ -28,6 +28,10 @@ const sceneTargets = new WeakMap()
 const sceneCurrents = new WeakMap()
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
+const smooth = (value) => {
+  const normalized = clamp(value, 0, 1)
+  return normalized * normalized * (3 - 2 * normalized)
+}
 
 function loadSceneSource(index) {
   const video = media[index]
@@ -71,6 +75,30 @@ function showScene(index) {
   chapters[activeIndex]?.classList.add('is-current')
   progressCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}`
   ensureAdjacentSources(index)
+}
+
+function copyOpacity(index, progress) {
+  if (index === 0) return 1 - smooth((progress - 0.6) / 0.18)
+  if (index === scenes.length - 1) return smooth((progress - 0.1) / 0.2)
+  const fadeIn = smooth((progress - 0.08) / 0.18)
+  const fadeOut = 1 - smooth((progress - 0.68) / 0.16)
+  return Math.min(fadeIn, fadeOut)
+}
+
+function updateCopyStage(index, progress) {
+  chapters.forEach((chapter, chapterIndex) => {
+    const copy = chapter.querySelector('.chapter__copy')
+    const opacity = chapterIndex === index ? copyOpacity(index, progress) : 0
+    const shift = (0.5 - progress) * 42
+    const scale = 0.985 + opacity * 0.015
+
+    copy.style.setProperty('--copy-opacity', opacity.toFixed(3))
+    copy.style.setProperty('--copy-shift', `${shift.toFixed(2)}px`)
+    copy.style.setProperty('--copy-scale', scale.toFixed(4))
+    copy.style.visibility = opacity > 0.002 ? 'visible' : 'hidden'
+    copy.style.pointerEvents = opacity > 0.55 ? 'auto' : 'none'
+    copy.setAttribute('aria-hidden', opacity > 0.12 ? 'false' : 'true')
+  })
 }
 
 function setVideoTime(video, progress) {
@@ -120,12 +148,13 @@ function updateJourney() {
   const totalProgress = scrollY >= maxScroll - 1 ? 1 : clamp((index + localProgress) / scenes.length, 0, 1)
 
   showScene(index)
+  updateCopyStage(index, localProgress)
   progressFill.style.transform = `scaleX(${totalProgress})`
 
   if (!reducedMotion.matches && !saveData) {
     sceneTargets.set(media[index], localProgress)
     const nextIndex = Math.min(index + 1, scenes.length - 1)
-    const seam = clamp((localProgress - 0.92) / 0.08, 0, 1)
+    const seam = smooth((localProgress - 0.78) / 0.22)
     if (nextIndex !== index) {
       media[index].style.opacity = String(1 - seam)
       media[nextIndex].style.opacity = String(seam)
@@ -220,6 +249,9 @@ media.forEach((video) => {
 })
 
 chapters[0]?.classList.add('is-current')
+chapters.forEach((chapter, index) => {
+  chapter.style.setProperty('--scene-height', `${Math.round((scenes[index].scroll ?? 1.8) * 100)}svh`)
+})
 document.documentElement.classList.add('is-enhanced')
 measureJourney()
 ensureAdjacentSources(0)
