@@ -23,9 +23,9 @@ Every clip begins from a lossless PNG extracted from the actual final frame of t
 - `/research` — world-model, physical simulator, and neural claim boundaries
 - `/capabilities.json` — machine-readable system surface
 - `/benchmarks.json` — machine-readable benchmark summary
-- `/proof.md`, `/llms.txt`, and `/llms-full.txt` — compact and full agent-readable context
+- `/proof.md`, `/research.md`, `/llms.txt`, and `/llms-full.txt` — compact and full agent-readable context
 - `/releases.json` and `/changelog.md` — release-versus-main boundaries
-- `/.well-known/ferrumos-docs.json` and `/.well-known/api-catalog.json` — read-only documentation discovery; never runtime-control endpoints
+- `/.well-known/ferrumos-docs.json`, `/.well-known/api-catalog`, and `/openapi.json` — read-only documentation discovery; never runtime-control endpoints
 
 The capability and benchmark documents identify the exact FerrumOS source commit and SHA-256 content hash used for each website snapshot. Refresh them from a sibling FerrumOS checkout with:
 

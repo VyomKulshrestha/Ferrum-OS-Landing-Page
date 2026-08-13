@@ -2,15 +2,21 @@
   "schemaVersion": 1,
   "name": "FerrumOS public metadata API",
   "baseUrl": "https://ferrum-os.vercel.app",
+  "canonicalUrl": "https://ferrum-os.vercel.app/.well-known/api-catalog",
+  "openapi": "https://ferrum-os.vercel.app/openapi.json",
   "readOnly": true,
   "authentication": "none",
+  "allowedMethods": ["GET"],
   "endpoints": [
+    { "path": "/.well-known/api-catalog", "mediaType": "application/json", "description": "Canonical read-only API discovery document" },
     { "path": "/capabilities.json", "mediaType": "application/json", "description": "Versioned per-operation capability catalog" },
     { "path": "/benchmarks.json", "mediaType": "application/json", "description": "Versioned benchmark and protocol snapshot" },
     { "path": "/releases.json", "mediaType": "application/json", "description": "Tagged software and frozen research releases" },
     { "path": "/proof.md", "mediaType": "text/markdown", "description": "Evidence summary and claim boundaries" },
+    { "path": "/research.md", "mediaType": "text/markdown", "description": "World-model, physical-simulator, and neural research boundaries" },
     { "path": "/llms.txt", "mediaType": "text/plain", "description": "Compact assistant context" },
-    { "path": "/llms-full.txt", "mediaType": "text/plain", "description": "Full assistant context" }
+    { "path": "/llms-full.txt", "mediaType": "text/plain", "description": "Full assistant context" },
+    { "path": "/changelog.md", "mediaType": "text/markdown", "description": "Release-versus-main change boundary" }
   ],
   "runtimeControl": false
 }

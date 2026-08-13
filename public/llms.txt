@@ -12,6 +12,8 @@
 - [Capability catalog](https://ferrum-os.vercel.app/capabilities.json)
 - [Benchmark catalog](https://ferrum-os.vercel.app/benchmarks.json)
 - [Release feed](https://ferrum-os.vercel.app/releases.json)
+- [Read-only metadata API catalog](https://ferrum-os.vercel.app/.well-known/api-catalog)
+- [Read-only metadata OpenAPI](https://ferrum-os.vercel.app/openapi.json)
 - [Source code](https://github.com/VyomKulshrestha/Ferrum-OS)
 - [Releases](https://github.com/VyomKulshrestha/Ferrum-OS/releases)
 

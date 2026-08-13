@@ -70,6 +70,8 @@ FerrumOS is not a production-ready general-purpose operating system, a certified
 - Benchmark catalog: https://ferrum-os.vercel.app/benchmarks.json
 - Release feed: https://ferrum-os.vercel.app/releases.json
 - Changelog: https://ferrum-os.vercel.app/changelog.md
+- Read-only metadata API catalog: https://ferrum-os.vercel.app/.well-known/api-catalog
+- Read-only metadata OpenAPI: https://ferrum-os.vercel.app/openapi.json
 - Technical report: https://doi.org/10.5281/zenodo.21829808
 - Dataset: https://doi.org/10.5281/zenodo.21829193
 - Frozen research release: https://github.com/VyomKulshrestha/Ferrum-OS/releases/tag/world-model-study-v1.0.0

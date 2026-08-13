@@ -119,17 +119,39 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
 })
 
 test('machine endpoints reference local schemas and do not impersonate a runtime agent', async () => {
-  const [capabilities, benchmarks, capabilitySchema, benchmarkSchema] = await Promise.all([
+  const [capabilities, benchmarks, capabilitySchema, benchmarkSchema, openapiSource, apiCatalogSource, configSource] = await Promise.all([
     text('public/capabilities.json'),
     text('public/benchmarks.json'),
     text('public/schemas/capabilities-v2.schema.json'),
     text('public/schemas/benchmarks-v2.schema.json'),
+    text('public/openapi.json'),
+    text('public/.well-known/api-catalog.json'),
+    text('vercel.json'),
   ])
   const capabilityData = JSON.parse(capabilities)
   const benchmarkData = JSON.parse(benchmarks)
   assert.equal(JSON.parse(capabilitySchema).$id, capabilityData.$schema)
   assert.equal(JSON.parse(benchmarkSchema).$id, benchmarkData.$schema)
+
+  const openapi = JSON.parse(openapiSource)
+  const apiCatalog = JSON.parse(apiCatalogSource)
+  const config = JSON.parse(configSource)
+  assert.equal(openapi.openapi, '3.1.0')
+  assert.equal(openapi['x-ferrumos-safety'].runtimeControl, false)
+  assert.equal(openapi['x-ferrumos-safety'].acceptsCommands, false)
+  assert.equal(apiCatalog.canonicalUrl, 'https://ferrum-os.vercel.app/.well-known/api-catalog')
+  assert.equal(apiCatalog.openapi, 'https://ferrum-os.vercel.app/openapi.json')
+  assert.deepEqual(apiCatalog.allowedMethods, ['GET'])
+  assert.deepEqual(config.rewrites, [{
+    source: '/.well-known/api-catalog',
+    destination: '/.well-known/api-catalog.json',
+  }])
+  for (const path of Object.values(openapi.paths)) {
+    assert.deepEqual(Object.keys(path), ['get'])
+  }
+  assert.equal(Object.hasOwn(openapi.paths, '/api/mcp'), false)
   await assert.rejects(stat(new URL('../public/.well-known/agent-card.json', import.meta.url)), /ENOENT/)
+  await assert.rejects(stat(new URL('../public/.well-known/mcp.json', import.meta.url)), /ENOENT/)
 })
 
 test('deployment metadata negotiates Markdown and enforces browser safety headers', async () => {

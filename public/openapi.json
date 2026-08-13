@@ -1,0 +1,168 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FerrumOS public metadata API",
+    "version": "1.0.0",
+    "description": "Unauthenticated, read-only metadata for FerrumOS capabilities, benchmarks, releases, research, and claim boundaries. This API cannot observe or control a FerrumOS instance."
+  },
+  "servers": [
+    { "url": "https://ferrum-os.vercel.app" }
+  ],
+  "security": [],
+  "tags": [
+    { "name": "discovery", "description": "Read-only endpoint discovery." },
+    { "name": "evidence", "description": "Versioned capability and benchmark evidence." },
+    { "name": "documentation", "description": "Human- and agent-readable public documentation." }
+  ],
+  "paths": {
+    "/.well-known/api-catalog": {
+      "get": {
+        "operationId": "getApiCatalog",
+        "summary": "Get the canonical public metadata catalog",
+        "tags": ["discovery"],
+        "responses": {
+          "200": {
+            "description": "Read-only public metadata catalog",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/.well-known/ferrumos-docs.json": {
+      "get": {
+        "operationId": "getDocumentationCatalog",
+        "summary": "Get the FerrumOS documentation catalog",
+        "tags": ["discovery"],
+        "responses": {
+          "200": {
+            "description": "Documentation resource map",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/capabilities.json": {
+      "get": {
+        "operationId": "getCapabilities",
+        "summary": "Get the versioned capability catalog",
+        "tags": ["evidence"],
+        "responses": {
+          "200": {
+            "description": "Per-operation authority and verification metadata",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "https://ferrum-os.vercel.app/schemas/capabilities-v2.schema.json" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/benchmarks.json": {
+      "get": {
+        "operationId": "getBenchmarks",
+        "summary": "Get the versioned benchmark snapshot",
+        "tags": ["evidence"],
+        "responses": {
+          "200": {
+            "description": "Measured results, protocols, and claim boundaries",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "https://ferrum-os.vercel.app/schemas/benchmarks-v2.schema.json" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/releases.json": {
+      "get": {
+        "operationId": "getReleases",
+        "summary": "Get tagged software and frozen research releases",
+        "tags": ["evidence"],
+        "responses": {
+          "200": {
+            "description": "Release-versus-main metadata",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/proof.md": {
+      "get": {
+        "operationId": "getProofMarkdown",
+        "summary": "Get measured evidence and limitations",
+        "tags": ["documentation"],
+        "responses": {
+          "200": {
+            "description": "Evidence summary in Markdown",
+            "content": { "text/markdown": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/research.md": {
+      "get": {
+        "operationId": "getResearchMarkdown",
+        "summary": "Get world-model and neural research boundaries",
+        "tags": ["documentation"],
+        "responses": {
+          "200": {
+            "description": "Research overview in Markdown",
+            "content": { "text/markdown": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/llms.txt": {
+      "get": {
+        "operationId": "getCompactContext",
+        "summary": "Get compact FerrumOS context",
+        "tags": ["documentation"],
+        "responses": {
+          "200": {
+            "description": "Compact public context",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/llms-full.txt": {
+      "get": {
+        "operationId": "getFullContext",
+        "summary": "Get full FerrumOS context",
+        "tags": ["documentation"],
+        "responses": {
+          "200": {
+            "description": "Full public context",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/changelog.md": {
+      "get": {
+        "operationId": "getChangelogMarkdown",
+        "summary": "Get the public changelog",
+        "tags": ["documentation"],
+        "responses": {
+          "200": {
+            "description": "Release and current-main changelog in Markdown",
+            "content": { "text/markdown": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    }
+  },
+  "x-ferrumos-safety": {
+    "readOnly": true,
+    "runtimeControl": false,
+    "acceptsCommands": false,
+    "connectsToRuntime": false,
+    "userDataAccess": false
+  },
+  "externalDocs": {
+    "description": "FerrumOS public evidence catalog",
+    "url": "https://ferrum-os.vercel.app/.well-known/api-catalog"
+  }
+}

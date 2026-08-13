@@ -13,8 +13,11 @@
     "capabilities": "https://ferrum-os.vercel.app/capabilities.json",
     "benchmarks": "https://ferrum-os.vercel.app/benchmarks.json",
     "proof": "https://ferrum-os.vercel.app/proof.md",
+    "research": "https://ferrum-os.vercel.app/research.md",
     "releases": "https://ferrum-os.vercel.app/releases.json",
-    "changelog": "https://ferrum-os.vercel.app/changelog.md"
+    "changelog": "https://ferrum-os.vercel.app/changelog.md",
+    "apiCatalog": "https://ferrum-os.vercel.app/.well-known/api-catalog",
+    "openapi": "https://ferrum-os.vercel.app/openapi.json"
   },
   "source": "https://github.com/VyomKulshrestha/Ferrum-OS",
   "note": "This catalog exposes public documentation only. It cannot observe, command, or control a FerrumOS instance."
