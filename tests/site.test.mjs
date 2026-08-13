@@ -31,7 +31,7 @@ test('the cinematic has eight complete, unique, statically rendered chapters', a
   assert.doesNotMatch(controller, /scrollY \/ maxScroll/)
   assert.match(controller, /Math\.max\(segmentStart \+ 1, maxScroll\)/)
   assert.match(controller, /opening\.currentTime >= cap/)
-  assert.match(controller, /openingBaseline = opening\.currentTime/)
+  assert.match(controller, /openingBaseline = Math\.max\(openingBaseline, opening\.currentTime\)/)
   assert.match(controller, /video === media\[0\] \? openingBaseline : 0/)
   assert.doesNotMatch(controller, /URL\.createObjectURL/)
   assert.match(controller, /video\.dataset\.transport = 'byte-range'/)

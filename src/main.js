@@ -195,11 +195,9 @@ async function startOpeningMotion() {
   const monitorOpening = () => {
     const cap = Number.isFinite(opening.duration) ? Math.min(3.5, opening.duration * 0.42) : 3.5
     if (userHasScrolled || window.scrollY > 2 || document.hidden || opening.currentTime >= cap) {
-      if (!userHasScrolled && opening.currentTime >= cap) {
-        openingBaseline = opening.currentTime
-        sceneTargets.set(opening, 0)
-        sceneCurrents.set(opening, 0)
-      }
+      if (Number.isFinite(opening.currentTime)) openingBaseline = Math.max(openingBaseline, opening.currentTime)
+      sceneTargets.set(opening, 0)
+      sceneCurrents.set(opening, 0)
       opening.pause()
       autoplayRaf = null
       return
