@@ -109,6 +109,27 @@ test('machine endpoints reference local schemas and do not impersonate a runtime
   await assert.rejects(stat(new URL('../public/.well-known/agent-card.json', import.meta.url)), /ENOENT/)
 })
 
+test('deployment metadata negotiates Markdown and enforces browser safety headers', async () => {
+  const [html, markdown, configSource] = await Promise.all([
+    text('index.html'),
+    text('public/index.md'),
+    text('vercel.json'),
+  ])
+  const config = JSON.parse(configSource)
+  const markdownRewrite = config.rewrites.find((rewrite) => rewrite.source === '/' && rewrite.has)
+  assert.equal(markdownRewrite.destination, '/index.md')
+  assert.equal(markdownRewrite.has[0].key, 'accept')
+  assert.match(markdownRewrite.has[0].value, /text\/markdown/)
+  assert.match(html, /rel="alternate" type="text\/markdown" href="\/index\.md"/)
+  assert.match(markdown, /Current main contains newer research/i)
+
+  const globalHeaders = config.headers.find((entry) => entry.source === '/(.*)').headers
+  const headerMap = Object.fromEntries(globalHeaders.map(({ key, value }) => [key, value]))
+  assert.equal(headerMap['X-Frame-Options'], 'DENY')
+  assert.match(headerMap['Content-Security-Policy'], /frame-ancestors 'none'/)
+  assert.match(headerMap['Permissions-Policy'], /camera=\(\)/)
+})
+
 test('the type system is self-hosted with its license notices', async () => {
   const assets = [
     'public/fonts/ibm-plex-mono-400-latin.woff2',

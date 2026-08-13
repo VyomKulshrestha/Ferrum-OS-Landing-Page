@@ -20,8 +20,4 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm test
-      - run: npm run build
-      - name: Verify multipage output
-        run: test -f dist/index.html && test -f dist/proof.html && test -f dist/research.html
-
+      - run: npm run check
