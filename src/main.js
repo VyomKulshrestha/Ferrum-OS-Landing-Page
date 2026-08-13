@@ -30,7 +30,7 @@ const sceneMarkup = scenes
 
 document.querySelector('#app').innerHTML = `
   <header class="site-header">
-    <a class="brand" href="#forge" aria-label="FerrumOS home">
+    <a class="brand" href="#forge" aria-label="FerrumOS">
       <span class="brand__mark" aria-hidden="true">F</span>
       <span>Ferrum<span>OS</span></span>
     </a>
