@@ -630,6 +630,19 @@ h2 {
   border-color: var(--cyan);
 }
 
+.button--sponsor {
+  border-color: rgba(179, 124, 255, 0.6);
+  background: rgba(179, 124, 255, 0.1);
+  color: #eadcff;
+}
+
+.button--sponsor:hover,
+.button--sponsor:focus-visible {
+  border-color: var(--violet);
+  background: rgba(179, 124, 255, 0.2);
+  color: var(--paper);
+}
+
 footer {
   position: relative;
   z-index: 5;
