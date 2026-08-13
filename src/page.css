@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 :root {
   color-scheme: dark;
   --ink: #070806;
@@ -241,4 +243,3 @@ h3 { margin: 0; font-size: 1.25rem; }
   .page-nav div a:not(:last-child) { display: none; }
   .cta-panel { align-items: flex-start; flex-direction: column; }
 }
-

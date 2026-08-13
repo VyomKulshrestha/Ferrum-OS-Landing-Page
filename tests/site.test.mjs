@@ -17,8 +17,10 @@ test('the cinematic has eight complete, unique chapters', async () => {
 })
 
 test('the landing page exposes semantic and agent-readable evidence', async () => {
-  const [html, llms, proof, capabilities, benchmarks] = await Promise.all([
+  const [html, proofHtml, researchHtml, llms, proof, capabilities, benchmarks] = await Promise.all([
     text('index.html'),
+    text('proof.html'),
+    text('research.html'),
     text('public/llms.txt'),
     text('public/proof.md'),
     text('public/capabilities.json'),
@@ -27,6 +29,9 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
 
   assert.match(html, /SoftwareApplication/)
   assert.match(html, /Skip to the FerrumOS journey/)
+  for (const page of [html, proofHtml, researchHtml]) {
+    assert.doesNotMatch(page, /fonts\.(?:googleapis|gstatic)\.com/)
+  }
   assert.match(llms, /no live-EEG accuracy or medical claim/i)
   assert.match(proof, /simple baseline result/i)
 
@@ -38,6 +43,29 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   const benchmarkData = JSON.parse(benchmarks)
   assert.equal(benchmarkData.benchmarks.length, 6)
   assert.equal(benchmarkData.benchmarks[0].balancedAccuracy, 0.814)
+})
+
+test('the type system is self-hosted with its license notices', async () => {
+  const assets = [
+    'public/fonts/ibm-plex-mono-400-latin.woff2',
+    'public/fonts/ibm-plex-mono-500-latin.woff2',
+    'public/fonts/ibm-plex-mono-600-latin.woff2',
+    'public/fonts/manrope-latin.woff2',
+    'public/fonts/space-grotesk-latin.woff2',
+  ]
+  const licenses = [
+    'public/fonts/licenses/IBM-Plex-LICENSE.txt',
+    'public/fonts/licenses/Manrope-OFL.txt',
+    'public/fonts/licenses/Space-Grotesk-OFL.txt',
+  ]
+
+  for (const asset of assets) {
+    const file = await stat(new URL(`../${asset}`, import.meta.url))
+    assert.ok(file.size > 10_000)
+  }
+  for (const license of licenses) {
+    assert.match(await text(license), /SIL OPEN FONT LICENSE Version 1\.1/)
+  }
 })
 
 test('evidence pages retain required scientific boundaries and sources', async () => {
