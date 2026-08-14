@@ -1,6 +1,6 @@
 # FerrumOS landing page
 
-The public cinematic and evidence layer for [FerrumOS](https://github.com/VyomKulshrestha/Ferrum-OS), a bootable Rust x86-64 research operating system where an AI agent runs in Ring 3 and learned predictions can add caution but never grant authority.
+The public cinematic and evidence layer for [FerrumOS](https://github.com/VyomKulshrestha/Ferrum-OS), a bootable Rust x86-64 agentic and simulator-backed cyber-physical research operating system where an AI agent runs in Ring 3 and learned predictions can add caution but never grant authority.
 
 ## Experience
 
@@ -33,7 +33,7 @@ The capability and benchmark documents identify the exact FerrumOS source commit
 node scripts/sync-public-evidence.mjs ../cursor-os-base public
 ```
 
-FerrumOS v0.1.1 is a research OS and QEMU appliance. Physical results are simulator-only, neural results are synthetic/recorded evidence only, and no formal-safety, medical, live-EEG, real-robot, or broad-PC-compatibility claim is made.
+FerrumOS v0.1.1 is a research OS and QEMU appliance. Current-main cyber-physical results are local simulator-backed software evidence; neural results are synthetic/recorded evidence only, and no installed third-party deployment, native hypervisor, formal-safety, medical, live-EEG, real-robot, hard-real-time, or broad-PC-compatibility claim is made.
 
 ## Local development
 

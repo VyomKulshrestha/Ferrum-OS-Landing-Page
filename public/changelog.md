@@ -1,8 +1,11 @@
 # FerrumOS public changelog
 
-## Current main snapshot — 2026-08-13
+## Current main snapshot — 2026-08-14
 
 The current main branch contains research and system work newer than the latest tagged software release. Use the commit and content hashes in `capabilities.json` and `benchmarks.json` when citing this snapshot.
+
+- Completed the simulator-backed cyber-physical software tier across deterministic evidence sessions, replay/faults, virtual devices, simulator bridges, supervision/watchdogs, transport conformance, actuator-disabled delivery, bounded neural proposals, host-managed cells, privacy, and reliability primitives.
+- Published 152/152 passing deterministic contract tests and 32/32 passing model/decoder gates with explicit external hardware and deployment boundaries.
 
 - [Compare v0.1.1 with current main](https://github.com/VyomKulshrestha/Ferrum-OS/compare/v0.1.1...main)
 - [Current commits](https://github.com/VyomKulshrestha/Ferrum-OS/commits/main)

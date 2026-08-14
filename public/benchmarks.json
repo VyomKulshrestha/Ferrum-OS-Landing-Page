@@ -6,9 +6,9 @@
   "researchVersion": "1.0.0",
   "source": {
     "repository": "https://github.com/VyomKulshrestha/Ferrum-OS",
-    "commit": "75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7",
-    "snapshotDate": "2026-08-13",
-    "sha256": "09f7a28397a5e2e3f5f85bc9409f6be3a20d5a40f38a72f610113d5369ba3685",
+    "commit": "84926841a401760b869af158ee80b0e709d0d6af",
+    "snapshotDate": "2026-08-14",
+    "sha256": "618ebe473f70e66a68e19a7fdf627ea0ec513b82914b14d38dc4562fe6059bff",
     "raw": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/main/benchmarks.json"
   },
   "benchmarks": [
@@ -95,6 +95,30 @@
       "unknownCommandPaths": 0,
       "protocol": "ferrumos-qemu-command-audit-v1",
       "boundary": "This is a dated emulator command-path audit for the named source commit and artifact hashes. It is not evidence of broad physical-PC compatibility, hardware accuracy, live EEG performance, formal safety, or independent replication."
+    },
+    {
+      "id": "cyber-physical-software-regression",
+      "metric": "passing_software_contracts",
+      "contractTestsPassed": 152,
+      "contractTestsFailed": 0,
+      "modelAndDecoderGatesPassed": 32,
+      "modelAndDecoderGatesFailed": 0,
+      "sourceCommit": "167b04766ee5ea3c5714cd09a551feb7bc78f359",
+      "protocol": "cyber-physical-software-regression-2026-08-14",
+      "coveredSoftwareBoundaries": [
+        "versioned provenance and logical clocks",
+        "deterministic sessions replay and fault injection",
+        "virtual sensor actuator EEG watchdog and stop contracts",
+        "scripted Gazebo ROS 2 and Webots bridge boundaries",
+        "deterministic supervisor watchdog recovery and stop priority",
+        "ROS 2 MQTT and CAN transport conformance",
+        "actuator-disabled delivery",
+        "bounded neural intent and proposal-only physical goals",
+        "shadow-only physical JEPA evaluation",
+        "host-managed agent-cell contract",
+        "privacy retention reliability and incident primitives"
+      ],
+      "boundary": "Local deterministic software regression on the named commit. It does not prove an installed Gazebo or Webots deployment, real ROS 2/MQTT/CAN infrastructure, physical clocks, actuator hardware, robot safety, live EEG, hard-real-time behavior, native hypervisor containment, certification, or independent replication."
     }
   ],
   "protocols": {
@@ -241,6 +265,80 @@
       "source_commit": "54e1cc1819d3b3c11436f437733d197d469d1607",
       "warmup_previews_per_run": 64
     },
+    "cyber_physical_software": {
+      "claim_boundary": "Local deterministic software regression on the named commit. It does not prove an installed Gazebo or Webots deployment, real ROS 2/MQTT/CAN infrastructure, physical clocks, actuator hardware, robot safety, live EEG, hard-real-time behavior, native hypervisor containment, certification, or independent replication.",
+      "contract_suites": [
+        {
+          "command": "cargo test --manifest-path userland/physical-runtime/Cargo.toml --target x86_64-pc-windows-msvc",
+          "component": "ferrum-physical-runtime",
+          "failed": 0,
+          "passed": 117
+        },
+        {
+          "command": "cargo test --manifest-path userland/neural-protocol/Cargo.toml --target x86_64-pc-windows-msvc",
+          "component": "ferrum-neural-protocol",
+          "failed": 0,
+          "passed": 9
+        },
+        {
+          "command": "python -m unittest discover -s tools/neurod -p test_*.py",
+          "component": "neurod",
+          "failed": 0,
+          "passed": 15
+        },
+        {
+          "command": "python -m unittest tools.physical_sim_bridge.test_bridge",
+          "component": "physical-simulator-bridge",
+          "failed": 0,
+          "passed": 11
+        }
+      ],
+      "contract_tests_failed": 0,
+      "contract_tests_passed": 152,
+      "covered_software_boundaries": [
+        "versioned provenance and logical clocks",
+        "deterministic sessions replay and fault injection",
+        "virtual sensor actuator EEG watchdog and stop contracts",
+        "scripted Gazebo ROS 2 and Webots bridge boundaries",
+        "deterministic supervisor watchdog recovery and stop priority",
+        "ROS 2 MQTT and CAN transport conformance",
+        "actuator-disabled delivery",
+        "bounded neural intent and proposal-only physical goals",
+        "shadow-only physical JEPA evaluation",
+        "host-managed agent-cell contract",
+        "privacy retention reliability and incident primitives"
+      ],
+      "environment": {
+        "host_os": "Windows 11",
+        "python_runtime": "CPython",
+        "rust_target": "x86_64-pc-windows-msvc"
+      },
+      "evidence_grade": "local-deterministic-regression",
+      "model_and_decoder_gates": [
+        {
+          "command": "python scripts/verify_physical_world_model.py --quick",
+          "component": "physical-world-model",
+          "failed": 0,
+          "passed": 21
+        },
+        {
+          "command": "python scripts/verify_physical_jepa_robustness.py",
+          "component": "physical-jepa-robustness",
+          "failed": 0,
+          "passed": 8
+        },
+        {
+          "command": "python scripts/evaluate_neural_simulator.py --output target/neural-simulator-audit.json",
+          "component": "neural-simulator",
+          "failed": 0,
+          "passed": 3
+        }
+      ],
+      "model_and_decoder_gates_failed": 0,
+      "model_and_decoder_gates_passed": 32,
+      "protocol_id": "cyber-physical-software-regression-2026-08-14",
+      "source_commit": "167b04766ee5ea3c5714cd09a551feb7bc78f359"
+    },
     "environment": {
       "accelerator": "WHPX",
       "host_os": "Windows 11",
@@ -249,7 +347,7 @@
       "runtime_guest_ram_mb": 512
     },
     "global_limitations": [
-      "The paper, physical simulator, and neural synthetic evaluations use different protocols and are not directly comparable.",
+      "The paper, physical simulator, neural synthetic, QEMU, and cyber-physical software evaluations use different protocols and are not directly comparable.",
       "No live EEG, human neural calibration, robot hardware-in-the-loop, or broad physical-PC benchmark is claimed.",
       "Ring-3 timing uses a virtualized 1 kHz PIT; provider, tool execution, and operator-confirmation latency are excluded.",
       "A passing benchmark is evidence for its named fixture and protocol, not formal safety proof."
@@ -436,6 +534,10 @@
           "sha256": "374182fd18f13d3184e89c6ed4297aa54748ea4fb7b6495886bcb57c434830c2"
         },
         {
+          "path": "docs/benchmarks/raw/2026-08-14/cyber-physical-software.json",
+          "sha256": "ef32ea6a79fe4945af7c5797d0eae743b0510c5206f80c1324e29ff8e6447530"
+        },
+        {
           "path": "docs/research/world_model_paper_evaluation.json",
           "sha256": "59e79803e6d3430fc3e6694cbf72ca7acb19f90b8cb5c335692ace7748ae6d58"
         },
@@ -461,11 +563,11 @@
       "protocol_id": "ferrumos-qemu-command-audit-v1",
       "unknown_command_paths": 0
     },
-    "schema_version": "2.0.0",
-    "snapshot_date": "2026-08-13"
+    "schema_version": "2.1.0",
+    "snapshot_date": "2026-08-14"
   },
   "globalLimitations": [
-    "The paper, physical simulator, and neural synthetic evaluations use different protocols and are not directly comparable.",
+    "The paper, physical simulator, neural synthetic, QEMU, and cyber-physical software evaluations use different protocols and are not directly comparable.",
     "No live EEG, human neural calibration, robot hardware-in-the-loop, or broad physical-PC benchmark is claimed.",
     "Ring-3 timing uses a virtualized 1 kHz PIT; provider, tool execution, and operator-confirmation latency are excluded.",
     "A passing benchmark is evidence for its named fixture and protocol, not formal safety proof."

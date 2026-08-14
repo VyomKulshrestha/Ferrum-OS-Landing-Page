@@ -1,6 +1,6 @@
 # FerrumOS evidence and limitations
 
-Current-main evidence snapshot: [`75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7).
+Current-main evidence snapshot: [`84926841a401760b869af158ee80b0e709d0d6af`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/84926841a401760b869af158ee80b0e709d0d6af).
 
 FerrumOS v0.1.1 is a bootable Rust x86-64 research operating system. Its agent runs in Ring 3 and all effects remain subject to kernel capabilities, operator confirmation where required, syscall validation, deterministic policy, and a monotonic predictive screening gate.
 
@@ -12,6 +12,14 @@ FerrumOS v0.1.1 is a bootable Rust x86-64 research operating system. Its agent r
 - 5 permission tiers
 - Unknown operations fail closed
 - A dated emulator audit passed 101/101 focused command cases and 81/81 exhaustive catalog entries for OS source [`c92056d`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/c92056d8635af5e4ee2a81351350b1b25cfd4861); its record is included in the current snapshot above
+
+## Simulator-backed cyber-physical software
+
+- 152/152 deterministic contract tests passed across the physical runtime, signed neural protocol, `neurod`, and simulator bridge.
+- 32/32 physical-model, robustness, and neural-decoder gates passed.
+- The software boundary covers versioned sessions, replay and faults, virtual devices, simulator connectors, deterministic supervision, ROS 2/MQTT/CAN conformance, actuator-disabled delivery, bounded neural proposals, host-managed cells, privacy, and reliability primitives.
+
+This is local deterministic software regression, not proof of installed simulators or transports, physical clocks, live EEG, robot execution, hard-real-time behavior, native hypervisor containment, certification, or independent replication.
 
 ## World-model fixture
 
@@ -26,6 +34,7 @@ This is a balanced authored counterfactual fixture. It is not natural-use preval
 - The physical JEPA is simulator-only and permanently shadow-only.
 - Neural evidence is deterministic and synthetic; there is no live-EEG or human accuracy claim.
 - FerrumOS makes no medical, diagnostic, mind-reading, real-robot, camera-accuracy, hardware-in-the-loop, or learned actuator-permit claim.
+- ROS 2, MQTT, CAN, Gazebo, and Webots are software-tested interfaces; no running third-party deployment is claimed.
 
 ## Primary sources
 

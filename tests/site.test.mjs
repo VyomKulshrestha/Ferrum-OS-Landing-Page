@@ -118,13 +118,16 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
 
   const benchmarkData = JSON.parse(benchmarks)
   assert.equal(benchmarkData.schemaVersion, 2)
-  assert.equal(benchmarkData.benchmarks.length, 7)
+  assert.equal(benchmarkData.benchmarks.length, 8)
   assert.equal(benchmarkData.benchmarks[0].value, 0.8140000000000001)
   assert.equal(benchmarkData.benchmarks[0].sampleSize, 500)
   assert.equal(benchmarkData.benchmarks[2].unit, 'microseconds')
   assert.equal(benchmarkData.benchmarks[6].focusedPassed, 101)
   assert.equal(benchmarkData.benchmarks[6].catalogPassed, 81)
   assert.equal(benchmarkData.benchmarks[6].unknownCommandPaths, 0)
+  assert.equal(benchmarkData.benchmarks[7].contractTestsPassed, 152)
+  assert.equal(benchmarkData.benchmarks[7].modelAndDecoderGatesPassed, 32)
+  assert.match(benchmarkData.benchmarks[7].boundary, /does not prove/i)
   assert.ok(benchmarkData.globalLimitations.length >= 3)
 
   const releaseData = JSON.parse(releases)

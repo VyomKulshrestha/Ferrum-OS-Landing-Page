@@ -62,6 +62,7 @@ const preview = sourceBenchmarks.current_ring3_preview
 const physical = sourceBenchmarks.physical_simulator_jepa
 const neural = sourceBenchmarks.neural_synthetic
 const qemu = sourceBenchmarks.qemu_command_audit
+const cyber = sourceBenchmarks.cyber_physical_software
 
 const benchmarks = {
   $schema: 'https://ferrum-os.vercel.app/schemas/benchmarks-v2.schema.json',
@@ -148,6 +149,18 @@ const benchmarks = {
       unknownCommandPaths: qemu.unknown_command_paths,
       protocol: qemu.protocol_id,
       boundary: qemu.claim_boundary,
+    },
+    {
+      id: 'cyber-physical-software-regression',
+      metric: 'passing_software_contracts',
+      contractTestsPassed: cyber.contract_tests_passed,
+      contractTestsFailed: cyber.contract_tests_failed,
+      modelAndDecoderGatesPassed: cyber.model_and_decoder_gates_passed,
+      modelAndDecoderGatesFailed: cyber.model_and_decoder_gates_failed,
+      sourceCommit: cyber.source_commit,
+      protocol: cyber.protocol_id,
+      coveredSoftwareBoundaries: cyber.covered_software_boundaries,
+      boundary: cyber.claim_boundary,
     },
   ],
   protocols: sourceBenchmarks,

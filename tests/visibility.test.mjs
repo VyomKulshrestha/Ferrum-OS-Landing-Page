@@ -24,7 +24,7 @@ test('visibility prompt pack is broad, unique, and explicit about real captures'
 
 test('source-only visibility audit remains honest without provider captures', async () => {
   const report = await audit([])
-  assert.equal(report.promptCount, 26)
+  assert.equal(report.promptCount, 29)
   assert.equal(report.sourceReadiness.passed, true)
   assert.equal(report.assistantSampling.status, 'pending-real-responses')
   assert.equal(report.assistantSampling.captureCount, 0)

@@ -5,8 +5,8 @@
   "releaseVersion": "0.1.1",
   "source": {
     "repository": "https://github.com/VyomKulshrestha/Ferrum-OS",
-    "commit": "75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7",
-    "snapshotDate": "2026-08-13",
+    "commit": "84926841a401760b869af158ee80b0e709d0d6af",
+    "snapshotDate": "2026-08-14",
     "sha256": "80c48a90bfcebd8108abc7be4a1f650d663dcfa4ea9953b151a7b4ca57af865b"
   },
   "counts": {

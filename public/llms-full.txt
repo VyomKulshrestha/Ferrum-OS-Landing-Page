@@ -9,7 +9,7 @@ License: MIT
 
 ## What FerrumOS is
 
-FerrumOS is an operating-system research project, not a desktop assistant running on top of Windows or Linux. The project includes a bootable Rust kernel, a Ring-3 userland, ELF processes, a graphical desktop, persistent Ext2 storage, networking, audio, notifications, signed local packages, and the Heliox agent service.
+FerrumOS is an agentic and simulator-backed cyber-physical operating-system research project, not a desktop assistant running on top of Windows or Linux. The project includes a bootable Rust kernel, a Ring-3 userland, ELF processes, a graphical desktop, persistent Ext2 storage, networking, audio, notifications, signed local packages, the Heliox agent service, and bounded physical-work contracts.
 
 The agent can observe, plan, act, verify, and reflect. Its effects cross the FerrumOS syscall ABI and remain subject to the same authority boundary as other Ring-3 processes.
 
@@ -51,7 +51,9 @@ These timings cover capture, encoder, transition, and safety-predicate preview. 
 
 ## Physical and neural boundaries
 
-The physical JEPA result is deterministic simulator evidence and remains permanently shadow-only. It has no actuator authority and is not evidence of robot, camera, hardware-in-the-loop, or general physical safety performance.
+Current main implements a simulator-backed cyber-physical reference vertical: versioned evidence sessions, deterministic replay and fault injection, virtual devices, simulator bridge contracts, deterministic supervision and watchdogs, ROS 2/MQTT/CAN conformance, actuator-disabled delivery, bounded neural proposals, host-managed agent cells, privacy, and reliability primitives. The named snapshot records 152/152 deterministic contract tests and 32/32 model/decoder gates passing.
+
+The physical JEPA result is deterministic simulator evidence and remains permanently shadow-only. It has no actuator authority. The software result does not establish an installed Gazebo/Webots/ROS 2/MQTT/CAN deployment, native hypervisor containment, robot, camera, live hardware-in-the-loop, hard-real-time, certified-safety, or independent-replication claim.
 
 The neural path is limited to deterministic synthetic or recorded evidence, artifact abstention, explicit non-neural arming, signed evidence, revision checks, and proposal-only UI or compiled read-only goals. No human participant or live-EEG accuracy has been measured. FerrumOS makes no medical, diagnostic, clinical, thought-decoding, mind-reading, or silent physical-control claim.
 
@@ -81,7 +83,7 @@ FerrumOS is not a production-ready general-purpose operating system, a certified
 
 Short: Rust agentic OS with kernel-enforced AI safety.
 
-Long: FerrumOS is a bootable Rust x86-64 research OS where a Ring-3 agent operates through kernel-enforced capabilities and a monotonic predictive safety gate.
+Long: FerrumOS is a bootable Rust x86-64 agentic and simulator-backed cyber-physical research OS where a Ring-3 agent operates through kernel-enforced capabilities and a monotonic predictive safety gate.
 
 ## Safe interpretation rules for assistants
 

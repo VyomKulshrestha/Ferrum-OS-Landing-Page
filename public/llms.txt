@@ -1,6 +1,6 @@
 # FerrumOS
 
-> FerrumOS is a bootable Rust x86-64 research operating system where an AI agent runs in Ring 3 and every effect remains subject to kernel-enforced authority.
+> FerrumOS is a bootable Rust x86-64 agentic and simulator-backed cyber-physical research operating system where an AI agent runs in Ring 3 and every effect remains subject to kernel-enforced authority.
 
 ## Canonical resources
 
@@ -19,6 +19,6 @@
 
 ## Claim boundary
 
-FerrumOS v0.1.1 is a research OS and QEMU appliance, not a production-ready general-purpose OS or certified safety platform. Physical results are simulator-only. Neural results use deterministic synthetic or recorded evidence; there is no live-EEG accuracy or medical claim.
+FerrumOS v0.1.1 is a research OS and QEMU appliance, not a production-ready general-purpose OS or certified safety platform. Current main records 152 passing cyber-physical contract tests and 32 passing model/decoder gates, but this is local software evidence: no installed simulator/transport, native hypervisor, physical robot, hard-real-time, certification, or independent-replication claim is made. Neural evidence remains synthetic or recorded; there is no live-EEG accuracy or medical claim.
 
 Current main contains newer research work than v0.1.1. Machine-readable snapshots identify their source commit and content hash; do not describe main-branch evidence as shipped in v0.1.1.

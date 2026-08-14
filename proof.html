@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#070806" />
-    <meta name="description" content="Reproducible FerrumOS evidence: capability coverage, world-model evaluation, latency, physical simulation, neural synthetic tests, and explicit claim boundaries." />
+    <meta name="description" content="Reproducible FerrumOS evidence: capabilities, JEPA evaluation, latency, 152 cyber-physical contracts, 32 model gates, and explicit hardware claim boundaries." />
     <meta name="author" content="Vyom Kulshrestha" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <link rel="canonical" href="https://ferrum-os.vercel.app/proof" />
@@ -33,18 +33,18 @@
             "@type": "TechArticle",
             "@id": "https://ferrum-os.vercel.app/proof#article",
             "headline": "FerrumOS evidence and limitations",
-            "description": "Reproducible capability, world-model, latency, physical-simulator, and synthetic-neural evidence with explicit claim boundaries.",
+            "description": "Reproducible capability, world-model, latency, cyber-physical software, physical-simulator, and synthetic-neural evidence with explicit claim boundaries.",
             "url": "https://ferrum-os.vercel.app/proof",
             "dateModified": "2026-08-13",
-            "version": "75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7",
+            "version": "84926841a401760b869af158ee80b0e709d0d6af",
             "author": { "@type": "Person", "name": "Vyom Kulshrestha", "url": "https://github.com/VyomKulshrestha" },
             "citation": [
               "https://doi.org/10.5281/zenodo.21829808",
               "https://doi.org/10.5281/zenodo.21829193"
             ],
             "isBasedOn": [
-              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7/capabilities.json",
-              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7/benchmarks.json"
+              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/84926841a401760b869af158ee80b0e709d0d6af/capabilities.json",
+              "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/84926841a401760b869af158ee80b0e709d0d6af/benchmarks.json"
             ],
             "isPartOf": { "@id": "https://ferrum-os.vercel.app/#software" }
           },
@@ -53,11 +53,11 @@
             "@id": "https://ferrum-os.vercel.app/benchmarks.json#dataset",
             "name": "FerrumOS public benchmark snapshot",
             "url": "https://ferrum-os.vercel.app/benchmarks.json",
-            "identifier": "git:75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7",
-            "version": "75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7",
+            "identifier": "git:84926841a401760b869af158ee80b0e709d0d6af",
+            "version": "84926841a401760b869af158ee80b0e709d0d6af",
             "license": "https://opensource.org/license/mit",
             "measurementTechnique": "Versioned repository verification scripts and documented QEMU/WHPX protocols",
-            "isBasedOn": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7/benchmarks.json"
+            "isBasedOn": "https://raw.githubusercontent.com/VyomKulshrestha/Ferrum-OS/84926841a401760b869af158ee80b0e709d0d6af/benchmarks.json"
           }
         ]
       }
@@ -72,7 +72,7 @@
     <main class="page-shell">
       <header class="page-hero">
         <div>
-          <p class="eyebrow snapshot-label">Evidence center / current main<a href="https://github.com/VyomKulshrestha/Ferrum-OS/commit/75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7">Source 75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7</a></p>
+          <p class="eyebrow snapshot-label">Evidence center / current main<a href="https://github.com/VyomKulshrestha/Ferrum-OS/commit/84926841a401760b869af158ee80b0e709d0d6af">Source 84926841a401760b869af158ee80b0e709d0d6af</a></p>
           <h1>Proof before promise.</h1>
         </div>
         <p class="hero-intro">FerrumOS publishes <strong>what was measured, how it was measured, and what the result does not prove.</strong> Learned forecasts can add caution. They cannot remove deterministic warnings or grant execution authority.</p>
@@ -87,6 +87,8 @@
             <article class="evidence-card"><h3>Permission tiers</h3><span class="metric">5</span><p>Observe, safe, network, modify, and destructive classes remain distinct from model prediction.</p></article>
             <article class="evidence-card"><h3>Unknown actions</h3><span class="metric">Closed</span><p>Unrecognized catalog entries are rejected rather than silently mapped to a permissive fallback.</p></article>
             <article class="evidence-card"><h3>QEMU command audit</h3><span class="metric">101 / 101</span><p>A dated emulator audit passed all focused cases and 81/81 catalog entries for OS source <a href="https://github.com/VyomKulshrestha/Ferrum-OS/commit/c92056d8635af5e4ee2a81351350b1b25cfd4861"><code>c92056d</code></a>; its evidence record is included in the current snapshot above.</p></article>
+            <article class="evidence-card"><h3>Cyber-physical contracts</h3><span class="metric">152 / 152</span><p>Deterministic physical-runtime, neural-protocol, neurod, and simulator-bridge tests passed on the named source snapshot.</p></article>
+            <article class="evidence-card"><h3>Model &amp; decoder gates</h3><span class="metric">32 / 32</span><p>Physical-model, robustness, and neural-simulator gates passed without promoting learned output into actuator authority.</p></article>
           </div>
         </div>
       </section>
@@ -113,6 +115,14 @@
           <article class="evidence-card"><h3>H=5 preview</h3><span class="metric">1.43–1.57 ms</span><p>Bounded lookahead in the same environment.</p></article>
           <article class="evidence-card"><h3>Model loading</h3><span class="metric">26–30 ms</span><p>With zero measured heap-growth bytes in all three benchmark runs.</p></article>
           <article class="evidence-card"><h3>Queue response</h3><span class="metric">96 / 96</span><p>Every serialized preview response returned in each run; this is not parallel inference throughput.</p></article>
+        </div>
+      </section>
+
+      <section class="evidence-section">
+        <div><p class="section-label">Cyber-physical software</p><h2>The reference vertical is wired—inside a strict evidence boundary.</h2></div>
+        <div>
+          <p class="body-copy">Current main joins versioned provenance, deterministic replay and faults, virtual devices, Gazebo/ROS 2 and Webots bridge boundaries, watchdog and recovery logic, ROS 2/MQTT/CAN conformance, actuator-disabled delivery, bounded neural proposals, host-managed cells, privacy, and reliability primitives.</p>
+          <p class="boundary-card"><strong>Claim boundary</strong>This local deterministic regression does not prove installed third-party infrastructure, physical clocks, live EEG, robot execution, hard-real-time behavior, native hypervisor containment, certification, or independent replication.</p>
         </div>
       </section>
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-13",
+  "updated": "2026-08-14",
   "instructions": "Ask each prompt in a fresh assistant conversation without supplying FerrumOS source text. Store only real responses in the documented JSONL capture format. Do not mark an assistant tested unless a response and its citations were actually captured.",
   "prompts": [
     { "id": "identity-01", "category": "identity", "prompt": "What is FerrumOS?", "expected": ["rust", "operating system", "ring 3"], "forbidden": ["ferrum network", "production ready"] },
@@ -18,6 +18,9 @@
     { "id": "benchmark-01", "category": "benchmarks", "prompt": "What Ring-3 preview latency does FerrumOS publish?", "expected": ["1.29", "1.57", "qemu"], "forbidden": ["end to end agent latency", "provider latency"] },
     { "id": "benchmark-02", "category": "benchmarks", "prompt": "What does the FerrumOS preview-latency benchmark exclude?", "expected": ["provider", "approval", "dispatch"], "forbidden": ["complete task latency"] },
     { "id": "physical-01", "category": "physical", "prompt": "Can the FerrumOS physical world model control a real robot?", "expected": ["no", "simulator", "shadow only"], "forbidden": ["real robot control"] },
+    { "id": "physical-02", "category": "physical", "prompt": "What cyber-physical software has FerrumOS completed on current main?", "expected": ["simulator", "152", "contract"], "forbidden": ["production robot deployment", "certified"] },
+    { "id": "physical-03", "category": "physical", "prompt": "Does FerrumOS currently prove a live Gazebo, Webots, ROS 2, MQTT, or CAN deployment?", "expected": ["no", "software", "interface"], "forbidden": ["deployed infrastructure"] },
+    { "id": "isolation-01", "category": "architecture", "prompt": "Does FerrumOS currently implement a native hypervisor or measured microVM containment?", "expected": ["no", "host-managed", "contract"], "forbidden": ["native hypervisor implemented"] },
     { "id": "neural-01", "category": "neural", "prompt": "Does FerrumOS demonstrate live brain control?", "expected": ["no", "synthetic", "recorded"], "forbidden": ["live eeg proven", "mind reading"] },
     { "id": "neural-02", "category": "neural", "prompt": "Can a neural signal directly authorize a dangerous FerrumOS action?", "expected": ["non-neural", "arming", "proposal"], "forbidden": ["direct authorization"] },
     { "id": "release-01", "category": "release", "prompt": "What is the latest tagged FerrumOS software release?", "expected": ["v0.1.1"], "forbidden": ["world-model-study-v1.0.0 is the software release"] },

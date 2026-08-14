@@ -1,6 +1,6 @@
 # FerrumOS world-model and neural research
 
-Current-main evidence snapshot: [`75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/75e8a58a238409f8c0bf6f51c0c3b6edd7b779e7).
+Current-main evidence snapshot: [`84926841a401760b869af158ee80b0e709d0d6af`](https://github.com/VyomKulshrestha/Ferrum-OS/commit/84926841a401760b869af158ee80b0e709d0d6af).
 
 FerrumOS studies a narrow systems question: can a learned forecast add caution before an operating-system action while deterministic policy and the kernel retain final authority?
 
@@ -20,7 +20,9 @@ The 0.2 percentage-point difference does not establish a material JEPA safety ad
 
 ## Physical prediction boundary
 
-The physical JEPA result comes from deterministic simulator traces. It is permanently shadow-only and cannot create an actuator permit or override a deterministic stop. It is not evidence of real-robot, camera, hardware-in-the-loop, or general physical-safety performance.
+The physical JEPA result comes from deterministic simulator traces. It is permanently shadow-only and cannot create an actuator permit or override a deterministic stop. The surrounding simulator-backed software tier now binds versioned sessions, replay/faults, virtual devices, simulator bridges, deterministic supervision, ROS 2/MQTT/CAN conformance, actuator-disabled delivery, bounded neural proposals, and host-managed cells.
+
+The named regression snapshot records 152/152 deterministic contract tests and 32/32 model/decoder gates passing. It is not evidence of installed simulator/transport infrastructure, native hypervisor containment, real-robot, camera, live hardware-in-the-loop, hard-real-time, or general physical-safety performance.
 
 ## Neural intent boundary
 

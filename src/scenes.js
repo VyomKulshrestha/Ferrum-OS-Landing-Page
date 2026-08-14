@@ -92,13 +92,13 @@ export const scenes = [
   {
     id: 'inputs',
     number: '07',
-    chapter: 'Proposal is not authority',
-    title: 'New interfaces inherit the same limits.',
+    chapter: 'Simulator-backed cyber-physical tier',
+    title: 'A complete software boundary. No borrowed hardware claims.',
     body:
-      'The physical world model remains shadow-only. Neural intent is constrained to signed coarse evidence, UI controls, and compiled read-only goals. Confidence never becomes actuator authority.',
-    tags: ['99.44% simulator BA', '0 / 10,000 idle candidates', 'Proposal only'],
+      'Ferrum now binds deterministic sessions, replay, virtual devices, simulator bridges, watchdogs, ROS 2/MQTT/CAN conformance, actuator-disabled delivery, bounded neural proposals, and host-managed cells into one testable reference vertical.',
+    tags: ['152 / 152 contracts', '32 / 32 model gates', 'Actuator disabled'],
     note:
-      'There is no live-EEG accuracy, medical, real-robot, camera-accuracy, or hardware-in-the-loop safety claim.',
+      'These are local software contracts. There is no installed simulator or transport deployment, live EEG, native hypervisor, real robot, hard-real-time, certification, or independent-replication claim.',
     video: '/media/scene-07.mp4',
     poster: '/posters-webp/scene-07.webp',
     align: 'left',
