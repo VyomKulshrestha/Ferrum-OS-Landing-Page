@@ -34,9 +34,16 @@ const smooth = (value) => {
   return normalized * normalized * (3 - 2 * normalized)
 }
 
-function loadSceneSource(index) {
+function loadSceneSource(index, preload = index === activeIndex ? 'auto' : 'metadata') {
   const video = media[index]
-  if (!video || reducedMotion.matches || saveData || video.dataset.loaded === 'true') return
+  if (!video || reducedMotion.matches || saveData) return
+  if (video.dataset.loaded === 'true') {
+    if (preload === 'auto' && video.preload !== 'auto') {
+      video.preload = 'auto'
+      video.load()
+    }
+    return
+  }
   const url = video.querySelector('source')?.dataset.src
   if (!url) return
 
@@ -46,7 +53,7 @@ function loadSceneSource(index) {
   video.src = url
   video.dataset.loaded = 'true'
   video.dataset.transport = 'byte-range'
-  video.preload = index === activeIndex ? 'auto' : 'metadata'
+  video.preload = preload
   video.load()
 }
 
@@ -163,6 +170,7 @@ function updateJourney() {
     const nextIndex = Math.min(index + 1, scenes.length - 1)
     const seam = smooth((localProgress - 0.78) / 0.22)
     if (nextIndex !== index) {
+      if (localProgress >= 0.35) loadSceneSource(nextIndex, 'auto')
       media[index].style.opacity = String(1 - seam)
       media[nextIndex].style.opacity = String(seam)
       sceneTargets.set(media[nextIndex], 0)
@@ -185,7 +193,7 @@ function requestJourneyUpdate(markInteraction = true) {
       opening.pause()
     }
     userHasScrolled = true
-    loadSceneSource(activeIndex)
+    ensureAdjacentSources(activeIndex)
     if (autoplayRaf) cancelAnimationFrame(autoplayRaf)
     autoplayRaf = null
   }
