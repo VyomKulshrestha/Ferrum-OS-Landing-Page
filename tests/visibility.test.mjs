@@ -62,6 +62,7 @@ test('IndexNow notification validates sitemap scope and keeps its key external',
   assert.equal(payload.host, 'ferrum-os.vercel.app')
   assert.equal(payload.keyLocation, `https://ferrum-os.vercel.app/${key}.txt`)
   assert.deepEqual(payload.urlList, urls)
+  assert.match(workflow, /push:\s+branches: \[main\]/)
   assert.doesNotMatch(workflow, /secrets\./)
   assert.throws(() => extractSitemapUrls('<urlset><url><loc>https://example.com/</loc></url></urlset>'), /outside/)
 })

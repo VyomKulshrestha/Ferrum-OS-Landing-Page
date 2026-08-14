@@ -77,6 +77,9 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   ])
 
   assert.match(html, /SoftwareApplication/)
+  assert.match(html, /"@type": "WebSite"/)
+  assert.match(html, /"dateModified": "2026-08-14"/)
+  assert.match(html, /"sameAs": \[/)
   assert.match(html, /Skip to the FerrumOS journey/)
   for (const page of [html, proofHtml, researchHtml]) {
     assert.doesNotMatch(page, /fonts\.(?:googleapis|gstatic)\.com/)
@@ -98,7 +101,7 @@ test('the landing page exposes semantic and agent-readable evidence', async () =
   assert.match(llmsFull, /0\.2 percentage-point difference does not establish a material JEPA safety advantage/i)
   assert.match(llmsFull, /Distinguish the v0\.1\.1 tagged release from current main/i)
   assert.match(proof, /simple baseline result/i)
-  assert.match(sitemap, /<lastmod>2026-08-13<\/lastmod>/)
+  assert.match(sitemap, /<lastmod>2026-08-14<\/lastmod>/)
 
   const capabilityData = JSON.parse(capabilities)
   assert.equal(capabilityData.schemaVersion, 2)
